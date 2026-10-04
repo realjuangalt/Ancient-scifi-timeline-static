@@ -116,43 +116,253 @@
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
   }
+
+  .spine { position: absolute; width: 2px; pointer-events: none; z-index: 3; }
+  .spine-science { left: 0; background: #b7d4df; }
+  .spine-myth { right: 0; background: #e0bc84; }
+  .meridian, .meridian-fill { display: none !important; }
+  body.layout-article .wrap {
+    position: relative;
+    max-width: 880px;
+    margin: 0 16px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  body.layout-article .wrap > :not(article):not(.spine):not(main) {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+  body.layout-article main { padding-left: 0; padding-right: 0; }
+  body.layout-article nav.order { margin-left: 20px; margin-right: 20px; }
+  body.layout-article article.card {
+    position: relative;
+    text-align: left;
+    overflow-wrap: break-word;
+    margin-bottom: 20px;
+    background: #101218;
+  }
+  body.layout-article article.card p,
+  body.layout-article article.card .body { text-align: left; }
+  body.page-science article.card,
+  body.page-myth article.card {
+    margin-left: 8px;
+    margin-right: 8px;
+    max-width: none;
+  }
+  body.page-science article.card { border: 1px solid var(--ice); }
+  body.page-myth article.card { border: 1px solid var(--gold); }
+  body.page-science .brand,
+  body.page-science article.card .kicker { color: var(--ice); }
+  body.page-myth .brand,
+  body.page-myth article.card .kicker,
+  body.page-myth .kicker,
+  body.page-myth .band-kicker,
+  body.page-myth .order-kicker { color: var(--gold); }
+  body.page-science article.card::before,
+  body.page-myth article.card::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    margin-top: -4px;
+  }
+  body.page-science article.card::before {
+    left: -12px;
+    border-width: 4px 12px 4px 0;
+    border-color: transparent var(--ice) transparent transparent;
+  }
+  body.page-myth article.card::before {
+    right: -12px;
+    border-width: 4px 0 4px 12px;
+    border-color: transparent transparent transparent var(--gold);
+  }
+  body.page-science article.card::after,
+  body.page-myth article.card::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    box-sizing: border-box;
+    border-radius: 50%;
+    background: var(--bg);
+    transform: translateY(-50%);
+    z-index: 4;
+  }
+  body.page-science article.card::after {
+    left: -8px;
+    margin-left: -4px;
+    border: 2px solid var(--ice);
+  }
+  body.page-myth article.card::after {
+    right: -8px;
+    margin-right: -4px;
+    border: 2px solid var(--gold);
+  }
+  body.page-both .brand {
+    background: linear-gradient(90deg, var(--ice), var(--gold));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  body.page-both article.card {
+    margin-left: 16px;
+    margin-right: 16px;
+    max-width: none;
+    border-top: 1px solid var(--edge);
+    border-bottom: 1px solid var(--edge);
+    border-left: 2px solid var(--ice);
+    border-right: 2px solid var(--gold);
+  }
+  body.layout-timeline .timeline {
+    position: relative;
+    max-width: 880px;
+    margin: 0 16px;
+    padding-top: 8px;
+  }
+  body.layout-timeline .event {
+    position: relative;
+    margin: 0 0 20px !important;
+    padding: 0 !important;
+  }
+  body.layout-timeline .event::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: auto !important;
+    right: -3px;
+    width: 8px;
+    height: 8px;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--gold);
+    box-shadow: none;
+    box-sizing: border-box;
+    z-index: 4;
+  }
+  body.layout-timeline .event .card {
+    position: relative;
+    margin-left: 8px;
+    margin-right: 8px;
+    max-width: none;
+    border: 1px solid var(--gold);
+    border-radius: 14px;
+    background: #101218;
+    text-align: left;
+    overflow-wrap: break-word;
+  }
+  body.layout-timeline .event .card::before,
+  body.layout-timeline .event .card::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border-style: solid;
+  }
+  body.layout-timeline .event .card::before {
+    right: -12px;
+    margin-top: -4px;
+    border-width: 4px 0 4px 12px;
+    border-color: transparent transparent transparent var(--gold);
+  }
+  body.layout-timeline .event .card::after {
+    right: -10px;
+    margin-top: -3px;
+    border-width: 3px 0 3px 10px;
+    border-color: transparent transparent transparent #101218;
+    z-index: 1;
+  }
+  body.layout-timeline .band-mark,
+  body.layout-timeline .reading,
+  body.layout-timeline .time-rule {
+    margin-left: 20px !important;
+    margin-right: 20px !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    max-width: none !important;
+  }
+  body.layout-timeline .band-kicker,
+  body.layout-timeline .kicker .when,
+  body.layout-timeline .time-rule span { color: var(--gold); }
+  body.layout-timeline .time-rule i { background: var(--gold); box-shadow: none; }
+  body.layout-timeline .event[data-tone="ice"] .card { border-color: var(--gold); }
+  body.layout-timeline .event[data-tone="ice"]::before { border-color: var(--gold); box-shadow: none; }
+  body.page-myth nav.order li::before { box-shadow: none; }
+  @media (min-width: 720px) {
+    body.layout-article .wrap,
+    body.layout-timeline .timeline {
+      width: calc(100% - 28px);
+      margin-left: auto;
+      margin-right: auto;
+    }
+    body.page-science article.card {
+      max-width: 62%;
+      margin-left: 12px;
+      margin-right: auto;
+    }
+    body.page-myth.layout-article article.card {
+      max-width: 62%;
+      margin-left: auto;
+      margin-right: 12px;
+    }
+    body.layout-timeline .event::before { width: 12px; height: 12px; right: -5px; }
+    body.layout-timeline .event .card {
+      max-width: 62%;
+      margin-left: auto;
+      margin-right: 12px;
+    }
+    body.page-science article.card::after,
+    body.page-myth article.card::after {
+      width: 12px;
+      height: 12px;
+    }
+    body.page-science article.card::after { left: -12px; margin-left: -6px; }
+    body.page-myth article.card::after { right: -12px; margin-right: -6px; }
+  }
+
 </style>
 </head>
-<body>
+<body class="page-both layout-article">
 <canvas id="stars" aria-hidden="true"></canvas>
 <div class="dust" aria-hidden="true"></div>
 <div class="meridian" aria-hidden="true"></div>
-<div class="wrap">
+<div class="wrap bubble-column">
+<div class="spine spine-science" aria-hidden="true"></div>
+<div class="spine spine-myth" aria-hidden="true"></div>
+
   <a class="back" href="index.html">← Ancient timeline</a>
   <p class="brand">Ancient timeline</p>
   <h1>The Anunnaki</h1>
-  <p class="lede">This page expands the Anunnaki cards. It is not the main spine. The gold line in the margin is only a family mark. One card is the myth, set in mythic time, before the flood. The other is the tablets, dated on their own. The alien-astronaut telling is modern mythology.</p>
+  <p class="lede">This page expands the Anunnaki cards. The ice line and the gold line mark the two sides this page holds. One card is the myth, set in mythic time, before the flood. The other is the tablets, dated on their own. The alien-astronaut telling is modern mythology.</p>
 
   <article class="card primary">
     <p class="kicker">Mythic time, before the flood</p>
     <h2>The story's own chronology</h2>
-    <p>In the ancient stories the great gods, and the making of humans, come before the flood. That is the myth's own order. It is not a calendar year, and this page does not give it one.</p>
+    <p>In the ancient stories the great gods, and the making of humans, come before the flood. That is the myth's own order.</p>
     <p>Anunna, later Anunnaki, names a group of gods. Nicole Brisch's entry on Oracc says that in Sumerian texts the name can mean the highest gods, or the gods of one city, such as Eridu or Lagash. One main function was to decide the fates. The same entry says that already in Sumerian sources they are sometimes tied to the netherworld, and that after the Old Babylonian period the name is used for the gods of the netherworld, set against the Igigi, the gods of heaven.</p>
-    <p>The British Museum's summary of its Atrahasis tablet says the minor gods work in the fields and then rebel, and that humans are made from clay, saliva, and divine blood so they will serve the gods. That summary does not mention gold. The people's noise then brings plague, famine, drought, and at last a flood. In the story, the making of humans comes before the flood.</p>
-    <p>In Enuma Elish the Anunnaki are the assembled great gods. Humans are made from Kingu's blood, and they raise Esagila, a temple ziggurat, not a craft. Brisch, on tablet VI, says Marduk assigns 300 Anunna to the heavens and the same number to the netherworld.</p>
-    <p>The Sumerian King List does not name them. It says kingship came down from heaven, then a flood swept over. The huge early reigns are literary, not a calendar year.</p>
-    <p>They are not the Watchers. That story stays on the Civilization and the Watchers card. First Enoch is Jewish apocalyptic, not a Mesopotamian tablet. The slogan that the Anunnaki are the Watchers, and that both are fallen angels, is a modern mashup.</p>
+    <p>The British Museum's summary of its Atrahasis tablet says the minor gods work in the fields and then rebel, and that humans are made from clay, saliva, and divine blood so they will serve the gods. The people's noise then brings plague, famine, drought, and at last a flood. In the story, the making of humans comes before the flood.</p>
+    <p>In Enuma Elish the Anunnaki are the assembled great gods. Humans are made from Kingu's blood, and they raise Esagila, a temple ziggurat. Brisch, on tablet VI, says Marduk assigns 300 Anunna to the heavens and the same number to the netherworld.</p>
+    <p>The Sumerian King List does not name them. It says kingship came down from heaven, then a flood swept over. The huge early reigns are literary.</p>
   </article>
 
   <article class="card primary">
-    <p class="kicker">Dated, not found</p>
+    <p class="kicker">Production dates</p>
     <h2>When the tablets are dated</h2>
     <p>Brisch says the term Anunna first appears in the Post-Akkadian period, in some inscriptions of Gudea, and in a few texts of the Third Dynasty of Ur. On that same entry the Akkadian forms Anunnaku and Anunnaki continue until the Seleucid period. The entry does not print a regnal year.</p>
-    <p>The Wikipedia article on the Anunnaki gives Gudea's reign as about 2144–2124 BCE, and the Third Dynasty of Ur as about 2112–2004 BCE. Those are that article's dates for the early inscriptions. They are not a year for the myth.</p>
-    <p>The British Museum Images record for the Atrahasis tablet from Sippar prints a production date of 1635 BC, Old Babylonian, about the 17th century BC. It says copies of this story have survived from the seventeenth to the seventh century BC. Lambert and Millard's publication of those museum tablets says the Old Babylonian tablet I was written in the twelfth year of Ammisaduqa. That is a date for the tablet. It is not the time the story is set in, and it is not a find-date.</p>
-    <p>The sources do not agree on one year, so this page does not pick a midpoint. The name is already in Gudea's inscriptions. The most complete Atrahasis manuscript is the tablet the museum dates to 1635 BC, with copies still being written into the seventh century BC, and the Akkadian name, on Brisch's entry, still in use into the Seleucid period. Nothing here dates the Anunnaki, or these tablets, to 9600 BCE.</p>
+    <p>The Wikipedia article on the Anunnaki gives Gudea's reign as about 2144–2124 BCE, and the Third Dynasty of Ur as about 2112–2004 BCE. Those are that article's dates for the early inscriptions.</p>
+    <p>The British Museum Images record for the Atrahasis tablet from Sippar prints a production date of 1635 BC, Old Babylonian, about the 17th century BC. It says copies of this story have survived from the seventeenth to the seventh century BC. Lambert and Millard's publication of those museum tablets says the Old Babylonian tablet I was written in the twelfth year of Ammisaduqa. That is a date for the tablet.</p>
+    <p>The sources do not agree on one year, so this page does not pick a midpoint. The name is already in Gudea's inscriptions. The most complete Atrahasis manuscript is the tablet the museum dates to 1635 BC, with copies still being written into the seventh century BC, and the Akkadian name, on Brisch's entry, still in use into the Seleucid period.</p>
     <p class="links"><a href="https://oracc.museum.upenn.edu/amgg/listofdeities/anunna/">Oracc, Anunna</a> <a href="https://en.wikipedia.org/wiki/Anunnaki">Wikipedia, Anunnaki</a> <a href="https://www.bmimages.com/preview.asp?image=00032581001">British Museum Images, Atrahasis tablet</a></p>
   </article>
 
   <article class="card interpretive">
     <p class="kicker">Modern mythology, labeled as his</p>
     <h2>Sitchin's reading</h2>
-    <p>The alien-astronaut chronology is a modern telling. The Wikipedia article on the Anunnaki says Zecharia Sitchin, in The Twelfth Planet (1976), claimed the Anunnaki were extraterrestrials from a planet he called Nibiru, who came to Earth around 500,000 years ago to mine gold, and that they made humans as a slave species of miners. Around 500,000 years ago is his claim, as that article reports it. It is not a date on the tablets.</p>
+    <p>The alien-astronaut chronology is a modern telling. The Wikipedia article on the Anunnaki says Zecharia Sitchin, in The Twelfth Planet (1976), claimed the Anunnaki were extraterrestrials from a planet he called Nibiru, who came to Earth around 500,000 years ago to mine gold, and that they made humans as a slave species of miners. Around 500,000 years ago is his claim, as that article reports it.</p>
     <p>Michael Heiser's paper on the cuneiform sources says Sitchin claims Nibiru passes through the solar system every 3600 years. Heiser, using the Chicago Assyrian Dictionary, says the word is a crossing, a ford, or a crossing point. In the astronomical texts he reads, it is a star identified with Jupiter and with Marduk, and once with Mercury. He says it is never a planet beyond Pluto, and that the texts never tie Nibiru to the Anunnaki. The Wikipedia article says mainstream historians reject Sitchin's books. His years stay his.</p>
     <p class="links"><a href="https://drmsh.com/michaelsheiser/nibiru.pdf">Heiser, Nibiru according to the cuneiform sources</a> <a href="https://en.wikipedia.org/wiki/Anunnaki">Wikipedia, Anunnaki</a></p>
   </article>
@@ -189,5 +399,31 @@
   drawStars();
   window.addEventListener("resize", () => { layoutStars(); drawStars(); });
 </script>
+
+<script>
+(function () {
+  function place() {
+    var host = document.querySelector(".timeline") || document.querySelector(".wrap");
+    if (!host) return;
+    var bubbles = host.querySelectorAll("article.event, article.card");
+    if (!bubbles.length) return;
+    var hostRect = host.getBoundingClientRect();
+    var first = bubbles[0].getBoundingClientRect();
+    var last = bubbles[bubbles.length - 1].getBoundingClientRect();
+    var top = (first.top - hostRect.top) + first.height / 2 - 24;
+    var end = (last.top - hostRect.top) + last.height / 2 + 24;
+    var spines = host.querySelectorAll(".spine");
+    for (var i = 0; i < spines.length; i++) {
+      spines[i].style.top = top + "px";
+      spines[i].style.height = Math.max(0, end - top) + "px";
+    }
+  }
+  place();
+  window.addEventListener("resize", place);
+  window.addEventListener("load", place);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(place);
+})();
+</script>
+
 </body>
 </html>

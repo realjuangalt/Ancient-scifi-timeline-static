@@ -116,22 +116,232 @@
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
   }
+
+  .spine { position: absolute; width: 2px; pointer-events: none; z-index: 3; }
+  .spine-science { left: 0; background: #b7d4df; }
+  .spine-myth { right: 0; background: #e0bc84; }
+  .meridian, .meridian-fill { display: none !important; }
+  body.layout-article .wrap {
+    position: relative;
+    max-width: 880px;
+    margin: 0 16px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  body.layout-article .wrap > :not(article):not(.spine):not(main) {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+  body.layout-article main { padding-left: 0; padding-right: 0; }
+  body.layout-article nav.order { margin-left: 20px; margin-right: 20px; }
+  body.layout-article article.card {
+    position: relative;
+    text-align: left;
+    overflow-wrap: break-word;
+    margin-bottom: 20px;
+    background: #101218;
+  }
+  body.layout-article article.card p,
+  body.layout-article article.card .body { text-align: left; }
+  body.page-science article.card,
+  body.page-myth article.card {
+    margin-left: 8px;
+    margin-right: 8px;
+    max-width: none;
+  }
+  body.page-science article.card { border: 1px solid var(--ice); }
+  body.page-myth article.card { border: 1px solid var(--gold); }
+  body.page-science .brand,
+  body.page-science article.card .kicker { color: var(--ice); }
+  body.page-myth .brand,
+  body.page-myth article.card .kicker,
+  body.page-myth .kicker,
+  body.page-myth .band-kicker,
+  body.page-myth .order-kicker { color: var(--gold); }
+  body.page-science article.card::before,
+  body.page-myth article.card::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    margin-top: -4px;
+  }
+  body.page-science article.card::before {
+    left: -12px;
+    border-width: 4px 12px 4px 0;
+    border-color: transparent var(--ice) transparent transparent;
+  }
+  body.page-myth article.card::before {
+    right: -12px;
+    border-width: 4px 0 4px 12px;
+    border-color: transparent transparent transparent var(--gold);
+  }
+  body.page-science article.card::after,
+  body.page-myth article.card::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    box-sizing: border-box;
+    border-radius: 50%;
+    background: var(--bg);
+    transform: translateY(-50%);
+    z-index: 4;
+  }
+  body.page-science article.card::after {
+    left: -8px;
+    margin-left: -4px;
+    border: 2px solid var(--ice);
+  }
+  body.page-myth article.card::after {
+    right: -8px;
+    margin-right: -4px;
+    border: 2px solid var(--gold);
+  }
+  body.page-both .brand {
+    background: linear-gradient(90deg, var(--ice), var(--gold));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  body.page-both article.card {
+    margin-left: 16px;
+    margin-right: 16px;
+    max-width: none;
+    border-top: 1px solid var(--edge);
+    border-bottom: 1px solid var(--edge);
+    border-left: 2px solid var(--ice);
+    border-right: 2px solid var(--gold);
+  }
+  body.layout-timeline .timeline {
+    position: relative;
+    max-width: 880px;
+    margin: 0 16px;
+    padding-top: 8px;
+  }
+  body.layout-timeline .event {
+    position: relative;
+    margin: 0 0 20px !important;
+    padding: 0 !important;
+  }
+  body.layout-timeline .event::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: auto !important;
+    right: -3px;
+    width: 8px;
+    height: 8px;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--gold);
+    box-shadow: none;
+    box-sizing: border-box;
+    z-index: 4;
+  }
+  body.layout-timeline .event .card {
+    position: relative;
+    margin-left: 8px;
+    margin-right: 8px;
+    max-width: none;
+    border: 1px solid var(--gold);
+    border-radius: 14px;
+    background: #101218;
+    text-align: left;
+    overflow-wrap: break-word;
+  }
+  body.layout-timeline .event .card::before,
+  body.layout-timeline .event .card::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border-style: solid;
+  }
+  body.layout-timeline .event .card::before {
+    right: -12px;
+    margin-top: -4px;
+    border-width: 4px 0 4px 12px;
+    border-color: transparent transparent transparent var(--gold);
+  }
+  body.layout-timeline .event .card::after {
+    right: -10px;
+    margin-top: -3px;
+    border-width: 3px 0 3px 10px;
+    border-color: transparent transparent transparent #101218;
+    z-index: 1;
+  }
+  body.layout-timeline .band-mark,
+  body.layout-timeline .reading,
+  body.layout-timeline .time-rule {
+    margin-left: 20px !important;
+    margin-right: 20px !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    max-width: none !important;
+  }
+  body.layout-timeline .band-kicker,
+  body.layout-timeline .kicker .when,
+  body.layout-timeline .time-rule span { color: var(--gold); }
+  body.layout-timeline .time-rule i { background: var(--gold); box-shadow: none; }
+  body.layout-timeline .event[data-tone="ice"] .card { border-color: var(--gold); }
+  body.layout-timeline .event[data-tone="ice"]::before { border-color: var(--gold); box-shadow: none; }
+  body.page-myth nav.order li::before { box-shadow: none; }
+  @media (min-width: 720px) {
+    body.layout-article .wrap,
+    body.layout-timeline .timeline {
+      width: calc(100% - 28px);
+      margin-left: auto;
+      margin-right: auto;
+    }
+    body.page-science article.card {
+      max-width: 62%;
+      margin-left: 12px;
+      margin-right: auto;
+    }
+    body.page-myth.layout-article article.card {
+      max-width: 62%;
+      margin-left: auto;
+      margin-right: 12px;
+    }
+    body.layout-timeline .event::before { width: 12px; height: 12px; right: -5px; }
+    body.layout-timeline .event .card {
+      max-width: 62%;
+      margin-left: auto;
+      margin-right: 12px;
+    }
+    body.page-science article.card::after,
+    body.page-myth article.card::after {
+      width: 12px;
+      height: 12px;
+    }
+    body.page-science article.card::after { left: -12px; margin-left: -6px; }
+    body.page-myth article.card::after { right: -12px; margin-right: -6px; }
+  }
+
 </style>
 </head>
-<body>
+<body class="page-myth layout-article">
 <canvas id="stars" aria-hidden="true"></canvas>
 <div class="dust" aria-hidden="true"></div>
 <div class="meridian" aria-hidden="true"></div>
-<div class="wrap">
+<div class="wrap bubble-column">
+<div class="spine spine-myth" aria-hidden="true"></div>
+
   <a class="back" href="index.html">← Ancient timeline</a>
   <p class="brand">Ancient timeline</p>
   <h1>Hawara</h1>
-  <p class="lede">This page expands the Hawara card. It is not the main spine. The gold line in the margin is only a family mark. The monument is Amenemhat III's pyramid at the edge of the Fayum, twelfth dynasty. The timeline keeps it at about 1860 BCE. The archaeological account comes first. The claim of a surviving maze with a saucer in the middle is an alternative reading, not a finding.</p>
+  <p class="lede">This page expands the Hawara card. The gold line in the margin marks the myth side. The monument is Amenemhat III's pyramid at the edge of the Fayum, twelfth dynasty. The timeline keeps it at about 1860 BCE. The archaeological account comes first. The claim of a surviving maze with a saucer in the middle is an alternative reading.</p>
 
   <article class="card primary">
     <p class="kicker">The civilization · Twelfth dynasty</p>
     <h2>The civilization that built it</h2>
-    <p>Hawara belongs to Middle Kingdom Egypt, not to 9600 BCE, and not to a retelling of the whole of Egyptian history. The Metropolitan Museum's essay on the period dates the Middle Kingdom to about 2030 to 1650 B.C., dynasties 11 through 13. On the Museum's page for the Head of King Amenemhat III, the reign is dated ca. 1859–1813 B.C., dynasty 12, Middle Kingdom. That range is the Met's. This timeline does not turn it into a reign length. It keeps the monument where the card already placed it, at about 1860 BCE, at the start of the Met's range.</p>
+    <p>Hawara belongs to Middle Kingdom Egypt. The Metropolitan Museum's essay on the period dates the Middle Kingdom to about 2030 to 1650 B.C., dynasties 11 through 13. On the Museum's page for the Head of King Amenemhat III, the reign is dated ca. 1859–1813 B.C., dynasty 12, Middle Kingdom. That range is the Met's. It keeps the monument where the card already placed it, at about 1860 BCE, at the start of the Met's range.</p>
     <p>University College London's Digital Egypt says his first pyramid was at Dahshur, and that problems with the ground there led to a second pyramid at Hawara, toward the end of his reign. Hawara stands where the canal enters the Fayum. The card's line is the short one: Amenemhat III, twelfth dynasty, mudbrick pyramid.</p>
     <p class="links"><a href="https://www.metmuseum.org/art/collection/search/545549">Met, Head of King Amenemhat III</a> <a href="https://www.metmuseum.org/essays/egypt-in-the-middle-kingdom-2030-1640-b-c">Met, Middle Kingdom essay</a> <a href="https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/amenemhatIII.html">UCL Digital Egypt, Amenemhat III</a></p>
   </article>
@@ -142,7 +352,7 @@
     <p>Flinders Petrie worked at Hawara in 1888. He published that season as Hawara, Biahmu, and Arsinoe (London, 1889). The pyramid was the first object, the labyrinth the next. He searched the north side and then the east, found neither entrance, and tunnelled in through the brickwork. He found the chamber. He did not enter it that season. He wrote that the masonry was too massive to attack in a hurry, and that it awaited the next season.</p>
     <p>On the labyrinth he is plain. The site was used as a quarry through the Roman period. The labyrinth, and the casing of the pyramid, were taken for stone and lime. Villages of workmen lived on the spot. He writes that it is rare to find even a piece of pavement remaining, and that the plan of the building is lost. South of the pyramid he traced an immense bed of chips of fine white limestone. Under it, a bed of flat-laid sand, or of concrete made of rammed stone chips, marked where pavement and walls had stood. He measured that spread at about 1,000 feet long and 800 feet broad.</p>
     <p>The brick chambers Karl Lepsius had taken for the labyrinth, Petrie read as later. They are the houses and tombs of the people who destroyed the stone building, standing on the chip bed, and a stone passage cut through that bed after that part of the labyrinth was already gone. A few blocks of the superstructure remained. Architraves of hard limestone carry titles of Amenemhat III and Sebekneferu. One granite column mentions her monuments to her father.</p>
-    <p>The cemetery is the other half of the 1888 work. Tomb shafts in the rock had already been plundered. While trying brick chambers on the surface he found a mummy with a painted portrait bandaged over the face, then others. When the labyrinth trenching was finished, the men turned the cemetery over from one side to the other. The 1889 book gives the cemetery its own chapter, and Cecil Smith a chapter on the pictures. The portraits are the panel paintings now called Fayum portraits. They are not the Middle Kingdom pyramid.</p>
+    <p>The cemetery is the other half of the 1888 work. Tomb shafts in the rock had already been plundered. While trying brick chambers on the surface he found a mummy with a painted portrait bandaged over the face, then others. When the labyrinth trenching was finished, the men turned the cemetery over from one side to the other. The 1889 book gives the cemetery its own chapter, and Cecil Smith a chapter on the pictures. The portraits are the panel paintings now called Fayum portraits.</p>
     <p>The next report is Kahun, Gurob, and Hawara (London, 1890). There the bulk of the pyramid is mud brick, laid in beds of clean yellow sand, and covered with a casing of fine limestone. He found pieces of that casing around the pyramid. Along the middles of the sides he found none still in position, and he writes that the casing appears to have been removed, and the pavement with it, except at the north-west corner and the middle of the north side.</p>
     <p class="links"><a href="https://archive.org/details/hawarabiahmuarsi00petruoft">Petrie, Hawara, Biahmu, and Arsinoe (1889)</a> <a href="https://archive.org/details/cu31924028675399">Petrie, Kahun, Gurob, and Hawara (1890)</a></p>
   </article>
@@ -150,19 +360,19 @@
   <article class="card primary">
     <p class="kicker">The reading from the reports</p>
     <h2>What mainstream archaeology concludes</h2>
-    <p>From Petrie's own books, Hawara is Amenemhat III's mudbrick pyramid at the Fayum edge, once cased in limestone, with a very large stone building on its south. That building is the one classical writers called the Labyrinth, and Petrie identified the chip bed with its ruins. He did not find an intact roof, or a plan he could recover. He treated the brick ruins on the site as a later village of the quarriers, not as the original maze. The cemetery he cleared to the north is where the portrait mummies came from. His chapter headings place those tombs in Ptolemaic and Roman times, after the pyramid.</p>
-    <p>He also warns against the modern sense of the word. Citing Pliny on the Cretan labyrinth, which Pliny says was copied from this one, Petrie says it is not to be compared with the meanders of a mosaic or a maze made in a field. The ancient descriptions are of a building with many doors and galleries. In his reading the courts were many and similar, not a single shrine with a secret center.</p>
-    <p>A later survey did not reverse that. In 2010 Mohamed Ahmed Khalil and colleagues published a very-low-frequency electromagnetic study of the ground south of the pyramid, in Near Surface Geophysics. They report a large group of elongated and square anomalies at shallow depth, connected in some parts and separated in others, and they write that the layout significantly matches a description by Herodotus. The paper is a test of a geophysical method. It is not an excavation, and it does not describe a metal object or a craft.</p>
+    <p>From Petrie's own books, Hawara is Amenemhat III's mudbrick pyramid at the Fayum edge, once cased in limestone, with a very large stone building on its south. That building is the one classical writers called the Labyrinth, and Petrie identified the chip bed with its ruins. He did not find an intact roof, or a plan he could recover. He treated the brick ruins on the site as a later village of the quarriers. The cemetery he cleared to the north is where the portrait mummies came from. His chapter headings place those tombs in Ptolemaic and Roman times, after the pyramid.</p>
+    <p>He also warns against the modern sense of the word. Citing Pliny on the Cretan labyrinth, which Pliny says was copied from this one, The ancient descriptions, in Petrie's reading, are of a building with many doors and galleries. The courts were many and similar.</p>
+    <p>A later survey did not reverse that. In 2010 Mohamed Ahmed Khalil and colleagues published a very-low-frequency electromagnetic study of the ground south of the pyramid, in Near Surface Geophysics. They report a large group of elongated and square anomalies at shallow depth, connected in some parts and separated in others, and they write that the layout significantly matches a description by Herodotus. The paper is a test of a geophysical method.</p>
     <p class="links"><a href="https://doi.org/10.3997/1873-0604.2010004">Khalil and others, 2010</a></p>
   </article>
 
   <article class="card interpretive">
-    <p class="kicker">Alternative reading · Not established fact</p>
+    <p class="kicker">Alternative reading</p>
     <h2>The alternative reading</h2>
-    <p>A separate claim says the maze is still there, underground and intact, and that an alien saucer sits in the middle of it. That claim is an alternative reading. It is not what Petrie published, and it is not what the 2010 survey published.</p>
-    <p>The publication that sets the claim out, and that shows the pictures it presents as the scans, is Louis de Cordier's newsletter "The Merlin Burrows scans II." It retells a private briefing in 2015 by Tim Akers of Merlin Burrows. In that account the layers meet in a central hall, about 40 metres wide and 100 metres long, built to hold a freestanding object about 40 metres long. Akers is quoted calling the object metallic rather than stone or wood, and naming it Dippy, after the diplodocus in the Natural History Museum in London. The shape is compared to a tic-tac mint, or to an upright disk, or to a shen ring. A further line in the same newsletter, marked there as more speculative, calls it a portal or a stargate. The pictures on that page are copyrighted. They are not copied here. Nothing on this page is a scan. The newsletter is not an excavation report, and the writer is retelling a briefing.</p>
+    <p>A separate claim says the maze is still there, underground and intact, and that an alien saucer sits in the middle of it. That claim is an alternative reading.</p>
+    <p>The publication that sets the claim out, and that shows the pictures it presents as the scans, is Louis de Cordier's newsletter "The Merlin Burrows scans II." It retells a private briefing in 2015 by Tim Akers of Merlin Burrows. In that account the layers meet in a central hall, about 40 metres wide and 100 metres long, built to hold a freestanding object about 40 metres long. Akers is quoted calling the object metallic rather than stone or wood, and naming it Dippy, after the diplodocus in the Natural History Museum in London. The shape is compared to a tic-tac mint, or to an upright disk, or to a shen ring. A further line in the same newsletter, marked there as more speculative, calls it a portal or a stargate. The pictures on that page are copyrighted. The writer is retelling a briefing.</p>
     <p>Two other pages carry the same briefing, still as the alternative reading. Ancient History X revisits the 2015 scans and treats the Dippy object as speculation that lacks physical evidence. A recording posted on Odysee is titled as the original 2015 briefing.</p>
-    <p>Do not confuse that claim with a different 2025 paper. Mark J. Carlotto, in the Journal of Scientific Exploration, argues from space-based radar for a possible underground structure at Hawara, which he suggests may be part of the labyrinth. That paper does not identify a saucer, and it is not a report of an excavated machine. It is linked so the two readings stay separate. It is not established archaeology either.</p>
+    <p>A different 2025 paper is Mark J. Carlotto, in the Journal of Scientific Exploration. He argues from space-based radar for a possible underground structure at Hawara, which he suggests may be part of the labyrinth. It is linked so the two readings stay separate.</p>
     <p class="links"><a href="https://labyrinthofegypt.substack.com/p/the-merlin-burrows-scans-ii">The Merlin Burrows scans II</a> <a href="https://ancienthistoryx.com/labyrinth-of-hawara-revisited-the-2015-satellite-scans/">Ancient History X on the 2015 scans</a> <a href="https://odysee.com/@MorningStar:0a/Hawara-Satellite-Scan-Briefing-(Original-2015-Recording)---Tim-Akers---Merlin-Burrows:e">Recording titled as the 2015 briefing</a> <a href="https://journalofscientificexploration.org/index.php/jse/article/view/3579">Carlotto, 2025, possible underground structure</a></p>
   </article>
 
@@ -198,5 +408,31 @@
   drawStars();
   window.addEventListener("resize", () => { layoutStars(); drawStars(); });
 </script>
+
+<script>
+(function () {
+  function place() {
+    var host = document.querySelector(".timeline") || document.querySelector(".wrap");
+    if (!host) return;
+    var bubbles = host.querySelectorAll("article.event, article.card");
+    if (!bubbles.length) return;
+    var hostRect = host.getBoundingClientRect();
+    var first = bubbles[0].getBoundingClientRect();
+    var last = bubbles[bubbles.length - 1].getBoundingClientRect();
+    var top = (first.top - hostRect.top) + first.height / 2 - 24;
+    var end = (last.top - hostRect.top) + last.height / 2 + 24;
+    var spines = host.querySelectorAll(".spine");
+    for (var i = 0; i < spines.length; i++) {
+      spines[i].style.top = top + "px";
+      spines[i].style.height = Math.max(0, end - top) + "px";
+    }
+  }
+  place();
+  window.addEventListener("resize", place);
+  window.addEventListener("load", place);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(place);
+})();
+</script>
+
 </body>
 </html>

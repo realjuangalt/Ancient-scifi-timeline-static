@@ -116,33 +116,243 @@
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
   }
+
+  .spine { position: absolute; width: 2px; pointer-events: none; z-index: 3; }
+  .spine-science { left: 0; background: #b7d4df; }
+  .spine-myth { right: 0; background: #e0bc84; }
+  .meridian, .meridian-fill { display: none !important; }
+  body.layout-article .wrap {
+    position: relative;
+    max-width: 880px;
+    margin: 0 16px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  body.layout-article .wrap > :not(article):not(.spine):not(main) {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+  body.layout-article main { padding-left: 0; padding-right: 0; }
+  body.layout-article nav.order { margin-left: 20px; margin-right: 20px; }
+  body.layout-article article.card {
+    position: relative;
+    text-align: left;
+    overflow-wrap: break-word;
+    margin-bottom: 20px;
+    background: #101218;
+  }
+  body.layout-article article.card p,
+  body.layout-article article.card .body { text-align: left; }
+  body.page-science article.card,
+  body.page-myth article.card {
+    margin-left: 8px;
+    margin-right: 8px;
+    max-width: none;
+  }
+  body.page-science article.card { border: 1px solid var(--ice); }
+  body.page-myth article.card { border: 1px solid var(--gold); }
+  body.page-science .brand,
+  body.page-science article.card .kicker { color: var(--ice); }
+  body.page-myth .brand,
+  body.page-myth article.card .kicker,
+  body.page-myth .kicker,
+  body.page-myth .band-kicker,
+  body.page-myth .order-kicker { color: var(--gold); }
+  body.page-science article.card::before,
+  body.page-myth article.card::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    margin-top: -4px;
+  }
+  body.page-science article.card::before {
+    left: -12px;
+    border-width: 4px 12px 4px 0;
+    border-color: transparent var(--ice) transparent transparent;
+  }
+  body.page-myth article.card::before {
+    right: -12px;
+    border-width: 4px 0 4px 12px;
+    border-color: transparent transparent transparent var(--gold);
+  }
+  body.page-science article.card::after,
+  body.page-myth article.card::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    box-sizing: border-box;
+    border-radius: 50%;
+    background: var(--bg);
+    transform: translateY(-50%);
+    z-index: 4;
+  }
+  body.page-science article.card::after {
+    left: -8px;
+    margin-left: -4px;
+    border: 2px solid var(--ice);
+  }
+  body.page-myth article.card::after {
+    right: -8px;
+    margin-right: -4px;
+    border: 2px solid var(--gold);
+  }
+  body.page-both .brand {
+    background: linear-gradient(90deg, var(--ice), var(--gold));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  body.page-both article.card {
+    margin-left: 16px;
+    margin-right: 16px;
+    max-width: none;
+    border-top: 1px solid var(--edge);
+    border-bottom: 1px solid var(--edge);
+    border-left: 2px solid var(--ice);
+    border-right: 2px solid var(--gold);
+  }
+  body.layout-timeline .timeline {
+    position: relative;
+    max-width: 880px;
+    margin: 0 16px;
+    padding-top: 8px;
+  }
+  body.layout-timeline .event {
+    position: relative;
+    margin: 0 0 20px !important;
+    padding: 0 !important;
+  }
+  body.layout-timeline .event::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: auto !important;
+    right: -3px;
+    width: 8px;
+    height: 8px;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--gold);
+    box-shadow: none;
+    box-sizing: border-box;
+    z-index: 4;
+  }
+  body.layout-timeline .event .card {
+    position: relative;
+    margin-left: 8px;
+    margin-right: 8px;
+    max-width: none;
+    border: 1px solid var(--gold);
+    border-radius: 14px;
+    background: #101218;
+    text-align: left;
+    overflow-wrap: break-word;
+  }
+  body.layout-timeline .event .card::before,
+  body.layout-timeline .event .card::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border-style: solid;
+  }
+  body.layout-timeline .event .card::before {
+    right: -12px;
+    margin-top: -4px;
+    border-width: 4px 0 4px 12px;
+    border-color: transparent transparent transparent var(--gold);
+  }
+  body.layout-timeline .event .card::after {
+    right: -10px;
+    margin-top: -3px;
+    border-width: 3px 0 3px 10px;
+    border-color: transparent transparent transparent #101218;
+    z-index: 1;
+  }
+  body.layout-timeline .band-mark,
+  body.layout-timeline .reading,
+  body.layout-timeline .time-rule {
+    margin-left: 20px !important;
+    margin-right: 20px !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    max-width: none !important;
+  }
+  body.layout-timeline .band-kicker,
+  body.layout-timeline .kicker .when,
+  body.layout-timeline .time-rule span { color: var(--gold); }
+  body.layout-timeline .time-rule i { background: var(--gold); box-shadow: none; }
+  body.layout-timeline .event[data-tone="ice"] .card { border-color: var(--gold); }
+  body.layout-timeline .event[data-tone="ice"]::before { border-color: var(--gold); box-shadow: none; }
+  body.page-myth nav.order li::before { box-shadow: none; }
+  @media (min-width: 720px) {
+    body.layout-article .wrap,
+    body.layout-timeline .timeline {
+      width: calc(100% - 28px);
+      margin-left: auto;
+      margin-right: auto;
+    }
+    body.page-science article.card {
+      max-width: 62%;
+      margin-left: 12px;
+      margin-right: auto;
+    }
+    body.page-myth.layout-article article.card {
+      max-width: 62%;
+      margin-left: auto;
+      margin-right: 12px;
+    }
+    body.layout-timeline .event::before { width: 12px; height: 12px; right: -5px; }
+    body.layout-timeline .event .card {
+      max-width: 62%;
+      margin-left: auto;
+      margin-right: 12px;
+    }
+    body.page-science article.card::after,
+    body.page-myth article.card::after {
+      width: 12px;
+      height: 12px;
+    }
+    body.page-science article.card::after { left: -12px; margin-left: -6px; }
+    body.page-myth article.card::after { right: -12px; margin-right: -6px; }
+  }
+
 </style>
 </head>
-<body>
+<body class="page-science layout-article">
 <canvas id="stars" aria-hidden="true"></canvas>
 <div class="dust" aria-hidden="true"></div>
 <div class="meridian" aria-hidden="true"></div>
-<div class="wrap">
+<div class="wrap bubble-column">
+<div class="spine spine-science" aria-hidden="true"></div>
+
   <a class="back" href="index.html">← Ancient timeline</a>
   <p class="brand">Ancient timeline</p>
   <h1>Lynne Isbell</h1>
-  <p class="lede">This page expands the timeline card. It is not the main spine. The gold line in the margin is only a family mark.</p>
+  <p class="lede">This page expands the timeline card. The ice line in the margin marks the science side.</p>
 
   <article class="card primary">
-    <p class="kicker">Her theory, not a date for Eden</p>
+    <p class="kicker">Snake predation and vision</p>
     <h2>The Fruit, the Tree, and the Serpent</h2>
     <p>Lynne Isbell, The Fruit, the Tree, and the Serpent, 2009, Harvard University Press. Peterson dates it 2011 in 12 Rules for Life and spells her Lynn.</p>
     <p>Thesis: snake predation over tens of millions of years selected for sharper vision, larger visual brains, and fast threat detection. She names the koniocellular path, the superior colliculus, the pulvinar, the parvocellular path, and the amygdala as part of an older fear system.</p>
-    <p>Fruit: her 2006 paper says ripe fruit or nectar was a requirement and a cause of the visual brain, but not the ultimate cause. Sugars, in her account, offset the metabolic cost. Her later essay says this was not the main cause but allowed the vision, and that it began before upright walking and tool-making.</p>
+    <p>Fruit: her 2006 paper says ripe fruit or nectar was a requirement and a cause of the visual brain. Sugars, in her account, offset the metabolic cost. Her later essay says fruit allowed the vision, and that it began before upright walking and tool-making.</p>
     <p>Later and separate: main brain-size increases after about 2 million years ago. Aiello and Wheeler, 1995, point to animal foods. Early bipedalism about 7 to 4 million years ago, still argued.</p>
-    <p>Support: a 2013 Davis news report. Macaque neurons responded faster and more strongly to snake pictures than to faces or shapes, in monkeys raised without seeing a real snake. The journal paper was not opened. This line is the university news story.</p>
+    <p>Support: a 2013 Davis news report. Macaque neurons responded faster and more strongly to snake pictures than to faces or shapes, in monkeys raised without seeing a real snake. This line is the university news story.</p>
     <p>Criticism: Wheeler, Bradley, and Kamilar, 2011, Journal of Human Evolution. No link between forward-facing eyes and a shared history with venomous snakes. Species less likely to be snake prey had more orbital convergence. Snake-spotting may be a side effect of stereoscopic vision.</p>
   </article>
 
   <article class="card interpretive">
     <p class="kicker">Labeled as his</p>
     <h2>Peterson's own addition</h2>
-    <p>Peterson's own addition, labeled as his: the snake gave us the vision of God. In 12 Rules for Life he names her, spells her Lynn, and dates the book 2011. The ripe-fruit sentence beside that is footnoted to other researchers, not to her.</p>
+    <p>Peterson's own addition, labeled as his: the snake gave us the vision of God. In 12 Rules for Life he names her, spells her Lynn, and dates the book 2011. The ripe-fruit sentence beside that is footnoted to other researchers.</p>
     <p class="links"><a href="https://www.youtube.com/watch?v=07Ys4tQPRis" target="_blank" rel="noopener noreferrer">Peterson discusses her book with interviewer Jordan Levine (Transliminal), in the talk other pages call Religion, Myth, Science, Truth. The YouTube title calls it a 2014 interview.</a></p>
   </article>
 
@@ -178,5 +388,31 @@
   drawStars();
   window.addEventListener("resize", () => { layoutStars(); drawStars(); });
 </script>
+
+<script>
+(function () {
+  function place() {
+    var host = document.querySelector(".timeline") || document.querySelector(".wrap");
+    if (!host) return;
+    var bubbles = host.querySelectorAll("article.event, article.card");
+    if (!bubbles.length) return;
+    var hostRect = host.getBoundingClientRect();
+    var first = bubbles[0].getBoundingClientRect();
+    var last = bubbles[bubbles.length - 1].getBoundingClientRect();
+    var top = (first.top - hostRect.top) + first.height / 2 - 24;
+    var end = (last.top - hostRect.top) + last.height / 2 + 24;
+    var spines = host.querySelectorAll(".spine");
+    for (var i = 0; i < spines.length; i++) {
+      spines[i].style.top = top + "px";
+      spines[i].style.height = Math.max(0, end - top) + "px";
+    }
+  }
+  place();
+  window.addEventListener("resize", place);
+  window.addEventListener("load", place);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(place);
+})();
+</script>
+
 </body>
 </html>
