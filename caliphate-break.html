@@ -111,23 +111,233 @@
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
   }
+
+  .spine { position: absolute; width: 2px; pointer-events: none; z-index: 3; }
+  .spine-science { left: 0; background: #b7d4df; }
+  .spine-myth { right: 0; background: #e0bc84; }
+  .meridian, .meridian-fill { display: none !important; }
+  body.layout-article .wrap {
+    position: relative;
+    max-width: 880px;
+    margin: 0 16px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  body.layout-article .wrap > :not(article):not(.spine):not(main) {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+  body.layout-article main { padding-left: 0; padding-right: 0; }
+  body.layout-article nav.order { margin-left: 20px; margin-right: 20px; }
+  body.layout-article article.card {
+    position: relative;
+    text-align: left;
+    overflow-wrap: break-word;
+    margin-bottom: 20px;
+    background: #101218;
+  }
+  body.layout-article article.card p,
+  body.layout-article article.card .body { text-align: left; }
+  body.page-science article.card,
+  body.page-myth article.card {
+    margin-left: 8px;
+    margin-right: 8px;
+    max-width: none;
+  }
+  body.page-science article.card { border: 1px solid var(--ice); }
+  body.page-myth article.card { border: 1px solid var(--gold); }
+  body.page-science .brand,
+  body.page-science article.card .kicker { color: var(--ice); }
+  body.page-myth .brand,
+  body.page-myth article.card .kicker,
+  body.page-myth .kicker,
+  body.page-myth .band-kicker,
+  body.page-myth .order-kicker { color: var(--gold); }
+  body.page-science article.card::before,
+  body.page-myth article.card::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    margin-top: -4px;
+  }
+  body.page-science article.card::before {
+    left: -12px;
+    border-width: 4px 12px 4px 0;
+    border-color: transparent var(--ice) transparent transparent;
+  }
+  body.page-myth article.card::before {
+    right: -12px;
+    border-width: 4px 0 4px 12px;
+    border-color: transparent transparent transparent var(--gold);
+  }
+  body.page-science article.card::after,
+  body.page-myth article.card::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    box-sizing: border-box;
+    border-radius: 50%;
+    background: var(--bg);
+    transform: translateY(-50%);
+    z-index: 4;
+  }
+  body.page-science article.card::after {
+    left: -8px;
+    margin-left: -4px;
+    border: 2px solid var(--ice);
+  }
+  body.page-myth article.card::after {
+    right: -8px;
+    margin-right: -4px;
+    border: 2px solid var(--gold);
+  }
+  body.page-both .brand {
+    background: linear-gradient(90deg, var(--ice), var(--gold));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  body.page-both article.card {
+    margin-left: 16px;
+    margin-right: 16px;
+    max-width: none;
+    border-top: 1px solid var(--edge);
+    border-bottom: 1px solid var(--edge);
+    border-left: 2px solid var(--ice);
+    border-right: 2px solid var(--gold);
+  }
+  body.layout-timeline .timeline {
+    position: relative;
+    max-width: 880px;
+    margin: 0 16px;
+    padding-top: 8px;
+  }
+  body.layout-timeline .event {
+    position: relative;
+    margin: 0 0 20px !important;
+    padding: 0 !important;
+  }
+  body.layout-timeline .event::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: auto !important;
+    right: -3px;
+    width: 8px;
+    height: 8px;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--gold);
+    box-shadow: none;
+    box-sizing: border-box;
+    z-index: 4;
+  }
+  body.layout-timeline .event .card {
+    position: relative;
+    margin-left: 8px;
+    margin-right: 8px;
+    max-width: none;
+    border: 1px solid var(--gold);
+    border-radius: 14px;
+    background: #101218;
+    text-align: left;
+    overflow-wrap: break-word;
+  }
+  body.layout-timeline .event .card::before,
+  body.layout-timeline .event .card::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border-style: solid;
+  }
+  body.layout-timeline .event .card::before {
+    right: -12px;
+    margin-top: -4px;
+    border-width: 4px 0 4px 12px;
+    border-color: transparent transparent transparent var(--gold);
+  }
+  body.layout-timeline .event .card::after {
+    right: -10px;
+    margin-top: -3px;
+    border-width: 3px 0 3px 10px;
+    border-color: transparent transparent transparent #101218;
+    z-index: 1;
+  }
+  body.layout-timeline .band-mark,
+  body.layout-timeline .reading,
+  body.layout-timeline .time-rule {
+    margin-left: 20px !important;
+    margin-right: 20px !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    max-width: none !important;
+  }
+  body.layout-timeline .band-kicker,
+  body.layout-timeline .kicker .when,
+  body.layout-timeline .time-rule span { color: var(--gold); }
+  body.layout-timeline .time-rule i { background: var(--gold); box-shadow: none; }
+  body.layout-timeline .event[data-tone="ice"] .card { border-color: var(--gold); }
+  body.layout-timeline .event[data-tone="ice"]::before { border-color: var(--gold); box-shadow: none; }
+  body.page-myth nav.order li::before { box-shadow: none; }
+  @media (min-width: 720px) {
+    body.layout-article .wrap,
+    body.layout-timeline .timeline {
+      width: calc(100% - 28px);
+      margin-left: auto;
+      margin-right: auto;
+    }
+    body.page-science article.card {
+      max-width: 62%;
+      margin-left: 12px;
+      margin-right: auto;
+    }
+    body.page-myth.layout-article article.card {
+      max-width: 62%;
+      margin-left: auto;
+      margin-right: 12px;
+    }
+    body.layout-timeline .event::before { width: 12px; height: 12px; right: -5px; }
+    body.layout-timeline .event .card {
+      max-width: 62%;
+      margin-left: auto;
+      margin-right: 12px;
+    }
+    body.page-science article.card::after,
+    body.page-myth article.card::after {
+      width: 12px;
+      height: 12px;
+    }
+    body.page-science article.card::after { left: -12px; margin-left: -6px; }
+    body.page-myth article.card::after { right: -12px; margin-right: -6px; }
+  }
+
 </style>
 </head>
-<body>
+<body class="page-science layout-article">
 <canvas id="stars" aria-hidden="true"></canvas>
 <div class="dust" aria-hidden="true"></div>
 <div class="meridian" aria-hidden="true"></div>
-<div class="wrap">
+<div class="wrap bubble-column">
+<div class="spine spine-science" aria-hidden="true"></div>
+
   <a class="back" href="index.html">← Ancient timeline</a>
   <p class="brand">Ancient timeline</p>
   <h1>The Battle of the Great Zab</h1>
-  <p class="lede">This page expands the timeline card. It is not the main spine. The gold line in the margin is only a family mark.</p>
+  <p class="lede">This page expands the timeline card. The ice line in the margin marks the science side.</p>
 
   <article class="card primary">
     <p class="kicker">750 CE</p>
     <h2>The break in the caliphate</h2>
     <p>In 750, at the Battle of the Great Zab, Marwan II was defeated. That defeat ends the unified Umayyad caliphate. Members of the Umayyad house were hunted down and killed, but one survivor, Abd al-Rahman, established himself as a ruler in Spain in 756, founding the Umayyads of Cordoba. The Abbasids take the east. An Umayyad line continues in al-Andalus.</p>
-    <p>This break is the hinge of the arc, not the whole of Islamic history, so later episodes can be added.</p>
+    <p>This break is the hinge of the arc, so later episodes can be added.</p>
   </article>
 
   <footer class="note">
@@ -162,5 +372,31 @@
   drawStars();
   window.addEventListener("resize", () => { layoutStars(); drawStars(); });
 </script>
+
+<script>
+(function () {
+  function place() {
+    var host = document.querySelector(".timeline") || document.querySelector(".wrap");
+    if (!host) return;
+    var bubbles = host.querySelectorAll("article.event, article.card");
+    if (!bubbles.length) return;
+    var hostRect = host.getBoundingClientRect();
+    var first = bubbles[0].getBoundingClientRect();
+    var last = bubbles[bubbles.length - 1].getBoundingClientRect();
+    var top = (first.top - hostRect.top) + first.height / 2 - 24;
+    var end = (last.top - hostRect.top) + last.height / 2 + 24;
+    var spines = host.querySelectorAll(".spine");
+    for (var i = 0; i < spines.length; i++) {
+      spines[i].style.top = top + "px";
+      spines[i].style.height = Math.max(0, end - top) + "px";
+    }
+  }
+  place();
+  window.addEventListener("resize", place);
+  window.addEventListener("load", place);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(place);
+})();
+</script>
+
 </body>
 </html>

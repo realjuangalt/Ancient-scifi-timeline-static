@@ -109,17 +109,227 @@
     max-width: 760px; margin: 0 auto; padding: 0 24px 72px;
     color: var(--dim); font-size: 14px;
   }
+
+  .spine { position: absolute; width: 2px; pointer-events: none; z-index: 3; }
+  .spine-science { left: 0; background: #b7d4df; }
+  .spine-myth { right: 0; background: #e0bc84; }
+  .meridian, .meridian-fill { display: none !important; }
+  body.layout-article .wrap {
+    position: relative;
+    max-width: 880px;
+    margin: 0 16px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  body.layout-article .wrap > :not(article):not(.spine):not(main) {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+  body.layout-article main { padding-left: 0; padding-right: 0; }
+  body.layout-article nav.order { margin-left: 20px; margin-right: 20px; }
+  body.layout-article article.card {
+    position: relative;
+    text-align: left;
+    overflow-wrap: break-word;
+    margin-bottom: 20px;
+    background: #101218;
+  }
+  body.layout-article article.card p,
+  body.layout-article article.card .body { text-align: left; }
+  body.page-science article.card,
+  body.page-myth article.card {
+    margin-left: 8px;
+    margin-right: 8px;
+    max-width: none;
+  }
+  body.page-science article.card { border: 1px solid var(--ice); }
+  body.page-myth article.card { border: 1px solid var(--gold); }
+  body.page-science .brand,
+  body.page-science article.card .kicker { color: var(--ice); }
+  body.page-myth .brand,
+  body.page-myth article.card .kicker,
+  body.page-myth .kicker,
+  body.page-myth .band-kicker,
+  body.page-myth .order-kicker { color: var(--gold); }
+  body.page-science article.card::before,
+  body.page-myth article.card::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    margin-top: -4px;
+  }
+  body.page-science article.card::before {
+    left: -12px;
+    border-width: 4px 12px 4px 0;
+    border-color: transparent var(--ice) transparent transparent;
+  }
+  body.page-myth article.card::before {
+    right: -12px;
+    border-width: 4px 0 4px 12px;
+    border-color: transparent transparent transparent var(--gold);
+  }
+  body.page-science article.card::after,
+  body.page-myth article.card::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    box-sizing: border-box;
+    border-radius: 50%;
+    background: var(--bg);
+    transform: translateY(-50%);
+    z-index: 4;
+  }
+  body.page-science article.card::after {
+    left: -8px;
+    margin-left: -4px;
+    border: 2px solid var(--ice);
+  }
+  body.page-myth article.card::after {
+    right: -8px;
+    margin-right: -4px;
+    border: 2px solid var(--gold);
+  }
+  body.page-both .brand {
+    background: linear-gradient(90deg, var(--ice), var(--gold));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  body.page-both article.card {
+    margin-left: 16px;
+    margin-right: 16px;
+    max-width: none;
+    border-top: 1px solid var(--edge);
+    border-bottom: 1px solid var(--edge);
+    border-left: 2px solid var(--ice);
+    border-right: 2px solid var(--gold);
+  }
+  body.layout-timeline .timeline {
+    position: relative;
+    max-width: 880px;
+    margin: 0 16px;
+    padding-top: 8px;
+  }
+  body.layout-timeline .event {
+    position: relative;
+    margin: 0 0 20px !important;
+    padding: 0 !important;
+  }
+  body.layout-timeline .event::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: auto !important;
+    right: -3px;
+    width: 8px;
+    height: 8px;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--gold);
+    box-shadow: none;
+    box-sizing: border-box;
+    z-index: 4;
+  }
+  body.layout-timeline .event .card {
+    position: relative;
+    margin-left: 8px;
+    margin-right: 8px;
+    max-width: none;
+    border: 1px solid var(--gold);
+    border-radius: 14px;
+    background: #101218;
+    text-align: left;
+    overflow-wrap: break-word;
+  }
+  body.layout-timeline .event .card::before,
+  body.layout-timeline .event .card::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border-style: solid;
+  }
+  body.layout-timeline .event .card::before {
+    right: -12px;
+    margin-top: -4px;
+    border-width: 4px 0 4px 12px;
+    border-color: transparent transparent transparent var(--gold);
+  }
+  body.layout-timeline .event .card::after {
+    right: -10px;
+    margin-top: -3px;
+    border-width: 3px 0 3px 10px;
+    border-color: transparent transparent transparent #101218;
+    z-index: 1;
+  }
+  body.layout-timeline .band-mark,
+  body.layout-timeline .reading,
+  body.layout-timeline .time-rule {
+    margin-left: 20px !important;
+    margin-right: 20px !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    max-width: none !important;
+  }
+  body.layout-timeline .band-kicker,
+  body.layout-timeline .kicker .when,
+  body.layout-timeline .time-rule span { color: var(--gold); }
+  body.layout-timeline .time-rule i { background: var(--gold); box-shadow: none; }
+  body.layout-timeline .event[data-tone="ice"] .card { border-color: var(--gold); }
+  body.layout-timeline .event[data-tone="ice"]::before { border-color: var(--gold); box-shadow: none; }
+  body.page-myth nav.order li::before { box-shadow: none; }
+  @media (min-width: 720px) {
+    body.layout-article .wrap,
+    body.layout-timeline .timeline {
+      width: calc(100% - 28px);
+      margin-left: auto;
+      margin-right: auto;
+    }
+    body.page-science article.card {
+      max-width: 62%;
+      margin-left: 12px;
+      margin-right: auto;
+    }
+    body.page-myth.layout-article article.card {
+      max-width: 62%;
+      margin-left: auto;
+      margin-right: 12px;
+    }
+    body.layout-timeline .event::before { width: 12px; height: 12px; right: -5px; }
+    body.layout-timeline .event .card {
+      max-width: 62%;
+      margin-left: auto;
+      margin-right: 12px;
+    }
+    body.page-science article.card::after,
+    body.page-myth article.card::after {
+      width: 12px;
+      height: 12px;
+    }
+    body.page-science article.card::after { left: -12px; margin-left: -6px; }
+    body.page-myth article.card::after { right: -12px; margin-right: -6px; }
+  }
+
 </style>
 </head>
-<body>
+<body class="page-myth layout-article">
 <canvas id="stars" aria-hidden="true"></canvas>
 <div class="dust" aria-hidden="true"></div>
-<div class="wrap">
+<div class="wrap bubble-column">
+<div class="spine spine-myth" aria-hidden="true"></div>
+
 <header class="top">
   <a class="back" href="index.html">← Ancient timeline</a>
   <p class="brand">Opening stories</p>
   <h1>Creation myths</h1>
-  <p class="lede">These are opening stories from different peoples, set side by side, not a ranking and not one story told many times.</p>
+  <p class="lede">These are opening stories from different peoples, set side by side.</p>
 </header>
 <main>
 
@@ -137,7 +347,7 @@
 <article class="card" id="enuma">
   <p class="kicker">Mesopotamian · Babylonian</p>
   <h2>Enuma Elish</h2>
-  <p>This is the Babylonian poem called, from its first words, Enuma Elish. The English here is from Leonard William King’s <em>The Seven Tablets of Creation</em> (1902) and, for the making of people, E. A. Wallis Budge’s <em>The Babylonian Legends of Creation</em> (1921). It is not presented below as the source of Genesis. Some modern writers have set the two beside each other. Neither text says that.</p>
+  <p>This is the Babylonian poem called, from its first words, Enuma Elish. The English here is from Leonard William King’s <em>The Seven Tablets of Creation</em> (1902) and, for the making of people, E. A. Wallis Budge’s <em>The Babylonian Legends of Creation</em> (1921). Some modern writers have set the poem beside Genesis. Neither text says the one is the source of the other.</p>
   <p>Before heaven is named, Apsu and Tiamat are the parents whose waters are mingled. Gods come into being. Apsu is disturbed by them. Later Tiamat makes monsters and exalts Kingu, giving him the Tablets of Destiny. Marduk is made champion. He kills Tiamat, stands on her body, and splits her. In King’s fourth tablet one half is set up as a covering for heaven. The lines opened here do not say, in those words, that the other half is the earth.</p>
   <p>The making of humans is not the same in the two editions opened. King’s 1902 sixth tablet is broken. In what survives, Marduk says he will take his own blood and fashion bone, and then the text fails. Budge’s 1921 sixth tablet continues: the gods name Kingu as the one who caused the strife, his blood is let, and Ea fashions mankind from that blood for the service of the gods.</p>
   <blockquote>When in the height heaven was not named, and the earth beneath did not yet bear a name, and the primeval Apsû, who begat them, and chaos, Tiamat, the mother of them both—their waters were mingled together.</blockquote>
@@ -150,8 +360,8 @@
 <article class="card" id="egypt">
   <p class="kicker">Egyptian · one text, not every cosmogony</p>
   <h2>Ra and Atum, and the water Nun</h2>
-  <p>The page opened is Book of the Dead chapter 17, in the English of James P. Allen on the University College London Digital Egypt site. It is a funerary chapter, not the Pyramid Texts, and not a single “Egyptian creation.” The speaker is identified with the creator. The glosses use the names Ra, Atum, and Nun. Nun is called father of the gods, and Ra is said to create his body. Atum is glossed as Atum in his sun-disk.</p>
-  <p>The same chapter’s commentary also mentions a high ground in Khemenu. That is a Hermopolitan place inside this chapter, not the Memphite theology of Ptah, which was not opened here. Heliopolis is the city usually tied to Atum and Ra; this page does not narrate a separate Heliopolitan myth from the Pyramid Texts.</p>
+  <p>The page opened is Book of the Dead chapter 17, in the English of James P. Allen on the University College London Digital Egypt site. It is a funerary chapter. The speaker is identified with the creator. The glosses use the names Ra, Atum, and Nun. Nun is called father of the gods, and Ra is said to create his body. Atum is glossed as Atum in his sun-disk.</p>
+  <p>The same chapter’s commentary also mentions a high ground in Khemenu. That is a Hermopolitan place inside this chapter. Heliopolis is the city usually tied to Atum and Ra.</p>
   <blockquote>Mine is all in existence alone in Nun, I am Ra in his rising, first in ruling what he made.</blockquote>
   <blockquote>I am the great god who comes to be of himself, there is water, there is Nun, father of the gods.</blockquote>
   <p class="src">Source: Book of the Dead, chapter 17, Allen’s translation as given by UCL. https://www.ucl.ac.uk/museums-static/digitalegypt/literature/religious/bd17.html</p>
@@ -183,7 +393,7 @@
   <p class="kicker">Hindu · Rig Veda</p>
   <h2>Nasadiya Sukta, hymn 10.129</h2>
   <p>Ralph T. H. Griffith’s 1896 translation titles Rig Veda 10.129 “Creation.” It does not tell a sequence of a god building a world. It asks what was there when there was neither the non-existent nor the existent, no air and no sky beyond. Death was not, nor anything immortal. Darkness covered an undiscriminated All, and warmth brought forth “that Unit.” Desire arises. Then the hymn turns to doubt. The gods come later than this world’s production. The last verse leaves open whether the overseer in highest heaven knows.</p>
-  <p>The image of Brahma seated on a lotus from Vishnu’s navel is not in this hymn. It is a later picture, on the next card.</p>
+  <p>The image of Brahma seated on a lotus from Vishnu’s navel is a later picture, on the next card.</p>
   <blockquote>Then was not non-existent nor existent: there was no realm of air, no sky beyond it.</blockquote>
   <blockquote>The Gods are later than this world's production. Who knows then whence it first came into being? … he verily knows it, or perhaps he knows not.</blockquote>
   <p class="src">Source: Rig Veda 10.129, tr. Ralph T. H. Griffith (1896), sacred-texts via the Internet Archive. https://web.archive.org/web/20180701000000id_/http://www.sacred-texts.com/hin/rigveda/rv10129.htm</p>
@@ -193,7 +403,7 @@
 <article class="card" id="brahma-lotus">
   <p class="kicker">Hindu · later, Puranic</p>
   <h2>Brahma from the lotus at Vishnu’s navel</h2>
-  <p>This is not the Nasadiya. W. J. Wilkins, in <em>Hindu Mythology, Vedic and Puranic</em> (the sacred-texts page dates the book 1900), says the Puranic accounts of Brahma’s creation differ so much that they cannot be pressed into one story. He then reports a particular image from the Mahabharata and some of the Puranas: Brahma issued from a lotus that sprang from Vishnu’s navel. That sentence is Wilkins’s report. A Purana chapter narrating the scene in full was not the page opened for the quotation.</p>
+  <p>W. J. Wilkins, in <em>Hindu Mythology, Vedic and Puranic</em> (the sacred-texts page dates the book 1900), says the Puranic accounts of Brahma’s creation differ so much that they cannot be pressed into one story. He then reports a particular image from the Mahabharata and some of the Puranas: Brahma issued from a lotus that sprang from Vishnu’s navel. That sentence is Wilkins’s report. A Purana chapter narrating the scene in full was not the page opened for the quotation.</p>
   <p>What was opened in Horace Hayman Wilson’s Vishnu Purana (1840), Book I, chapter IV, is a different scene. There Narayana, named Brahma, finds the universe void, enters the waters, takes the form of a boar, and lifts the earth. Wilson’s footnote on an earlier chapter mentions a kalpa in which Brahma was born from a lotus, but that note does not describe the navel.</p>
   <blockquote>In the Mahābhārata, and some of the Purānas, Brahmā is said to have issued from a lotus that sprang from the navel of Vishnu.</blockquote>
   <p class="src">Source of the quotation: W. J. Wilkins, Hindu Mythology, Vedic and Puranic (1900), Part II, chapter III, sacred-texts via the Internet Archive. https://web.archive.org/web/2018id_/http://www.sacred-texts.com/hin/hmvp/hmvp17.htm · Wilson, Vishnu Purana I.4, opened for the boar scene and not quoted as the navel story: https://web.archive.org/web/2018id_/http://www.sacred-texts.com/hin/vp/vp038.htm</p>
@@ -203,7 +413,7 @@
 <article class="card" id="pangu">
   <p class="kicker">Chinese</p>
   <h2>Pangu</h2>
-  <p>Pangu is not treated here as a figure from the earliest Chinese classics. The Wikipedia article opened says the earliest known writer to record the myth is believed to have been Xu Zheng, in the Three Kingdoms period, and its bibliography names his book <em>Sanwu Liji</em> (Three Five Historic Records), with the dates 220–265, as the first to mention Pangu, in a story called “Pangu Separates the Sky from the Earth.” The same article says his name was found in a tomb predating the Three Kingdoms period. Xu Zheng’s book itself was not opened, so no sentence is quoted from it.</p>
+  <p>The Wikipedia article opened says the earliest known writer to record the myth is believed to have been Xu Zheng, in the Three Kingdoms period, and its bibliography names his book <em>Sanwu Liji</em> (Three Five Historic Records), with the dates 220–265, as the first to mention Pangu, in a story called “Pangu Separates the Sky from the Earth.” The same article says his name was found in a tomb predating the Three Kingdoms period. Xu Zheng’s book itself was not opened, so no sentence is quoted from it.</p>
   <p>The short quotation is from a later English retelling, Edward T. C. Werner’s <em>Myths and Legends of China</em> (1922). Werner calls P’an Ku the figure who chiselled the universe out of Chaos, offspring of yin and yang, and says the task of making heaven and earth occupied eighteen thousand years. Details such as the hammer and the chisel belong to that retelling, not to a page of the <em>Sanwu Liji</em>.</p>
   <blockquote>The most conspicuous figure in Chinese cosmogony is P’an Ku. He it was who chiselled the universe out of Chaos.</blockquote>
   <p class="src">Earliest source as named, not quoted: Wikipedia, “Pangu,” Xu Zheng and the Sanwu Liji. https://en.wikipedia.org/wiki/Pangu · Quotation: Werner (1922), chapter III, sacred-texts via the Internet Archive. https://web.archive.org/web/2018id_/http://www.sacred-texts.com/cfu/mlc/mlc05.htm</p>
@@ -253,7 +463,7 @@
 <article class="card" id="maori">
   <p class="kicker">Māori · an added account</p>
   <h2>Rangi and Papa</h2>
-  <p>This is one Māori tradition, from George Grey’s <em>Polynesian Mythology</em>, the chapter “The Children of Heaven and Earth” (Standard Ebooks text of that book). It is not a general Polynesian story. Heaven and Earth, Rangi and Papa, lie together, and darkness rests on them because they have not been rent apart. Their children debate whether to kill them or separate them. Tūmatauenga says to slay them. Tānemahuta says to rend them, so heaven will stand far above and earth lie underfoot. Tāwhirimātea, father of winds and storms, will not consent. Several brothers try and fail. Tāne sets his head against his mother the earth and his feet against his father the sky and presses them apart. Light appears. People who had lain between the two are discovered. The chapter goes on to Tāwhirimātea’s storms against his brothers. That continuation is not quoted here.</p>
+  <p>This is one Māori tradition, from George Grey’s <em>Polynesian Mythology</em>, the chapter “The Children of Heaven and Earth” (Standard Ebooks text of that book). Heaven and Earth, Rangi and Papa, lie together, and darkness rests on them because they have not been rent apart. Their children debate whether to kill them or separate them. Tūmatauenga says to slay them. Tānemahuta says to rend them, so heaven will stand far above and earth lie underfoot. Tāwhirimātea, father of winds and storms, will not consent. Several brothers try and fail. Tāne sets his head against his mother the earth and his feet against his father the sky and presses them apart. Light appears. People who had lain between the two are discovered. The chapter goes on to Tāwhirimātea’s storms against his brothers. That continuation is not quoted here.</p>
   <blockquote>According to the traditions of our race, Rangi and Papa, or Heaven and Earth, were the source from which, in the beginning, all things originated.</blockquote>
   <blockquote>It was the fierce thrusting of Tāne which tore the heaven from the earth, so that they were rent apart, and darkness was made manifest, and so was the light.</blockquote>
   <p class="src">Source: George Grey, Polynesian Mythology, “The Children of Heaven and Earth,” Standard Ebooks. https://standardebooks.org/ebooks/george-grey/polynesian-mythology/text/chapter-1</p>
@@ -301,5 +511,31 @@
   window.addEventListener("resize", function () { size(); draw(); });
 })();
 </script>
+
+<script>
+(function () {
+  function place() {
+    var host = document.querySelector(".timeline") || document.querySelector(".wrap");
+    if (!host) return;
+    var bubbles = host.querySelectorAll("article.event, article.card");
+    if (!bubbles.length) return;
+    var hostRect = host.getBoundingClientRect();
+    var first = bubbles[0].getBoundingClientRect();
+    var last = bubbles[bubbles.length - 1].getBoundingClientRect();
+    var top = (first.top - hostRect.top) + first.height / 2 - 24;
+    var end = (last.top - hostRect.top) + last.height / 2 + 24;
+    var spines = host.querySelectorAll(".spine");
+    for (var i = 0; i < spines.length; i++) {
+      spines[i].style.top = top + "px";
+      spines[i].style.height = Math.max(0, end - top) + "px";
+    }
+  }
+  place();
+  window.addEventListener("resize", place);
+  window.addEventListener("load", place);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(place);
+})();
+</script>
+
 </body>
 </html>
