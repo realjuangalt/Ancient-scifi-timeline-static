@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lynne Isbell — an expansion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07080c;
+    --ink: #ebe4d6;
+    --muted: #b1a89b;
+    --dim: #7d756b;
+    --gold: #e0bc84;
+    --gold-dim: rgba(224, 188, 132, 0.45);
+    --ice: #b7d4df;
+    --ice-dim: rgba(183, 212, 223, 0.5);
+    --hinge: #e7d7b0;
+    --card: rgba(12, 14, 20, 0.82);
+    --edge: rgba(235, 228, 214, 0.14);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    color: var(--ink);
+    background: var(--bg);
+    font-family: Outfit, "Segoe UI", sans-serif;
+    font-weight: 300;
+    line-height: 1.55;
+    font-size: 17px;
+  }
+  canvas#stars {
+    position: fixed; inset: 0; width: 100%; height: 100%;
+    z-index: 0; pointer-events: none;
+  }
+  .dust {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(1200px 500px at 50% -10%, rgba(224, 188, 132, 0.08), transparent 60%),
+      radial-gradient(900px 700px at 80% 40%, rgba(80, 110, 140, 0.08), transparent 55%),
+      linear-gradient(180deg, transparent, rgba(0,0,0,0.35));
+  }
+  .meridian {
+    position: fixed;
+    top: 0; bottom: 0;
+    left: max(20px, calc(50vw - 430px));
+    width: 1px;
+    z-index: 0;
+    pointer-events: none;
+    background: linear-gradient(180deg, transparent, var(--gold-dim), var(--gold-dim), transparent);
+  }
+  .wrap { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; padding: 72px 24px 80px; }
+  a { color: var(--ice); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  a:hover { color: var(--gold); }
+  .back {
+    display: inline-block;
+    margin: 0 0 22px;
+    color: var(--ice);
+    text-decoration: none;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-size: 12px;
+  }
+  .back:hover { color: var(--gold); }
+  .brand {
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: var(--gold);
+    margin: 0 0 18px;
+  }
+  h1 {
+    font-family: Cinzel, Palatino, serif;
+    font-weight: 500;
+    font-size: clamp(34px, 6vw, 52px);
+    line-height: 1.12;
+    margin: 0 0 18px;
+    letter-spacing: 0.01em;
+  }
+  .lede { color: var(--muted); margin: 0 0 28px; max-width: 64ch; }
+  article.card {
+    background: var(--card);
+    border: 1px solid var(--edge);
+    border-radius: 14px;
+    padding: 22px 22px 18px;
+    margin: 0 0 18px;
+    backdrop-filter: blur(6px);
+  }
+  article.card.primary { border-color: rgba(183, 212, 223, 0.35); }
+  article.card.interpretive { border-color: rgba(224, 188, 132, 0.35); }
+  .kicker {
+    margin: 0 0 8px;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+  article.card.primary .kicker { color: var(--ice); }
+  article.card.interpretive .kicker { color: var(--gold); }
+  h2 {
+    font-family: Cinzel, Palatino, serif;
+    font-weight: 500;
+    font-size: 26px;
+    margin: 0 0 12px;
+    line-height: 1.2;
+  }
+  p { margin: 0 0 12px; color: var(--muted); }
+  p:last-child { margin-bottom: 0; }
+  .links { margin-top: 4px; }
+  .links a { display: inline-block; margin: 0 16px 8px 0; color: var(--gold); }
+  footer.note { margin-top: 28px; color: var(--dim); font-size: 14px; }
+  footer.note p.rights { margin-top: 18px; letter-spacing: 0.04em; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+<canvas id="stars" aria-hidden="true"></canvas>
+<div class="dust" aria-hidden="true"></div>
+<div class="meridian" aria-hidden="true"></div>
+<div class="wrap">
+  <a class="back" href="index.html">← Ancient timeline</a>
+  <p class="brand">Ancient timeline</p>
+  <h1>Lynne Isbell</h1>
+  <p class="lede">This page expands the timeline card. It is not the main spine. The gold line in the margin is only a family mark.</p>
+
+  <article class="card primary">
+    <p class="kicker">Her theory, not a date for Eden</p>
+    <h2>The Fruit, the Tree, and the Serpent</h2>
+    <p>Lynne Isbell, The Fruit, the Tree, and the Serpent, 2009, Harvard University Press. Peterson dates it 2011 in 12 Rules for Life and spells her Lynn.</p>
+    <p>Thesis: snake predation over tens of millions of years selected for sharper vision, larger visual brains, and fast threat detection. She names the koniocellular path, the superior colliculus, the pulvinar, the parvocellular path, and the amygdala as part of an older fear system.</p>
+    <p>Fruit: her 2006 paper says ripe fruit or nectar was a requirement and a cause of the visual brain, but not the ultimate cause. Sugars, in her account, offset the metabolic cost. Her later essay says this was not the main cause but allowed the vision, and that it began before upright walking and tool-making.</p>
+    <p>Later and separate: main brain-size increases after about 2 million years ago. Aiello and Wheeler, 1995, point to animal foods. Early bipedalism about 7 to 4 million years ago, still argued.</p>
+    <p>Support: a 2013 Davis news report. Macaque neurons responded faster and more strongly to snake pictures than to faces or shapes, in monkeys raised without seeing a real snake. The journal paper was not opened. This line is the university news story.</p>
+    <p>Criticism: Wheeler, Bradley, and Kamilar, 2011, Journal of Human Evolution. No link between forward-facing eyes and a shared history with venomous snakes. Species less likely to be snake prey had more orbital convergence. Snake-spotting may be a side effect of stereoscopic vision.</p>
+  </article>
+
+  <article class="card interpretive">
+    <p class="kicker">Labeled as his</p>
+    <h2>Peterson's own addition</h2>
+    <p>Peterson's own addition, labeled as his: the snake gave us the vision of God. In 12 Rules for Life he names her, spells her Lynn, and dates the book 2011. The ripe-fruit sentence beside that is footnoted to other researchers, not to her.</p>
+    <p class="links"><a href="https://www.youtube.com/watch?v=07Ys4tQPRis" target="_blank" rel="noopener noreferrer">Peterson discusses her book with interviewer Jordan Levine (Transliminal), in the talk other pages call Religion, Myth, Science, Truth. The YouTube title calls it a 2014 interview.</a></p>
+  </article>
+
+  <footer class="note">
+    <p><a href="index.html">Back to the timeline</a>.</p>
+    <p class="rights">All rights reserved to Studio Gulch SAS.</p>
+  </footer>
+</div>
+<script>
+  const canvas = document.getElementById("stars");
+  const ctx = canvas.getContext("2d");
+  let stars = [];
+  function layoutStars() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const n = Math.min(140, Math.floor(window.innerWidth * window.innerHeight / 14000));
+    stars = Array.from({ length: n }, () => ({
+      x: Math.random(), y: Math.random(),
+      r: Math.random() * 1.2 + 0.2,
+      a: Math.random() * 0.5 + 0.15
+    }));
+  }
+  function drawStars() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    stars.forEach((s) => {
+      ctx.fillStyle = "rgba(235, 228, 214," + s.a + ")";
+      ctx.beginPath();
+      ctx.arc(s.x * canvas.width, s.y * canvas.height, s.r, 0, Math.PI * 2);
+      ctx.fill();
+    });
+  }
+  layoutStars();
+  drawStars();
+  window.addEventListener("resize", () => { layoutStars(); drawStars(); });
+</script>
+</body>
+</html>

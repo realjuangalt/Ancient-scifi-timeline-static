@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Battle of the Great Zab — an expansion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07080c;
+    --ink: #ebe4d6;
+    --muted: #b1a89b;
+    --dim: #7d756b;
+    --gold: #e0bc84;
+    --gold-dim: rgba(224, 188, 132, 0.45);
+    --ice: #b7d4df;
+    --ice-dim: rgba(183, 212, 223, 0.5);
+    --hinge: #e7d7b0;
+    --card: rgba(12, 14, 20, 0.82);
+    --edge: rgba(235, 228, 214, 0.14);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    color: var(--ink);
+    background: var(--bg);
+    font-family: Outfit, "Segoe UI", sans-serif;
+    font-weight: 300;
+    line-height: 1.55;
+    font-size: 17px;
+  }
+  canvas#stars {
+    position: fixed; inset: 0; width: 100%; height: 100%;
+    z-index: 0; pointer-events: none;
+  }
+  .dust {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(1200px 500px at 50% -10%, rgba(224, 188, 132, 0.08), transparent 60%),
+      radial-gradient(900px 700px at 80% 40%, rgba(80, 110, 140, 0.08), transparent 55%),
+      linear-gradient(180deg, transparent, rgba(0,0,0,0.35));
+  }
+  .meridian {
+    position: fixed;
+    top: 0; bottom: 0;
+    left: max(20px, calc(50vw - 430px));
+    width: 1px;
+    z-index: 0;
+    pointer-events: none;
+    background: linear-gradient(180deg, transparent, var(--gold-dim), var(--gold-dim), transparent);
+  }
+  .wrap { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; padding: 72px 24px 80px; }
+  a { color: var(--ice); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  a:hover { color: var(--gold); }
+  .back {
+    display: inline-block;
+    margin: 0 0 22px;
+    color: var(--ice);
+    text-decoration: none;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-size: 12px;
+  }
+  .back:hover { color: var(--gold); }
+  .brand {
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: var(--gold);
+    margin: 0 0 18px;
+  }
+  h1 {
+    font-family: Cinzel, Palatino, serif;
+    font-weight: 500;
+    font-size: clamp(34px, 6vw, 52px);
+    line-height: 1.12;
+    margin: 0 0 18px;
+    letter-spacing: 0.01em;
+  }
+  .lede { color: var(--muted); margin: 0 0 28px; max-width: 64ch; }
+  article.card {
+    background: var(--card);
+    border: 1px solid var(--edge);
+    border-radius: 14px;
+    padding: 22px 22px 18px;
+    margin: 0 0 18px;
+    backdrop-filter: blur(6px);
+  }
+  article.card.primary { border-color: rgba(183, 212, 223, 0.35); }
+  .kicker {
+    margin: 0 0 8px;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ice);
+  }
+  h2 {
+    font-family: Cinzel, Palatino, serif;
+    font-weight: 500;
+    font-size: 26px;
+    margin: 0 0 12px;
+    line-height: 1.2;
+  }
+  p { margin: 0 0 12px; color: var(--muted); }
+  p:last-child { margin-bottom: 0; }
+  footer.note { margin-top: 28px; color: var(--dim); font-size: 14px; }
+  footer.note p.rights { margin-top: 18px; letter-spacing: 0.04em; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+<canvas id="stars" aria-hidden="true"></canvas>
+<div class="dust" aria-hidden="true"></div>
+<div class="meridian" aria-hidden="true"></div>
+<div class="wrap">
+  <a class="back" href="index.html">← Ancient timeline</a>
+  <p class="brand">Ancient timeline</p>
+  <h1>The Battle of the Great Zab</h1>
+  <p class="lede">This page expands the timeline card. It is not the main spine. The gold line in the margin is only a family mark.</p>
+
+  <article class="card primary">
+    <p class="kicker">750 CE</p>
+    <h2>The break in the caliphate</h2>
+    <p>In 750, at the Battle of the Great Zab, Marwan II was defeated. That defeat ends the unified Umayyad caliphate. Members of the Umayyad house were hunted down and killed, but one survivor, Abd al-Rahman, established himself as a ruler in Spain in 756, founding the Umayyads of Cordoba. The Abbasids take the east. An Umayyad line continues in al-Andalus.</p>
+    <p>This break is the hinge of the arc, not the whole of Islamic history, so later episodes can be added.</p>
+  </article>
+
+  <footer class="note">
+    <p><a href="index.html">Back to the timeline</a>.</p>
+    <p class="rights">All rights reserved to Studio Gulch SAS.</p>
+  </footer>
+</div>
+<script>
+  const canvas = document.getElementById("stars");
+  const ctx = canvas.getContext("2d");
+  let stars = [];
+  function layoutStars() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const n = Math.min(140, Math.floor(window.innerWidth * window.innerHeight / 14000));
+    stars = Array.from({ length: n }, () => ({
+      x: Math.random(), y: Math.random(),
+      r: Math.random() * 1.2 + 0.2,
+      a: Math.random() * 0.5 + 0.15
+    }));
+  }
+  function drawStars() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    stars.forEach((s) => {
+      ctx.fillStyle = "rgba(235, 228, 214," + s.a + ")";
+      ctx.beginPath();
+      ctx.arc(s.x * canvas.width, s.y * canvas.height, s.r, 0, Math.PI * 2);
+      ctx.fill();
+    });
+  }
+  layoutStars();
+  drawStars();
+  window.addEventListener("resize", () => { layoutStars(); drawStars(); });
+</script>
+</body>
+</html>

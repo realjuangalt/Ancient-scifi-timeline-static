@@ -211,12 +211,21 @@
   }
   .reading strong { color: var(--gold); font-weight: 500; }
   a.inline-link { color: var(--gold); }
-  a.card-link {
+  a.card-link,
+  a.card {
     display: block;
     color: inherit;
     text-decoration: none;
+    border: 1px solid var(--gold);
   }
-  a.card-link:hover { border-color: rgba(224, 188, 132, 0.45); }
+  .event[data-tone="ice"] a.card-link,
+  .event[data-tone="ice"] a.card {
+    border-color: var(--ice);
+  }
+  a.card-link:hover,
+  a.card:hover { border-color: var(--gold); }
+  .event[data-tone="ice"] a.card-link:hover,
+  .event[data-tone="ice"] a.card:hover { border-color: var(--ice); }
   .opposed {
     position: relative;
     display: grid;
@@ -309,21 +318,6 @@
     .split-myth .event::before { left: auto; right: -6px; }
     .split-science .event::before { left: -6px; }
   }
-  .isbell-summary { margin: 0; }
-  .isbell-link-slot { margin: 8px 0 0; }
-  .isbell-fold { margin: 0; }
-  .isbell-fold > summary {
-    cursor: pointer;
-    color: var(--gold);
-    font-size: 13px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 8px 0 0;
-  }
-  .isbell-fold > summary:focus-visible {
-    outline: 1px solid var(--gold);
-    outline-offset: 3px;
-  }
   .anunnaki-summary { margin: 0; }
   .anunnaki-fold { margin: 0; }
   .anunnaki-fold > summary {
@@ -376,16 +370,8 @@ const events = [
   { group:"lgm", track:"science", tone:"ice", era:"The deep freeze", when:"About 26,000 to 19,000 years ago", title:"The ice at its peak", text:"The Last Glacial Maximum. The ice is at its thickest, and the sea sits about 130 to 134 meters lower than today. Coasts that are underwater now were dry ground. Any shore-city of this age would not be on a modern map." },
   { group:"lgp", track:"myth", part:"The first age", tone:"myth", era:"The first age", when:"Before the flood", title:"The Garden and the fall", text:"They are placed in Eden and given one boundary. They cross it. Exile begins, and the way back to the garden is shut.",
     oppose: {
-      track:"science", tone:"ice", era:"Science track", when:"Her theory, not a date for Eden", title:"Lynne Isbell",
-      paras: [
-        "Lynne Isbell, The Fruit, the Tree, and the Serpent, 2009, Harvard University Press. Peterson dates it 2011 in 12 Rules for Life and spells her Lynn.",
-        "Thesis: snake predation over tens of millions of years selected for sharper vision, larger visual brains, and fast threat detection. She names the koniocellular path, the superior colliculus, the pulvinar, the parvocellular path, and the amygdala as part of an older fear system.",
-        "Fruit: her 2006 paper says ripe fruit or nectar was a requirement and a cause of the visual brain, but not the ultimate cause. Sugars, in her account, offset the metabolic cost. Her later essay says this was not the main cause but allowed the vision, and that it began before upright walking and tool-making.",
-        "Later and separate: main brain-size increases after about 2 million years ago. Aiello and Wheeler, 1995, point to animal foods. Early bipedalism about 7 to 4 million years ago, still argued.",
-        "Support: a 2013 Davis news report. Macaque neurons responded faster and more strongly to snake pictures than to faces or shapes, in monkeys raised without seeing a real snake. The journal paper was not opened. This line is the university news story.",
-        "Criticism: Wheeler, Bradley, and Kamilar, 2011, Journal of Human Evolution. No link between forward-facing eyes and a shared history with venomous snakes. Species less likely to be snake prey had more orbital convergence. Snake-spotting may be a side effect of stereoscopic vision.",
-        "Peterson's own addition, labeled as his: the snake gave us the vision of God. In 12 Rules for Life he names her, spells her Lynn, and dates the book 2011. The ripe-fruit sentence beside that is footnoted to other researchers, not to her."
-      ]
+      track:"science", tone:"ice", era:"Science track", when:"Her theory, not a date for Eden", title:"Lynne Isbell", hrefCard:"isbell.html",
+      text:"Lynne Isbell, The Fruit, the Tree, and the Serpent, 2009, Harvard University Press."
     },
     connector: "Connector to Eden"
   },
@@ -431,27 +417,18 @@ const events = [
   },
   { group:"holocene", track:"myth", tone:"hinge", era:"Plato's date", when:"About 9600 BCE", title:"Atlantis falls", text:"Nine thousand years before Solon, the power beyond the Pillars of Hercules is said to sink in a single day and night of earthquake and flood. On this page that date is the first mark of the Holocene: just after the Younger Dryas, not during the long cold and not at the glacial maximum. Egypt's own long history is left off this page, apart from the Hawara monument below. The next marks are that monument, then the people of the covenant." },
   { group:"holocene", track:"myth", tone:"myth", era:"Egyptian monument only", when:"About 1860 BCE", title:"Hawara", hrefCard:"hawara.html", text:"Amenemhat III, 12th Dynasty, mudbrick pyramid. Kept here at about 1860 BCE. It is Egyptian. It is not 9600 BCE, and it is not a retelling of Egyptian history." },
-  { group:"holocene", part:"The covenant", track:"myth", tone:"myth", era:"Traditional chronology", when:"About 2000 to 1800 BCE", title:"Abraham leaves Ur", text:"A man leaves the city of Ur. The promise is a land, a people, and a blessing that will run out to the nations. The line that reaches Christ is this one.", link:{ href:"jewish-saga.html", label:"The full saga" } },
-  { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"About 1446 BCE, the early date", title:"Moses and the Exodus", text:"Moses leads them out. The sea closes on the pursuit. They leave as the people of the covenant, with the wilderness in front of them. The later date, in the 1200s BCE, is the main alternative. This page uses the early one.", link:{ href:"jewish-saga.html", label:"The full saga" } },
-  { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"About 1400 BCE", title:"Joshua and Canaan", text:"They cross the river. Jericho falls. The land named to Abraham is taken and divided among the tribes.", link:{ href:"jewish-saga.html", label:"The full saga" } },
-  { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"The long middle", title:"The judges", text:"A rough, uneven age. Deliverers rise when the people are overrun, and the land keeps slipping back. There is still no king." },
-  { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"About 1050 BCE", title:"Saul", text:"The first king. He is anointed, he wins, and he fails. The kingdom is already looking past him." },
-  { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"About 1010 BCE", title:"David", text:"The shepherd king takes Jerusalem and holds the kingdom. The promise narrows again: a son of David, and his throne." },
-  { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"About 970 BCE, Temple about 960", title:"Solomon and the Temple", text:"The kingdom is at its widest. A house is built in Jerusalem for the name that had lived in a tent since Sinai." },
-  { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"About 930 BCE", title:"The kingdom splits", text:"After Solomon the kingdom tears. Israel in the north, Judah in the south. Two thrones, and one story coming apart." },
-  { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"722 BCE", title:"Assyria takes the north", text:"Assyria destroys the northern kingdom and deports Israel. Judah is what remains." },
+  { group:"holocene", part:"The covenant", track:"myth", tone:"myth", era:"Traditional chronology", when:"Traditional chronology", title:"The Torah", hrefCard:"jewish-saga.html", text:"This material is from the Torah, not the Quran. Abraham, about 2000 to 1800 BCE. The Jews become enslaved. Moses leads them to freedom. They wander for a long time. They found Israel. They fight over Israel for a long time." },
   { group:"holocene", track:"myth", tone:"ice", era:"Off the spine", when:"About 593 BCE", title:"Ezekiel's wheels", text:"A religious vision. Reading it as a spacecraft is modern and retrospective.", link:{ href:"aliens.html", label:"The alien timeline" } },
-  { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"586 BCE", title:"The Babylonian exile", text:"Babylon burns the Temple Solomon built and carries Judah away. Jerusalem is empty, and the line of David looks finished." },
-  { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"538 BCE", title:"The return under Cyrus", text:"Cyrus of Persia lets the exiles go home. They come back to a ruined city, not to the kingdom they lost." },
-  { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"About 516 BCE", title:"The Second Temple", text:"A new house rises on the old ground, poorer than Solomon's. It is the Temple still standing, rebuilt again in a later age, when Rome arrives." },
-  { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"167 BCE", title:"The Maccabean revolt", text:"When the Temple is desecrated, a revolt takes it back. For a short while Judah rules itself. It does not last." },
-  { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"63 BCE", title:"Rome", text:"Pompey takes Jerusalem. The land of the promise is under Rome, and the throne of David is not on it." },
   { group:"holocene", part:"The Christ", track:"myth", tone:"christ", era:"The end of the age", when:"About 4 BCE", title:"The birth", text:"Jesus is born in Bethlehem, in the line this whole second half of the page has been following, while a Roman census is in the land." },
   { group:"holocene", track:"myth", tone:"christ", era:"The end of the age", when:"About 27 to 30 CE", title:"The ministry", text:"He announces the kingdom, heals, and teaches. The covenant, the law, and the Temple are all reread around him." },
   { group:"holocene", track:"myth", tone:"christ", era:"The end of the age", when:"About 30 CE", title:"The cross", text:"He is executed outside Jerusalem under Roman authority. The Temple is still standing. The people who followed him scatter." },
   { group:"holocene", track:"myth", tone:"christ", era:"The end of the age", when:"The third day", title:"The resurrection", text:"The tomb is empty, and the ones who ran come back saying they have seen him. On the dense spine, this is the last milestone. The page continues below only in touchpoints. Everything above is what this universe says that morning is answering." },
   { group:"after", track:"myth", part:"After the spine", tone:"after", era:"After Christ", when:"476 CE", title:"The fall of Rome", text:"The western empire comes apart. The usual date for the end of Rome in the west is 476." },
+  { group:"after", track:"science", tone:"ice", era:"Islam", when:"Before the community", title:"Before Muhammad", text:"The religious world of Arabia he was born into. The community begins with him. Muslims later read earlier prophets as part of the same story. This is the arc, not every dynasty or school." },
   { group:"after", track:"myth", tone:"after", era:"After Christ", when:"The medieval centuries", title:"The Dark Ages and the medieval world", text:"A long middle between Rome and the modern world, often called the Dark Ages, and better read as the medieval centuries. Kingdoms, the church, and the story above them still organize life." },
+  { group:"after", track:"science", tone:"myth", era:"Islam", when:"750 CE", title:"The Battle of the Great Zab", hrefCard:"caliphate-break.html", text:"Marwan II is defeated. The unified Umayyad caliphate ends. The Abbasids take the east, and an Umayyad line continues in al-Andalus." },
+  { group:"after", track:"science", tone:"ice", era:"Islam", when:"762 CE", title:"The golden age of Islam", text:"The Abbasid flowering. Al-Mansur founded Baghdad in 762." },
+  { group:"after", track:"science", tone:"ice", era:"Side quest", when:"1258 CE", title:"Mongol side quest", text:"In 1258 Baghdad was surrounded by Hulegu, a grandson of Genghis Khan. The city was taken and sacked. The sack does serious damage to the institutions of the golden age." },
   { group:"after", track:"myth", tone:"after", era:"After Christ", when:"17th and 18th centuries", title:"The Enlightenment", text:"Reason, experiment, and argument about authority move to the center of European thought." },
   { group:"after", track:"myth", tone:"after", era:"After Christ", when:"Late 18th into the 19th century", title:"The Industrial Revolution", text:"Machines, coal, and factories remake work and the city. The pace of ordinary life changes." },
   { group:"after", track:"myth", tone:"ice", era:"Off the spine", when:"1896 to 1897", title:"Mystery airships", text:"United States mystery airship wave.", link:{ href:"aliens.html", label:"The alien timeline" } },
@@ -495,20 +472,6 @@ function sideName(track) {
   return track === "science" ? "right" : "left";
 }
 
-function isbellTalkLink(place) {
-  const p = document.createElement("p");
-  p.className = "body isbell-link-slot";
-  p.dataset.place = place;
-  const a = document.createElement("a");
-  a.className = "inline-link";
-  a.href = "https://www.youtube.com/watch?v=07Ys4tQPRis";
-  a.target = "_blank";
-  a.rel = "noopener noreferrer";
-  a.textContent = "Peterson discusses her book with interviewer Jordan Levine (Transliminal), in the talk other pages call Religion, Myth, Science, Truth. The YouTube title calls it a 2014 interview.";
-  p.appendChild(a);
-  return p;
-}
-
 function fillCard(card, ev) {
   const kicker = document.createElement("p");
   kicker.className = "kicker";
@@ -531,28 +494,7 @@ function fillCard(card, ev) {
     body.textContent = t;
     parent.appendChild(body);
   }
-  if (ev.title === "Lynne Isbell") {
-    card.classList.add("isbell-card");
-    const first = paras[0] || "";
-    const cut = first.indexOf(". ");
-    const shortText = cut === -1 ? first : first.slice(0, cut + 1);
-    const short = document.createElement("p");
-    short.className = "body isbell-summary";
-    short.textContent = shortText;
-    card.appendChild(short);
-    card.appendChild(document.createComment(" link slot: summary "));
-    card.appendChild(isbellTalkLink("summary"));
-    const details = document.createElement("details");
-    details.className = "isbell-fold";
-    const summary = document.createElement("summary");
-    summary.textContent = "Full analysis";
-    summary.setAttribute("aria-label", ev.title + ". " + shortText + " Full analysis");
-    details.appendChild(summary);
-    paras.forEach((t) => addBody(details, t));
-    details.appendChild(document.createComment(" link slot: analysis "));
-    details.appendChild(isbellTalkLink("analysis"));
-    card.appendChild(details);
-  } else if (ev.title === "The Anunnaki") {
+  if (ev.title === "The Anunnaki") {
     card.classList.add("anunnaki-card");
     const first = paras[0] || "";
     let cut = first.indexOf(". ");
