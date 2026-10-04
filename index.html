@@ -309,6 +309,35 @@
     .split-myth .event::before { left: auto; right: -6px; }
     .split-science .event::before { left: -6px; }
   }
+  .isbell-summary { margin: 0; }
+  .isbell-link-slot { margin: 8px 0 0; }
+  .isbell-fold { margin: 0; }
+  .isbell-fold > summary {
+    cursor: pointer;
+    color: var(--gold);
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 8px 0 0;
+  }
+  .isbell-fold > summary:focus-visible {
+    outline: 1px solid var(--gold);
+    outline-offset: 3px;
+  }
+  .anunnaki-summary { margin: 0; }
+  .anunnaki-fold { margin: 0; }
+  .anunnaki-fold > summary {
+    cursor: pointer;
+    color: var(--gold);
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 8px 0 0;
+  }
+  .anunnaki-fold > summary:focus-visible {
+    outline: 1px solid var(--gold);
+    outline-offset: 3px;
+  }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
   }
@@ -337,7 +366,7 @@
     </div>
   </main>
   <footer class="note">
-    <p>The Quaternary ice age began about 2.6 million years ago and has not ended. We are in a warm pause inside it, the Holocene, which starts about 11,700 years ago. Plato's Atlantis date, nine thousand years before Solon, is about 9600 BCE, just after the Younger Dryas ends, not during the Last Glacial Maximum. The glacial dates are geology. The years from Abraham to Christ are traditional, and several are disputed by centuries. Egypt's own history is left off this page, except the Hawara monument, the slavery, and the Exodus. Creation is not given a calendar year. Brackets are readings, reports, or someone else's theory. After the resurrection the page only marks touchpoints.</p>
+    <p>The Quaternary ice age began about 2.6 million years ago and has not ended. We are in a warm pause inside it, the Holocene, which starts about 11,700 years ago. Plato's Atlantis date, nine thousand years before Solon, is about 9600 BCE, just after the Younger Dryas ends, not during the Last Glacial Maximum. The glacial dates are geology. The years from Abraham to Christ are traditional, and several are disputed by centuries. Egypt's own history is left off this page, except the Hawara monument and the Exodus. Creation is not given a calendar year. Brackets are readings, reports, or someone else's theory. After the resurrection the page only marks touchpoints.</p>
     <p class="rights">All rights reserved to Studio Gulch SAS.</p>
 </footer>
 </div>
@@ -378,24 +407,7 @@ const events = [
       "Atrahasis is a tablet of about 1650 BCE. Ziusudra and Utnapishtim are the other two Mesopotamian tellings.",
       "In this universe the flood sits before Atlantis, still inside the glacial age, and it is not given a year of its own."
     ],
-    link:{ href:"flood-myths.html", label:"The flood stories" },
-    bracket: {
-      kicker: "Other flood stories",
-      note: "Same family of stories, off the spine. Uncalibrated, except the deduced placements named here. Only Plato's Atlantis flood self-dates near 9600 BCE. That card is not moved.",
-      items: [
-        { title:"Deucalion", when:"Deduced placement", text:"A Greek flood, mapped here to the same Mesopotamian memory, not to Atlantis and not to 9600 BCE." },
-        { title:"Ymir", when:"Uncalibrated", text:"Norse: Ymir's blood is a creation flood, not Noah's flood." },
-        { title:"Manu", when:"Uncalibrated", text:"A cosmic-age story. The earliest version is a fish and a ship. The billion-year pralaya is later. This page does not date it." },
-        { title:"Yu", when:"Deduced placement", text:"River drainage, traditional late 3rd millennium BCE. A deduced placement, not a flood year in the text." },
-        { title:"Maya and Aztec", when:"Uncalibrated", text:"Repeating world-age endings, not one historical flood." },
-        { title:"Hopi", when:"Uncalibrated", text:"Climbing out of a flooded underworld on plants." },
-        { title:"Shaped by later collectors", when:"Not independent ancient dates", text:"Choctaw, the later Hawaiian houseboat, Maori, and Yoruba are flagged by collectors as missionary-shaped or Muslim-shaped. They are not treated here as independent ancient dates." },
-        { title:"Older Hawaiian report", when:"Uncalibrated", text:"Two people on Mauna Kea, no ship. Not merged with the houseboat." },
-        { title:"Yima", when:"Uncalibrated", text:"Iranian: a sealed enclosure against winter, not an ark." },
-        { title:"Cessair", when:"Not an independent date", text:"Irish: Noah's flood on purpose, said to arrive forty days early." },
-        { title:"What is not dated", when:"Uncalibrated", text:"Every other flood here is uncalibrated. The deduced placements are Deucalion, mapped to the Mesopotamian memory, and Yu. Only Plato's Atlantis flood self-dates near 9600 BCE." }
-      ]
-    }
+    link:{ href:"flood-myths-more.html", label:"The other flood stories" },
   },
   { group:"lgp", track:"myth", tone:"myth", era:"The first age", when:"After the waters fall", title:"After the flood", text:"Noah's sons, Shem, Ham, and Japheth, repeople the earth. One language gathers at Babel, the tower is stopped, and the scattering begins. The nations start here, still before the date Plato later gives Atlantis.",
     oppose: {
@@ -411,46 +423,24 @@ const events = [
     },
     connector: "Not the Watchers"
   },
-  { group:"yd", track:"science", tone:"ice", era:"The last snap of cold", when:"About 12,900 to 11,700 years ago", title:"The Younger Dryas", text:"Roughly 10,900 to 9,700 BCE. A short, sharp return to cold at the very end of the glacial period, after the world had already begun to warm. This is not the deep ice of the maximum. It is the last snap. The next mark, Atlantis, is placed just after this band ends.",
-    middle: {
-      track:"theory", tone:"hinge", era:"Theory bracket", when:"Not this page's date for the ice", title:"Graham Hancock",
-      paras: [
-        "His theory, not a geological date. Two impacts: one about 12,800 years ago, and a second about 9600 BCE. He aligns 9600 BCE with Plato and with Göbekli Tepe's monumental phase, about 9600 to 8200 BCE.",
-        "On Joe Rogan Experience #872, with Randall Carlson, November 16, 2016, an automated transcript has him describe the Taurid stream as debris of a giant comet that entered the inner solar system about 20,000 years ago, broke into fragments, and still crosses Earth's path. Earth passes through that stream twice a year. He says pieces hit the North American ice cap 12,800 years ago, and again about 11,600 years ago. He ties the Tunguska explosion of June 30, 1908, to the June crossing. No official transcript. The transcript does not say the comet stayed visible for a long time. That line is Martin Sweatman's, not Hancock's.",
-        "He tells the same comet story on #725, #1897, and #2051. On #1897 the automated transcript dates the breakup to 12,800 years ago, which disagrees with the 20,000-year entry on #872.",
-        "The scientific counter sits in this same bracket: no crater, no impact glass, no unambiguous debris field, and 9600 BCE lines up suspiciously with Plato."
-      ],
-      links: [
-        { href:"https://www.jrepodcast.com/episode/joe-rogan-experience-872-graham-hancock-randall-carlson/", label:"JRE #872 page" },
-        { href:"https://www.youtube.com/watch?v=0H5LCLljJho", label:"YouTube" }
-      ]
-    }
-  },
-  { group:"holocene", track:"myth", tone:"hinge", era:"Plato's date", when:"About 9600 BCE", title:"Atlantis falls", text:"Nine thousand years before Solon, the power beyond the Pillars of Hercules is said to sink in a single day and night of earthquake and flood. On this page that date is the first mark of the Holocene: just after the Younger Dryas, not during the long cold and not at the glacial maximum. Egypt's own long history is left off this page, apart from the Hawara monument below. The next marks are that monument, then the people of the covenant." },
-  { group:"holocene", track:"myth", tone:"myth", era:"Egyptian monument only", when:"About 1860 BCE", title:"Hawara", text:"Amenemhat III, 12th Dynasty, mudbrick pyramid. His first pyramid, at Dahshur, was unused. Kept here at about 1860 BCE. It is Egyptian. It is not 9600 BCE, and it is not a retelling of Egyptian history.",
+  { group:"yd", track:"science", tone:"ice", era:"The last snap of cold", when:"About 12,900 to 11,700 years ago", title:"The Younger Dryas", hrefCard:"younger-dryas.html",
     paras: [
-      "Herodotus, about the fifth century BCE, described a stone labyrinth a little beyond Lake Moeris: twelve courts, three thousand chambers. He saw the upper ones only. He credited twelve kings, not Amenemhat. Strabo names the builder Imandes. Pliny says a labyrinth stood in the Heracleopolis nome.",
-      "Petrie in 1888 found a limestone chip bed about 1,000 by 800 feet south of the pyramid and said the plan was lost to Roman quarrying. He did not find an intact roof.",
-      "The muon scan people cite is ScanPyramids inside Khufu at Giza, the 2017 void above the Grand Gallery. No peer-reviewed Hawara muon scan was found. The researcher named for one is a waste-management scholar with no Hawara record.",
-      "A 2010 survey found shallow anomalies whose layout matches Herodotus, and reported no metal and no void. A 2015 radar survey was about groundwater, to about 20 metres.",
-      "The room-sized metal object called Dippy, about 40 metres long, comes from a 2025 newsletter retelling a private 2015 briefing. The writer was not in the room, the images were under a non-disclosure agreement, and no original report was found. The alien craft and the stargate are that same newsletter's speculation."
+      "Roughly 10,900 to 9,700 BCE. A short, sharp return to cold at the very end of the glacial period, after the world had already begun to warm. This is not the deep ice of the maximum. It is the last snap. The next mark, Atlantis, is placed just after this band ends.",
+      "Graham Hancock's comet reading is a theory here, not the date of the ice."
     ]
   },
-  { group:"holocene", part:"The covenant", track:"myth", tone:"myth", era:"Traditional chronology", when:"Early 2nd millennium BCE", title:"Abraham leaves Ur", text:"A man leaves the city of Ur. The promise is a land, a people, and a blessing that will run out to the nations. The line that reaches Christ is this one." },
-  { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"After the call", title:"The covenant", text:"The promise is cut and the household is marked off from the nations that scattered after Babel. From here the story is no longer about the whole world at once. It follows one family." },
-  { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"The next generation", title:"Isaac", text:"The son of the promise, born against the odds. The covenant passes to him, not to every child of Abraham." },
-  { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"The next generation", title:"Jacob and the twelve tribes", text:"Jacob, later called Israel, fathers the twelve. The people who will go down into Egypt, and come back out, are all in that family." },
-  { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"The centuries in Egypt", title:"Slavery in Egypt", text:"The family becomes a nation inside Egypt, and then a nation enslaved. This is the Egypt of the oppression, not a history of the pharaohs." },
-  { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"About 1446 BCE, the early date", title:"Moses and the Exodus", text:"Moses leads them out. The sea closes on the pursuit. They leave as the people of the covenant, with the wilderness in front of them. The later date, in the 1200s BCE, is the main alternative. This page uses the early one." },
-  { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"The same season", title:"The Law at Sinai", text:"The mountain smokes. The law is given: who they are, and how a people taken out of Egypt is to live." },
-  { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"Forty years", title:"The wilderness", text:"The generation that would not enter the land dies on the way. Their children grow up facing the Jordan." },
-  { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"About 1400 BCE", title:"Joshua and Canaan", text:"They cross the river. Jericho falls. The land named to Abraham is taken and divided among the tribes." },
+  { group:"holocene", track:"myth", tone:"hinge", era:"Plato's date", when:"About 9600 BCE", title:"Atlantis falls", text:"Nine thousand years before Solon, the power beyond the Pillars of Hercules is said to sink in a single day and night of earthquake and flood. On this page that date is the first mark of the Holocene: just after the Younger Dryas, not during the long cold and not at the glacial maximum. Egypt's own long history is left off this page, apart from the Hawara monument below. The next marks are that monument, then the people of the covenant." },
+  { group:"holocene", track:"myth", tone:"myth", era:"Egyptian monument only", when:"About 1860 BCE", title:"Hawara", hrefCard:"hawara.html", text:"Amenemhat III, 12th Dynasty, mudbrick pyramid. Kept here at about 1860 BCE. It is Egyptian. It is not 9600 BCE, and it is not a retelling of Egyptian history." },
+  { group:"holocene", part:"The covenant", track:"myth", tone:"myth", era:"Traditional chronology", when:"About 2000 to 1800 BCE", title:"Abraham leaves Ur", text:"A man leaves the city of Ur. The promise is a land, a people, and a blessing that will run out to the nations. The line that reaches Christ is this one.", link:{ href:"jewish-saga.html", label:"The full saga" } },
+  { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"About 1446 BCE, the early date", title:"Moses and the Exodus", text:"Moses leads them out. The sea closes on the pursuit. They leave as the people of the covenant, with the wilderness in front of them. The later date, in the 1200s BCE, is the main alternative. This page uses the early one.", link:{ href:"jewish-saga.html", label:"The full saga" } },
+  { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"About 1400 BCE", title:"Joshua and Canaan", text:"They cross the river. Jericho falls. The land named to Abraham is taken and divided among the tribes.", link:{ href:"jewish-saga.html", label:"The full saga" } },
   { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"The long middle", title:"The judges", text:"A rough, uneven age. Deliverers rise when the people are overrun, and the land keeps slipping back. There is still no king." },
   { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"About 1050 BCE", title:"Saul", text:"The first king. He is anointed, he wins, and he fails. The kingdom is already looking past him." },
   { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"About 1010 BCE", title:"David", text:"The shepherd king takes Jerusalem and holds the kingdom. The promise narrows again: a son of David, and his throne." },
   { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"About 970 BCE, Temple about 960", title:"Solomon and the Temple", text:"The kingdom is at its widest. A house is built in Jerusalem for the name that had lived in a tent since Sinai." },
   { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"About 930 BCE", title:"The kingdom splits", text:"After Solomon the kingdom tears. Israel in the north, Judah in the south. Two thrones, and one story coming apart." },
   { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"722 BCE", title:"Assyria takes the north", text:"Assyria destroys the northern kingdom and deports Israel. Judah is what remains." },
+  { group:"holocene", track:"myth", tone:"ice", era:"Off the spine", when:"About 593 BCE", title:"Ezekiel's wheels", text:"A religious vision. Reading it as a spacecraft is modern and retrospective.", link:{ href:"aliens.html", label:"The alien timeline" } },
   { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"586 BCE", title:"The Babylonian exile", text:"Babylon burns the Temple Solomon built and carries Judah away. Jerusalem is empty, and the line of David looks finished." },
   { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"538 BCE", title:"The return under Cyrus", text:"Cyrus of Persia lets the exiles go home. They come back to a ruined city, not to the kingdom they lost." },
   { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"About 516 BCE", title:"The Second Temple", text:"A new house rises on the old ground, poorer than Solomon's. It is the Temple still standing, rebuilt again in a later age, when Rome arrives." },
@@ -464,56 +454,12 @@ const events = [
   { group:"after", track:"myth", tone:"after", era:"After Christ", when:"The medieval centuries", title:"The Dark Ages and the medieval world", text:"A long middle between Rome and the modern world, often called the Dark Ages, and better read as the medieval centuries. Kingdoms, the church, and the story above them still organize life." },
   { group:"after", track:"myth", tone:"after", era:"After Christ", when:"17th and 18th centuries", title:"The Enlightenment", text:"Reason, experiment, and argument about authority move to the center of European thought." },
   { group:"after", track:"myth", tone:"after", era:"After Christ", when:"Late 18th into the 19th century", title:"The Industrial Revolution", text:"Machines, coal, and factories remake work and the city. The pace of ordinary life changes." },
+  { group:"after", track:"myth", tone:"ice", era:"Off the spine", when:"1896 to 1897", title:"Mystery airships", text:"United States mystery airship wave.", link:{ href:"aliens.html", label:"The alien timeline" } },
   { group:"after", track:"myth", tone:"after", era:"After Christ", when:"1914 to 1918", title:"World War I", text:"A continental war pulls down old empires and leaves the century already broken." },
   { group:"after", track:"myth", tone:"after", era:"After Christ", when:"1939 to 1945", title:"World War II", text:"A second and wider war. The map that follows is the one the present still recognizes." },
+  { group:"after", track:"myth", tone:"after", era:"After Christ", when:"June 24, 1947 to September 30, 2026", title:"Reports of craft and beings", text:"Reports of craft and beings, from the airship wave through the recent hearings. The types and the individual sightings are on the alien timeline.", link:{ href:"aliens.html", label:"The alien timeline" } },
   { group:"after", track:"myth", tone:"after", era:"After Christ", when:"Late 20th century to now", title:"The digital age", text:"Computation, networks, and a planet that can see itself in real time. This is the last touchpoint. The line stops in the age we are living in." }
 ];
-
-const sightingBracket = {
-  kicker: "Sighting bracket",
-  note: "Beside the last two thousand years. Not on the ancient spine. Reports and official replies, not confirmed visits.",
-  items: [
-    { title:"Ezekiel's wheels", when:"About 593 BCE", text:"A religious vision. Reading it as a spacecraft is modern and retrospective." },
-    { title:"Mystery airships", when:"1896 to 1897", text:"United States mystery airship wave." },
-    { title:"Kenneth Arnold", when:"June 24, 1947", text:"Near Mount Rainier. This is the flying-saucer sighting, not Roswell." },
-    { title:"Roswell", when:"July 1947", text:"Separate from Arnold. The base announced a flying disc and the next day called it a balloon. Later Air Force reports said Mogul balloon trains, and that body stories match crash-test dummies from other years." },
-    { title:"Washington, D.C.", when:"July 1952", text:"Radar and some lights. The public line was temperature inversion." },
-    { title:"Betty and Barney Hill", when:"September 1961", text:"New Hampshire. The template abduction. No government confirmation." },
-    { title:"Jimmy Carter", when:"January 6, 1969", text:"In Leary, Georgia. 1977 is when the Washington Post wrote about it, not the sighting." },
-    { title:"Tehran", when:"September 1976", text:"Iranian jets scrambled. No public confirmation of an alien craft." },
-    { title:"Rendlesham Forest", when:"December 1980", text:"Lights reported by U.S. airmen. The British ministry said no defence threat. A lighthouse is the prosaic account of some of the lights." },
-    { title:"Phoenix Lights", when:"March 13, 1997", text:"The Guard later said A-10 flares explain the videotaped string, not every early report." },
-    { title:"Nimitz tic tac", when:"November 14, 2004", text:"Fravor and Dietrich. The Navy later said the videos are real and unidentified, which is not confirmation of an alien craft." },
-    { title:"O'Hare", when:"November 7, 2006", text:"United employees reported a disc. The FAA said radar showed nothing unusual." },
-    { title:"New York Times", when:"December 16, 2017", text:"On the Pentagon program. The Pentagon later said Luis Elizondo had no assigned role on it. He disputes that." },
-    { title:"Navy videos", when:"April 27, 2020", text:"FLIR, Gimbal, and GoFast, called authentic and unexplained, not confirmed alien craft." },
-    { title:"David Grusch", when:"July 26, 2023", text:"House hearing. He alleged crash retrievals and non-human biologics from what others told him. He said he had not seen the craft or the bodies. The Defense Department said investigators found nothing verifiable." },
-    { title:"Joe Rogan Experience 2560", when:"September 30, 2026", text:"David Grusch, Joe Rogan Experience number 2560. He says greys come in three or four sizes, taller ones running the show, and at least two reptilian kinds. Bodies he says he saw on video were pale, long-haired, and human-looking, not greys. No full transcript was found.",
-      links: [{ href:"https://www.youtube.com/watch?v=dYPXINFcvmI", label:"YouTube" }]
-    }
-  ]
-};
-
-
-const alienBracket = {
-  kicker: "Alien types",
-  note: "Beside the sighting column. Names from stories, not confirmed species.",
-  items: [
-    { title:"Alien types", when:"Not confirmed species", text:"Short lines only.",
-      lines: [
-        "Greys.",
-        "Tall greys.",
-        "Little greys.",
-        "Tall whites.",
-        "Nordics.",
-        "Reptilians, two kinds as David Grusch described them on the show: a large gorilla-looking then scaly kind, and a more humanoid kind. He said he never saw one himself.",
-        "Mantis beings.",
-        "Hybrids.",
-        "Little green men."
-      ]
-    }
-  ]
-};
 
 const line = document.getElementById("line");
 const fill = document.getElementById("fill");
@@ -549,6 +495,20 @@ function sideName(track) {
   return track === "science" ? "right" : "left";
 }
 
+function isbellTalkLink(place) {
+  const p = document.createElement("p");
+  p.className = "body isbell-link-slot";
+  p.dataset.place = place;
+  const a = document.createElement("a");
+  a.className = "inline-link";
+  a.href = "https://www.youtube.com/watch?v=07Ys4tQPRis";
+  a.target = "_blank";
+  a.rel = "noopener noreferrer";
+  a.textContent = "Peterson discusses her book with interviewer Jordan Levine (Transliminal), in the talk other pages call Religion, Myth, Science, Truth. The YouTube title calls it a 2014 interview.";
+  p.appendChild(a);
+  return p;
+}
+
 function fillCard(card, ev) {
   const kicker = document.createElement("p");
   kicker.className = "kicker";
@@ -565,12 +525,57 @@ function fillCard(card, ev) {
   card.appendChild(kicker);
   card.appendChild(h);
   const paras = ev.paras || (ev.text ? [ev.text] : []);
-  paras.forEach((t) => {
+  function addBody(parent, t) {
     const body = document.createElement("p");
     body.className = "body";
     body.textContent = t;
-    card.appendChild(body);
-  });
+    parent.appendChild(body);
+  }
+  if (ev.title === "Lynne Isbell") {
+    card.classList.add("isbell-card");
+    const first = paras[0] || "";
+    const cut = first.indexOf(". ");
+    const shortText = cut === -1 ? first : first.slice(0, cut + 1);
+    const short = document.createElement("p");
+    short.className = "body isbell-summary";
+    short.textContent = shortText;
+    card.appendChild(short);
+    card.appendChild(document.createComment(" link slot: summary "));
+    card.appendChild(isbellTalkLink("summary"));
+    const details = document.createElement("details");
+    details.className = "isbell-fold";
+    const summary = document.createElement("summary");
+    summary.textContent = "Full analysis";
+    summary.setAttribute("aria-label", ev.title + ". " + shortText + " Full analysis");
+    details.appendChild(summary);
+    paras.forEach((t) => addBody(details, t));
+    details.appendChild(document.createComment(" link slot: analysis "));
+    details.appendChild(isbellTalkLink("analysis"));
+    card.appendChild(details);
+  } else if (ev.title === "The Anunnaki") {
+    card.classList.add("anunnaki-card");
+    const first = paras[0] || "";
+    let cut = first.indexOf(". ");
+    if (cut !== -1 && cut < 20) {
+      const next = first.indexOf(". ", cut + 2);
+      if (next !== -1) cut = next;
+    }
+    const shortText = cut === -1 ? first : first.slice(0, cut + 1);
+    const short = document.createElement("p");
+    short.className = "body anunnaki-summary";
+    short.textContent = shortText;
+    card.appendChild(short);
+    const details = document.createElement("details");
+    details.className = "anunnaki-fold";
+    const summary = document.createElement("summary");
+    summary.textContent = "Full analysis";
+    summary.setAttribute("aria-label", ev.title + ". " + shortText + " Full analysis");
+    details.appendChild(summary);
+    paras.forEach((t) => addBody(details, t));
+    card.appendChild(details);
+  } else {
+    paras.forEach((t) => addBody(card, t));
+  }
   (ev.lines || []).forEach((t) => {
     if (!card.querySelector(".lines")) {
       const ul = document.createElement("ul");
@@ -769,18 +774,7 @@ events.forEach((ev) => {
 });
 
 if (afterHost) {
-  const split = document.createElement("div");
-  split.className = "split";
-  const mythCol = document.createElement("div");
-  mythCol.className = "split-myth";
-  afterCards.forEach((card) => mythCol.appendChild(card));
-  const scienceCol = document.createElement("div");
-  scienceCol.className = "split-science";
-  scienceCol.appendChild(bracketEl(sightingBracket));
-  scienceCol.appendChild(bracketEl(alienBracket));
-  split.appendChild(mythCol);
-  split.appendChild(scienceCol);
-  afterHost.appendChild(split);
+  afterCards.forEach((card) => afterHost.appendChild(card));
 }
 
 const canvas = document.getElementById("stars");

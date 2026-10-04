@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Other flood stories</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07080c;
+    --ink: #ebe4d6;
+    --muted: #b1a89b;
+    --dim: #7d756b;
+    --gold: #e0bc84;
+    --gold-dim: rgba(224, 188, 132, 0.45);
+    --ice: #b7d4df;
+    --card: rgba(12, 14, 20, 0.82);
+    --edge: rgba(235, 228, 214, 0.14);
+    --line: 72px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    color: var(--ink);
+    background: var(--bg);
+    font-family: Outfit, "Segoe UI", sans-serif;
+    font-weight: 300;
+    line-height: 1.55;
+    font-size: 17px;
+  }
+  canvas#stars {
+    position: fixed; inset: 0; width: 100%; height: 100%;
+    z-index: 0; pointer-events: none;
+  }
+  .dust {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(1200px 500px at 50% -10%, rgba(224, 188, 132, 0.08), transparent 60%),
+      radial-gradient(900px 700px at 80% 40%, rgba(80, 110, 140, 0.08), transparent 55%),
+      linear-gradient(180deg, transparent, rgba(0,0,0,0.35));
+  }
+  .wrap { position: relative; z-index: 1; }
+  header.top { max-width: 760px; margin: 0 auto; padding: 56px 24px 12px; }
+  .backs { display: flex; flex-wrap: wrap; gap: 8px 22px; margin: 0 0 22px; }
+  .back {
+    display: inline-block; color: var(--ice); text-decoration: none;
+    letter-spacing: 0.14em; text-transform: uppercase; font-size: 12px;
+  }
+  .back:hover { color: var(--gold); }
+  .brand {
+    letter-spacing: 0.28em; text-transform: uppercase;
+    font-size: 12px; color: var(--gold); margin: 0 0 18px;
+  }
+  h1 {
+    font-family: Cinzel, Palatino, serif; font-weight: 500;
+    font-size: clamp(34px, 6vw, 58px); line-height: 1.12;
+    margin: 0 0 18px; letter-spacing: 0.01em;
+  }
+  .lede { color: var(--muted); margin: 0 0 12px; max-width: 64ch; }
+  .lede:last-child { margin-bottom: 0; }
+  main { padding: 10px 0 40px; }
+  .timeline {
+    position: relative; max-width: 980px; margin: 0 auto; padding: 8px 0 40px;
+  }
+  .meridian, .meridian-fill {
+    position: absolute; top: 0; left: var(--line); width: 1px; pointer-events: none;
+  }
+  .meridian {
+    bottom: 0;
+    background: linear-gradient(180deg, transparent, var(--gold-dim), var(--gold-dim), transparent);
+  }
+  .meridian-fill {
+    height: 0;
+    background: linear-gradient(180deg, transparent, var(--gold));
+    box-shadow: 0 0 12px var(--gold);
+  }
+  .band { position: relative; }
+  .band-mark {
+    margin: 0;
+    padding: 22px 22px 6px calc(var(--line) + 28px);
+    max-width: 640px;
+  }
+  .band-kicker {
+    margin: 0 0 4px;
+    font-family: Cinzel, Palatino, serif;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: var(--ice);
+  }
+  .band-span { margin: 0; color: var(--ice); font-size: 13px; letter-spacing: 0.06em; }
+  .band-note {
+    margin: 8px 0 0;
+    color: var(--muted);
+    font-size: 15px;
+    max-width: 58ch;
+  }
+  .event { position: relative; margin: 0; padding: 14px 20px 14px calc(var(--line) + 28px); }
+  .event::before {
+    content: "";
+    position: absolute;
+    left: calc(var(--line) - 5px);
+    top: 32px;
+    width: 11px; height: 11px; border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--gold);
+    box-shadow: 0 0 0 4px rgba(224, 188, 132, 0.08), 0 0 14px var(--gold);
+    z-index: 1;
+  }
+  .event[data-tone="ice"]::before { border-color: var(--ice); box-shadow: 0 0 0 4px rgba(183, 212, 223, 0.08), 0 0 14px var(--ice); }
+  .card {
+    max-width: 560px;
+    background: var(--card);
+    border: 1px solid var(--edge);
+    border-radius: 14px;
+    padding: 18px 20px 16px;
+    backdrop-filter: blur(6px);
+  }
+  .event[data-tone="ice"] .card { border-color: rgba(183, 212, 223, 0.22); }
+  .kicker {
+    display: flex; justify-content: space-between; gap: 12px;
+    margin: 0 0 8px; font-size: 12px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--dim);
+  }
+  .kicker .when { color: var(--gold); letter-spacing: 0.06em; text-align: right; }
+  .event[data-tone="ice"] .kicker .when { color: var(--ice); }
+  h2 {
+    font-family: Cinzel, Palatino, serif; font-weight: 500;
+    font-size: 26px; margin: 0 0 8px; line-height: 1.2;
+  }
+  .body { margin: 0; color: var(--muted); }
+  .card .body + .body { margin-top: 8px; }
+  a.inline-link { color: var(--gold); }
+  .time-rule {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 28px 20px 8px calc(var(--line) + 8px);
+    max-width: 640px;
+  }
+  .time-rule span {
+    font-family: Cinzel, Palatino, serif;
+    font-weight: 500;
+    font-size: 15px;
+    letter-spacing: 0.04em;
+    color: var(--gold);
+    background: var(--bg);
+    padding: 0 10px;
+    white-space: nowrap;
+  }
+  .time-rule i {
+    flex: 1;
+    height: 1px;
+    background: var(--gold);
+    box-shadow: 0 0 12px var(--gold);
+  }
+  .reading {
+    max-width: 560px;
+    margin: 6px 20px 18px calc(var(--line) + 28px);
+    color: var(--muted);
+    font-size: 15px;
+  }
+  footer.note p.rights { margin: 0; letter-spacing: 0.04em; }
+  footer.note {
+    max-width: 760px; margin: 0 auto; padding: 10px 24px 80px;
+    color: var(--dim); font-size: 14px;
+  }
+  @media (min-width: 900px) {
+    :root { --line: 50%; }
+    .band-mark { padding-left: calc(var(--line) + 36px); }
+    .event { padding: 16px 0; }
+    .event.side-right { padding-left: calc(50% + 36px); padding-right: 24px; }
+    .card { max-width: none; }
+    .time-rule { margin-left: calc(var(--line) + 16px); margin-right: 24px; max-width: none; }
+    .reading { margin-left: calc(var(--line) + 36px); margin-right: 24px; max-width: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+<canvas id="stars" aria-hidden="true"></canvas>
+<div class="dust" aria-hidden="true"></div>
+<div class="wrap">
+<header class="top">
+  <p class="backs">
+    <a class="back" href="index.html">← Ancient timeline</a>
+    <a class="back" href="flood-myths.html">← Flood stories</a>
+  </p>
+  <p class="brand">Off the spine</p>
+  <h1>Other flood stories</h1>
+  <p class="lede">This page is not the main timeline, and it is not the spine. It is a separate expansion. The stories here are off the spine. They are not extra dated catastrophes, and they are not given a year the sources do not already state.</p>
+  <p class="lede">The one memory told as Noah, Atrahasis, Ziusudra, and Utnapishtim stays on the timeline. Noah dates that flood only to his 600th year. Plato’s Atlantis stays on the timeline too. Only that flood self-dates near 9600 BCE. None of the stories on this page are equated with it. The fuller tellings, including the spine, are on the flood stories page.</p>
+  <p class="lede">Stories with no datable time sit above the line. Below it, only placements those pages already give, in the order the placements allow.</p>
+</header>
+<main>
+  <div class="timeline" id="line">
+    <div class="meridian" aria-hidden="true"></div>
+    <div class="meridian-fill" id="fill" aria-hidden="true"></div>
+
+    <section class="band">
+      <div class="band-mark">
+        <p class="band-kicker">No datable time</p>
+        <p class="band-span">Uncalibrated</p>
+        <p class="band-note">Same family of stories, off the spine. No composition date and no origin year is stated for these. They are not a second timeline.</p>
+      </div>
+
+      <article class="event side-right" data-tone="myth" id="ymir">
+        <div class="card">
+          <p class="kicker"><span>Norse</span><span class="when">Uncalibrated</span></p>
+          <h2>Ymir’s blood</h2>
+          <p class="body">Source: the Prose Edda, Gylfaginning. This flood is at the making of the world, not a later voyage.</p>
+          <p class="body">Before the earth is shaped, the giant Ymir is killed by the sons of Bor. His blood runs out in such a flood that it drowns the frost giants. Bergelmir gets away with his household. He is a giant, not a man, and the giants who come after are said to come from him. Only then is the earth built, from Ymir’s body: flesh as soil, bones as mountains, blood as the sea.</p>
+          <p class="body">Norse: Ymir’s blood is a creation flood, not Noah’s flood. The story places the blood before the world has a shape. It is not dated to a king’s year.</p>
+          <p class="body"><a class="inline-link" href="flood-myths.html#ymir">The telling on the flood stories page</a></p>
+        </div>
+      </article>
+
+      <article class="event side-right" data-tone="myth" id="yima">
+        <div class="card">
+          <p class="kicker"><span>Iranian</span><span class="when">Uncalibrated</span></p>
+          <h2>Yima’s enclosure</h2>
+          <p class="body">Source: the Vendidad, the story of Yima. This is not an ark, and the danger is not a flood of water.</p>
+          <p class="body">Ahura Mazda warns Yima that a killing winter is coming, a cold that will destroy cattle and people. Yima is told to build a vara, a sealed enclosure, and to bring into it the best of men and women, the best of animals, and the seeds of plants, two of each kind that should continue. He seals it. Inside, life goes on through the winter. There is no ship, no sea, and no mountain landing. The world outside is buried in cold.</p>
+          <p class="body">Iranian: a sealed enclosure against winter, not an ark. The story sets this in Yima’s reign, in the early age of the world. It does not count the years the way a chronicle does.</p>
+          <p class="body"><a class="inline-link" href="flood-myths.html#yima">The telling on the flood stories page</a></p>
+        </div>
+      </article>
+
+      <article class="event side-right" data-tone="myth" id="deucalion">
+        <div class="card">
+          <p class="kicker"><span>Greek</span><span class="when">Deduced placement</span></p>
+          <h2>Deucalion and Pyrrha</h2>
+          <p class="body">Source: the Greek flood of Deucalion, told in Apollodorus and in Ovid. This is not Plato’s Atlantis.</p>
+          <p class="body">Zeus resolves to destroy the people of the Bronze Age. Prometheus warns his son Deucalion. Deucalion and his wife Pyrrha survive in a chest, or in a small boat, and the water carries them to Mount Parnassus. When the flood sinks, they ask how people can be made again. They are told to throw the bones of their mother behind them. They understand the mother to be the earth, and the bones to be stones. The stones Deucalion throws become men. The stones Pyrrha throws become women.</p>
+          <p class="body">A Greek flood, mapped here to the same Mesopotamian memory, not to Atlantis and not to 9600 BCE. The story calls it the flood of that age. It does not count the years back from a named king the way Plato does. That memory is not given a year of its own.</p>
+          <p class="body"><a class="inline-link" href="flood-myths.html#deucalion">The telling on the flood stories page</a></p>
+        </div>
+      </article>
+
+      <article class="event side-right" data-tone="myth" id="popol">
+        <div class="card">
+          <p class="kicker"><span>Maya · K’iche’</span><span class="when">Uncalibrated</span></p>
+          <h2>The wooden people</h2>
+          <p class="body">Source: the Popol Vuh. Do not fold this into the Aztec story of a couple in a log. They are different tellings.</p>
+          <p class="body">The gods have tried to make people. The wooden people can speak and multiply, but they have no hearts and do not remember their makers. A flood is sent against them. Resin rains down. Animals they had used turn on them. Their grinding stones and pots rise up. The wooden people are washed away and destroyed. Two of them, Tata and Nene, are told to hide in a hollow cypress and to eat nothing but what they are given. They come out too soon and cook food. For that they are changed into dogs.</p>
+          <p class="body">Maya and Aztec: repeating world-age endings, not one historical flood. The story sets this in the attempts before the people of maize. It does not give a year.</p>
+          <p class="body"><a class="inline-link" href="flood-myths.html#popol">The telling on the flood stories page</a></p>
+        </div>
+      </article>
+
+      <article class="event side-right" data-tone="myth" id="aztec">
+        <div class="card">
+          <p class="kicker"><span>Aztec</span><span class="when">Uncalibrated</span></p>
+          <h2>The ages that end</h2>
+          <p class="body">Source: the Aztec telling of the world-ages, the suns, one after another.</p>
+          <p class="body">The world does not flood once. An age ends, and another age begins, and that happens again. One of those ages ends in water. The people of that sun are swept away, and the next sun is made after them. The destruction is a rhythm, not a single rescue. Jaguar, wind, fire, and flood take their turns, and the present sun is the one that followed.</p>
+          <p class="body">Repeating world-age endings, not one historical flood. The story counts the ages. It does not pin the flood-age to a year before a named king.</p>
+          <p class="body"><a class="inline-link" href="flood-myths.html#aztec">The telling on the flood stories page</a></p>
+        </div>
+      </article>
+
+      <article class="event side-right" data-tone="myth" id="hopi">
+        <div class="card">
+          <p class="kicker"><span>Hopi</span><span class="when">Uncalibrated</span></p>
+          <h2>The climb from below</h2>
+          <p class="body">Source: Hopi emergence tellings.</p>
+          <p class="body">The people are living in a world under this one, and that world floods. They do not sail. They climb. Tall plants, reeds, grow up through the water toward an opening in the sky of that world, which is the ground of this one. The people ascend the plants and come out into the new world. Those who climb are the ones who continue.</p>
+          <p class="body">Climbing out of a flooded underworld on plants. The story tells it as a change of worlds. It does not give a year.</p>
+          <p class="body"><a class="inline-link" href="flood-myths.html#hopi">The telling on the flood stories page</a></p>
+        </div>
+      </article>
+
+      <article class="event side-right" data-tone="ice" id="choctaw">
+        <div class="card">
+          <p class="kicker"><span>Choctaw</span><span class="when">Not independent ancient dates</span></p>
+          <h2>The boat</h2>
+          <p class="body">Source: a Choctaw flood story as it was written down.</p>
+          <p class="body">A flood covers the land. People survive by a boat. The story, as collected, is a boat story: a warning, a vessel, and people carried through the water until there is ground again.</p>
+          <p class="body">Shaped by later collectors. Choctaw, the later Hawaiian houseboat, Maori, and Yoruba are flagged by collectors as missionary-shaped or Muslim-shaped. They are not treated here as independent ancient dates. The people who wrote this version down noted that it may reflect missionary influence. That is their note, not a date inside the story. The story itself does not give a year.</p>
+          <p class="body"><a class="inline-link" href="flood-myths.html#choctaw">The telling on the flood stories page</a></p>
+        </div>
+      </article>
+
+      <article class="event side-right" data-tone="myth" id="hawaii-old">
+        <div class="card">
+          <p class="kicker"><span>Hawaiian · an older report</span><span class="when">Uncalibrated</span></p>
+          <h2>Two people on Mauna Kea</h2>
+          <p class="body">Source: an older Hawaiian report, distinct from the houseboat.</p>
+          <p class="body">A flood leaves two people alive on Mauna Kea. They are asked about a ship. They say they never heard of one. There is no boat in their account. They simply remained on the mountain when the water was gone.</p>
+          <p class="body">Two people on Mauna Kea, no ship. Not merged with the houseboat. The report does not date the flood. It does not mention Nuʻu.</p>
+          <p class="body"><a class="inline-link" href="flood-myths.html#hawaii-old">The telling on the flood stories page</a></p>
+        </div>
+      </article>
+
+      <article class="event side-right" data-tone="ice" id="hawaii-late">
+        <div class="card">
+          <p class="kicker"><span>Hawaiian · a later telling</span><span class="when">Not independent ancient dates</span></p>
+          <h2>The houseboat</h2>
+          <p class="body">Source: a later Hawaiian telling, in which Nuʻu rides out a flood.</p>
+          <p class="body">A flood comes over the islands. Nuʻu builds a houseboat, a vessel with a house on it, and he survives in that. When the water falls, he is the one left to begin again, and he makes an offering.</p>
+          <p class="body">The later Hawaiian houseboat is one of the stories flagged by collectors as missionary-shaped. They are not treated here as independent ancient dates. The people who wrote this version down noted that it may reflect missionary influence. That is their note. This is not the older report, and the two should not be folded together.</p>
+          <p class="body"><a class="inline-link" href="flood-myths.html#hawaii-late">The telling on the flood stories page</a></p>
+        </div>
+      </article>
+
+      <article class="event side-right" data-tone="ice" id="maori">
+        <div class="card">
+          <p class="kicker"><span>Māori</span><span class="when">Not independent ancient dates</span></p>
+          <h2>The raft</h2>
+          <p class="body">Source: a Māori flood story as it was written down.</p>
+          <p class="body">The water rises over the land. The survivors are on a raft, not in a beamed ark, and the raft carries them until they can find ground again.</p>
+          <p class="body">Maori is one of the stories flagged by collectors as missionary-shaped. They are not treated here as independent ancient dates. The people who wrote this version down noted that it may reflect missionary influence. That is their note. The story itself does not give a year.</p>
+          <p class="body"><a class="inline-link" href="flood-myths.html#maori">The telling on the flood stories page</a></p>
+        </div>
+      </article>
+
+      <article class="event side-right" data-tone="ice" id="yoruba">
+        <div class="card">
+          <p class="kicker"><span>Yoruba</span><span class="when">Not independent ancient dates</span></p>
+          <h2>The flood</h2>
+          <p class="body">Source: a Yoruba flood story as it was written down.</p>
+          <p class="body">A flood covers the world of people. The telling that was collected has the water sent over the land, and a remnant living through it so that people continue.</p>
+          <p class="body">Yoruba is one of the stories flagged by collectors as Muslim-shaped. They are not treated here as independent ancient dates. The people who wrote this version down noted that it may reflect Muslim influence. That is their note. The story itself does not give a year.</p>
+          <p class="body"><a class="inline-link" href="flood-myths.html#yoruba">The telling on the flood stories page</a></p>
+        </div>
+      </article>
+
+      <article class="event side-right" data-tone="myth" id="cessair">
+        <div class="card">
+          <p class="kicker"><span>Irish</span><span class="when">Not an independent date</span></p>
+          <h2>Cessair</h2>
+          <p class="body">Source: the Lebor Gabála Érenn, the Book of Invasions. The story means this to be Noah’s flood.</p>
+          <p class="body">Cessair, of Noah’s line, is told that Ireland is a place the flood has not yet reached. She sails there with her company to get ahead of it. They land forty days before the water arrives. When the flood comes, it is Noah’s flood, reaching Ireland late. The company dies. The story remembers one man, Fintan, left alive after them.</p>
+          <p class="body">Irish: Noah’s flood on purpose, said to arrive forty days early. The dating borrows Noah’s. It is not offered as a separate disaster with its own year.</p>
+          <p class="body"><a class="inline-link" href="flood-myths.html#cessair">The telling on the flood stories page</a></p>
+        </div>
+      </article>
+
+      <article class="event side-right" data-tone="myth" id="manu">
+        <div class="card">
+          <p class="kicker"><span>Hindu</span><span class="when">Uncalibrated</span></p>
+          <h2>Manu</h2>
+          <p class="body">Source: the earliest telling is in the Shatapatha Brahmana. Later puranas stretch the same rescue across a cosmic age.</p>
+          <p class="body">A fish comes to Manu and asks to be saved. Manu keeps it, and it grows from a jar to a tank to the river to the ocean. The fish tells him a flood is coming, and that he must build a ship. When the water rises, the fish, now huge, tows the ship by a rope to a northern mountain. Manu is the one left to begin the world again. In the later telling, this is not one flood in a human lifetime. It is the dissolution at the end of an age, and that age is spoken of in billions of years.</p>
+          <p class="body">A cosmic-age story. The earliest version is a fish and a ship. The billion-year pralaya is later. This page does not date it. The early story does not give a year. The vast span belongs to the later cosmic telling.</p>
+          <p class="body"><a class="inline-link" href="flood-myths.html#manu">The telling on the flood stories page</a></p>
+        </div>
+      </article>
+    </section>
+
+    <div class="time-rule" role="separator">
+      <i aria-hidden="true"></i>
+      <span>Before time.</span>
+      <i aria-hidden="true"></i>
+    </div>
+
+    <section class="band">
+      <div class="band-mark">
+        <p class="band-kicker">Placements already stated</p>
+        <p class="band-span">Not a flood year in the text</p>
+        <p class="band-note">The only placement these pages already date is Yu: traditional late 3rd millennium BCE, a deduced placement, not a flood year in the text. Deucalion is mapped to the Mesopotamian memory, not to 9600 BCE, and that memory is not given a year, so he is not sorted as a date. Only Plato’s Atlantis flood self-dates near 9600 BCE. That card is not on this page.</p>
+      </div>
+
+      <article class="event side-right" data-tone="myth" id="yu">
+        <div class="card">
+          <p class="kicker"><span>Chinese</span><span class="when">Traditional late 3rd millennium BCE</span></p>
+          <h2>Yu</h2>
+          <p class="body">Source: the traditional story of Yu the Great, set at the beginning of the Xia.</p>
+          <p class="body">The rivers have overflowed and the land is under water. Yu’s father, Gun, tries to dam the water and fails. Yu does not build a boat and does not ride the flood out. He drains it. He cuts channels, dredges the rivers, and walks the land until the water has a way to the sea. The work takes years. He passes his own door and does not go in. When the land is dry enough to live on, he is remembered as the founder of the Xia.</p>
+          <p class="body">River drainage, traditional late 3rd millennium BCE. A deduced placement, not a flood year in the text. Tradition places that work at the start of the Xia, in the late third millennium BCE. The story itself tells it as the labor that made the kingdom possible, not as a dated tablet.</p>
+          <p class="body"><a class="inline-link" href="flood-myths.html#yu">The telling on the flood stories page</a></p>
+        </div>
+      </article>
+
+      <p class="reading">Every other flood here is uncalibrated. The deduced placements are Deucalion, mapped to the Mesopotamian memory, and Yu. Only Plato’s Atlantis flood self-dates near 9600 BCE.</p>
+    </section>
+  </div>
+</main>
+<footer class="note">
+  <p class="rights">All rights reserved to Studio Gulch SAS.</p>
+</footer>
+</div>
+<script>
+(function () {
+  var c = document.getElementById("stars");
+  if (!c || !c.getContext) return;
+  var ctx = c.getContext("2d");
+  var stars = [];
+  function size() {
+    c.width = window.innerWidth;
+    c.height = window.innerHeight;
+    var n = Math.min(140, Math.floor(c.width * c.height / 14000));
+    stars = [];
+    for (var i = 0; i < n; i++) {
+      stars.push({ x: Math.random(), y: Math.random(), r: Math.random() * 1.2 + 0.2, a: Math.random() * 0.5 + 0.15 });
+    }
+  }
+  function draw() {
+    ctx.clearRect(0, 0, c.width, c.height);
+    for (var i = 0; i < stars.length; i++) {
+      var s = stars[i];
+      ctx.fillStyle = "rgba(235,228,214," + s.a + ")";
+      ctx.beginPath();
+      ctx.arc(s.x * c.width, s.y * c.height, s.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+  size(); draw();
+  var line = document.getElementById("line");
+  var fill = document.getElementById("fill");
+  function paint() {
+    if (!line || !fill) return;
+    var top = line.getBoundingClientRect().top + window.scrollY;
+    var total = line.offsetHeight;
+    var y = window.scrollY + window.innerHeight * 0.42 - top;
+    fill.style.height = Math.max(0, Math.min(total, y)) + "px";
+  }
+  paint();
+  window.addEventListener("resize", function () { size(); draw(); paint(); });
+  window.addEventListener("scroll", paint, { passive: true });
+})();
+</script>
+</body>
+</html>

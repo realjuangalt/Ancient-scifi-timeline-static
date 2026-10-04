@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The alien timeline</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07080c;
+    --ink: #ebe4d6;
+    --muted: #b1a89b;
+    --dim: #7d756b;
+    --gold: #e0bc84;
+    --gold-dim: rgba(224, 188, 132, 0.45);
+    --ice: #b7d4df;
+    --card: rgba(12, 14, 20, 0.82);
+    --edge: rgba(235, 228, 214, 0.14);
+    --line: 72px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    color: var(--ink);
+    background: var(--bg);
+    font-family: Outfit, "Segoe UI", sans-serif;
+    font-weight: 300;
+    line-height: 1.55;
+    font-size: 17px;
+  }
+  canvas#stars {
+    position: fixed; inset: 0; width: 100%; height: 100%;
+    z-index: 0; pointer-events: none;
+  }
+  .dust {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(1200px 500px at 50% -10%, rgba(224, 188, 132, 0.08), transparent 60%),
+      radial-gradient(900px 700px at 80% 40%, rgba(80, 110, 140, 0.08), transparent 55%),
+      linear-gradient(180deg, transparent, rgba(0,0,0,0.35));
+  }
+  .wrap { position: relative; z-index: 1; }
+  header.top { max-width: 760px; margin: 0 auto; padding: 56px 24px 12px; }
+  .backs { display: flex; flex-wrap: wrap; gap: 8px 22px; margin: 0 0 22px; }
+  .back {
+    display: inline-block; color: var(--ice); text-decoration: none;
+    letter-spacing: 0.14em; text-transform: uppercase; font-size: 12px;
+  }
+  .back:hover { color: var(--gold); }
+  .brand {
+    letter-spacing: 0.28em; text-transform: uppercase;
+    font-size: 12px; color: var(--gold); margin: 0 0 18px;
+  }
+  h1 {
+    font-family: Cinzel, Palatino, serif; font-weight: 500;
+    font-size: clamp(34px, 6vw, 58px); line-height: 1.12;
+    margin: 0 0 18px; letter-spacing: 0.01em;
+  }
+  .lede { color: var(--muted); margin: 0 0 12px; max-width: 64ch; }
+  .lede:last-child { margin-bottom: 0; }
+  main { padding: 10px 0 40px; }
+  .timeline {
+    position: relative; max-width: 980px; margin: 0 auto; padding: 8px 0 40px;
+  }
+  .meridian, .meridian-fill {
+    position: absolute; top: 0; left: var(--line); width: 1px; pointer-events: none;
+  }
+  .meridian {
+    bottom: 0;
+    background: linear-gradient(180deg, transparent, var(--gold-dim), var(--gold-dim), transparent);
+  }
+  .meridian-fill {
+    height: 0;
+    background: linear-gradient(180deg, transparent, var(--gold));
+    box-shadow: 0 0 12px var(--gold);
+  }
+  .band { position: relative; }
+  .band-mark {
+    margin: 0;
+    padding: 22px 22px 6px calc(var(--line) + 28px);
+    max-width: 640px;
+  }
+  .band-kicker {
+    margin: 0 0 4px;
+    font-family: Cinzel, Palatino, serif;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: var(--ice);
+  }
+  .band-span { margin: 0; color: var(--ice); font-size: 13px; letter-spacing: 0.06em; }
+  .band-note {
+    margin: 8px 0 0;
+    color: var(--muted);
+    font-size: 15px;
+    max-width: 58ch;
+  }
+  .event { position: relative; margin: 0; padding: 14px 20px 14px calc(var(--line) + 28px); }
+  .event::before {
+    content: "";
+    position: absolute;
+    left: calc(var(--line) - 5px);
+    top: 32px;
+    width: 11px; height: 11px; border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--gold);
+    box-shadow: 0 0 0 4px rgba(224, 188, 132, 0.08), 0 0 14px var(--gold);
+    z-index: 1;
+  }
+  .event[data-tone="ice"]::before { border-color: var(--ice); box-shadow: 0 0 0 4px rgba(183, 212, 223, 0.08), 0 0 14px var(--ice); }
+  .card {
+    max-width: 560px;
+    background: var(--card);
+    border: 1px solid var(--edge);
+    border-radius: 14px;
+    padding: 18px 20px 16px;
+    backdrop-filter: blur(6px);
+  }
+  .event[data-tone="ice"] .card { border-color: rgba(183, 212, 223, 0.22); }
+  .kicker {
+    display: flex; justify-content: space-between; gap: 12px;
+    margin: 0 0 8px; font-size: 12px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--dim);
+  }
+  .kicker .when { color: var(--gold); letter-spacing: 0.06em; text-align: right; }
+  .event[data-tone="ice"] .kicker .when { color: var(--ice); }
+  h2 {
+    font-family: Cinzel, Palatino, serif; font-weight: 500;
+    font-size: 26px; margin: 0 0 8px; line-height: 1.2;
+  }
+  .body { margin: 0; color: var(--muted); }
+  .card .body + .body { margin-top: 8px; }
+  a.inline-link { color: var(--gold); }
+  .time-rule {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 28px 20px 8px calc(var(--line) + 8px);
+    max-width: 640px;
+  }
+  .time-rule span {
+    font-family: Cinzel, Palatino, serif;
+    font-weight: 500;
+    font-size: 15px;
+    letter-spacing: 0.04em;
+    color: var(--gold);
+    background: var(--bg);
+    padding: 0 10px;
+    white-space: nowrap;
+  }
+  .time-rule i {
+    flex: 1;
+    height: 1px;
+    background: var(--gold);
+    box-shadow: 0 0 12px var(--gold);
+  }
+  .reading {
+    max-width: 560px;
+    margin: 6px 20px 18px calc(var(--line) + 28px);
+    color: var(--muted);
+    font-size: 15px;
+  }
+  footer.note p.rights { margin: 0; letter-spacing: 0.04em; }
+  footer.note {
+    max-width: 760px; margin: 0 auto; padding: 10px 24px 80px;
+    color: var(--dim); font-size: 14px;
+  }
+  @media (min-width: 900px) {
+    :root { --line: 50%; }
+    .band-mark { padding-left: calc(var(--line) + 36px); }
+    .event { padding: 16px 0; }
+    .event.side-right { padding-left: calc(50% + 36px); padding-right: 24px; }
+    .card { max-width: none; }
+    .time-rule { margin-left: calc(var(--line) + 16px); margin-right: 24px; max-width: none; }
+    .reading { margin-left: calc(var(--line) + 36px); margin-right: 24px; max-width: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+<canvas id="stars" aria-hidden="true"></canvas>
+<div class="dust" aria-hidden="true"></div>
+<div class="wrap">
+  <header class="top">
+    <p class="backs"><a class="back" href="index.html">← Ancient timeline</a></p>
+    <p class="brand">Off the spine</p>
+    <h1>The alien timeline</h1>
+    <p class="lede">This page is the expansion, not the main spine. The sightings and the types are here, in the wording already on the timeline, in the order of the dates already written on them.</p>
+    <p class="lede"><a class="inline-link" href="index.html">Back to the timeline</a></p>
+  </header>
+  <main>
+    <div class="timeline" id="line">
+      <div class="meridian" aria-hidden="true"></div>
+      <div class="meridian-fill" id="fill" aria-hidden="true"></div>
+      <section class="band">
+        <div class="band-mark">
+          <p class="band-kicker">Reports, not a finding</p>
+          <p class="band-span">About 1860 BCE through the recent hearings</p>
+          <p class="band-note">A lone report stays on the main timeline as well. A run of reports is one card there, and the separate wordings are here.</p>
+        </div>
+      <article class="event side-right" data-tone="myth">
+        <div class="card">
+          <p class="kicker"><span>Egyptian monument only</span><span class="when">About 1860 BCE</span></p>
+          <h2>Hawara</h2>
+          <p class="body">Amenemhat III, 12th Dynasty, mudbrick pyramid. Kept here at about 1860 BCE. It is Egyptian. It is not 9600 BCE, and it is not a retelling of Egyptian history.</p>
+          <p class="body">A separate claim says the maze is still there, underground and intact, and that an alien saucer sits in the middle of it. That claim is an alternative reading. It is not what Petrie published, and it is not what the 2010 survey published.</p>
+          <p class="body">The publication that sets the claim out, and that shows the pictures it presents as the scans, is Louis de Cordier's newsletter "The Merlin Burrows scans II." The pictures on that page are copyrighted. They are not copied here. Nothing on this page is a scan.</p>
+          <p class="body">Do not confuse that claim with a different 2025 paper. Mark J. Carlotto, in the Journal of Scientific Exploration, argues from space-based radar for a possible underground structure at Hawara, which he suggests may be part of the labyrinth. That paper does not identify a saucer, and it is not a report of an excavated machine. It is linked so the two readings stay separate. It is not established archaeology either.</p>
+          <p class="body"><a class="inline-link" href="https://labyrinthofegypt.substack.com/p/the-merlin-burrows-scans-ii">The Merlin Burrows scans II</a> <a class="inline-link" href="https://ancienthistoryx.com/labyrinth-of-hawara-revisited-the-2015-satellite-scans/">Ancient History X on the 2015 scans</a> <a class="inline-link" href="https://odysee.com/@MorningStar:0a/Hawara-Satellite-Scan-Briefing-(Original-2015-Recording)---Tim-Akers---Merlin-Burrows:e">Recording titled as the 2015 briefing</a> <a class="inline-link" href="https://journalofscientificexploration.org/index.php/jse/article/view/3579">Carlotto, 2025, possible underground structure</a> <a class="inline-link" href="hawara.html">The Hawara page</a></p>
+        </div>
+      </article>
+      <article class="event side-right" data-tone="myth">
+        <div class="card">
+          <p class="kicker"><span>Off the spine</span><span class="when">About 593 BCE</span></p>
+          <h2>Ezekiel's wheels</h2>
+          <p class="body">A religious vision. Reading it as a spacecraft is modern and retrospective.</p>
+        </div>
+      </article>
+      <article class="event side-right" data-tone="myth">
+        <div class="card">
+          <p class="kicker"><span>Off the spine</span><span class="when">1896 to 1897</span></p>
+          <h2>Mystery airships</h2>
+          <p class="body">United States mystery airship wave.</p>
+        </div>
+      </article>
+      <article class="event side-right" data-tone="myth">
+        <div class="card">
+          <p class="kicker"><span>Off the spine</span><span class="when">June 24, 1947</span></p>
+          <h2>Kenneth Arnold</h2>
+          <p class="body">Near Mount Rainier. This is the flying-saucer sighting, not Roswell.</p>
+        </div>
+      </article>
+      <article class="event side-right" data-tone="myth">
+        <div class="card">
+          <p class="kicker"><span>Off the spine</span><span class="when">July 1947</span></p>
+          <h2>Roswell</h2>
+          <p class="body">Separate from Arnold. The base announced a flying disc and the next day called it a balloon. Later Air Force reports said Mogul balloon trains, and that body stories match crash-test dummies from other years.</p>
+        </div>
+      </article>
+      <article class="event side-right" data-tone="myth">
+        <div class="card">
+          <p class="kicker"><span>Off the spine</span><span class="when">July 1952</span></p>
+          <h2>Washington, D.C.</h2>
+          <p class="body">Radar and some lights. The public line was temperature inversion.</p>
+        </div>
+      </article>
+      <article class="event side-right" data-tone="myth">
+        <div class="card">
+          <p class="kicker"><span>Off the spine</span><span class="when">September 1961</span></p>
+          <h2>Betty and Barney Hill</h2>
+          <p class="body">New Hampshire. The template abduction. No government confirmation.</p>
+        </div>
+      </article>
+      <article class="event side-right" data-tone="myth">
+        <div class="card">
+          <p class="kicker"><span>Off the spine</span><span class="when">January 6, 1969</span></p>
+          <h2>Jimmy Carter</h2>
+          <p class="body">In Leary, Georgia. 1977 is when the Washington Post wrote about it, not the sighting.</p>
+        </div>
+      </article>
+      <article class="event side-right" data-tone="myth">
+        <div class="card">
+          <p class="kicker"><span>Off the spine</span><span class="when">September 1976</span></p>
+          <h2>Tehran</h2>
+          <p class="body">Iranian jets scrambled. No public confirmation of an alien craft.</p>
+        </div>
+      </article>
+      <article class="event side-right" data-tone="myth">
+        <div class="card">
+          <p class="kicker"><span>Off the spine</span><span class="when">December 1980</span></p>
+          <h2>Rendlesham Forest</h2>
+          <p class="body">Lights reported by U.S. airmen. The British ministry said no defence threat. A lighthouse is the prosaic account of some of the lights.</p>
+        </div>
+      </article>
+      <article class="event side-right" data-tone="myth">
+        <div class="card">
+          <p class="kicker"><span>Off the spine</span><span class="when">March 13, 1997</span></p>
+          <h2>Phoenix Lights</h2>
+          <p class="body">The Guard later said A-10 flares explain the videotaped string, not every early report.</p>
+        </div>
+      </article>
+      <article class="event side-right" data-tone="myth">
+        <div class="card">
+          <p class="kicker"><span>Off the spine</span><span class="when">November 14, 2004</span></p>
+          <h2>Nimitz tic tac</h2>
+          <p class="body">Fravor and Dietrich. The Navy later said the videos are real and unidentified, which is not confirmation of an alien craft.</p>
+        </div>
+      </article>
+      <article class="event side-right" data-tone="myth">
+        <div class="card">
+          <p class="kicker"><span>Off the spine</span><span class="when">November 7, 2006</span></p>
+          <h2>O'Hare</h2>
+          <p class="body">United employees reported a disc. The FAA said radar showed nothing unusual.</p>
+        </div>
+      </article>
+      <article class="event side-right" data-tone="myth">
+        <div class="card">
+          <p class="kicker"><span>Off the spine</span><span class="when">December 16, 2017</span></p>
+          <h2>New York Times</h2>
+          <p class="body">On the Pentagon program. The Pentagon later said Luis Elizondo had no assigned role on it. He disputes that.</p>
+        </div>
+      </article>
+      <article class="event side-right" data-tone="myth">
+        <div class="card">
+          <p class="kicker"><span>Off the spine</span><span class="when">April 27, 2020</span></p>
+          <h2>Navy videos</h2>
+          <p class="body">FLIR, Gimbal, and GoFast, called authentic and unexplained, not confirmed alien craft.</p>
+        </div>
+      </article>
+      <article class="event side-right" data-tone="myth">
+        <div class="card">
+          <p class="kicker"><span>Off the spine</span><span class="when">July 26, 2023</span></p>
+          <h2>David Grusch</h2>
+          <p class="body">House hearing. He alleged crash retrievals and non-human biologics from what others told him. He said he had not seen the craft or the bodies. The Defense Department said investigators found nothing verifiable.</p>
+        </div>
+      </article>
+      <article class="event side-right" data-tone="myth">
+        <div class="card">
+          <p class="kicker"><span>Off the spine</span><span class="when">September 30, 2026</span></p>
+          <h2>Joe Rogan Experience 2560</h2>
+          <p class="body">David Grusch, Joe Rogan Experience number 2560. He says greys come in three or four sizes, taller ones running the show, and at least two reptilian kinds. Bodies he says he saw on video were pale, long-haired, and human-looking, not greys. No full transcript was found.</p>
+          <p class="body"><a class="inline-link" href="https://www.youtube.com/watch?v=dYPXINFcvmI">YouTube</a></p>
+        </div>
+      </article>
+      <article class="event side-right" data-tone="myth">
+        <div class="card">
+          <p class="kicker"><span>Off the spine</span><span class="when">Not confirmed species</span></p>
+          <h2>Alien types</h2>
+          <p class="body">Short lines only.</p>
+          <p class="body">Greys.</p>
+          <p class="body">Tall greys.</p>
+          <p class="body">Little greys.</p>
+          <p class="body">Tall whites.</p>
+          <p class="body">Nordics.</p>
+          <p class="body">Reptilians, two kinds as David Grusch described them on the show: a large gorilla-looking then scaly kind, and a more humanoid kind. He said he never saw one himself.</p>
+          <p class="body">Mantis beings.</p>
+          <p class="body">Hybrids.</p>
+          <p class="body">Little green men.</p>
+        </div>
+      </article>
+      </section>
+    </div>
+  </main>
+  <footer class="note">
+    <p class="rights">All rights reserved to Studio Gulch SAS.</p>
+  </footer>
+
+</div>
+<script>
+(function () {
+  var c = document.getElementById("stars");
+  if (!c || !c.getContext) return;
+  var ctx = c.getContext("2d");
+  var stars = [];
+  function size() {
+    c.width = window.innerWidth;
+    c.height = window.innerHeight;
+    var n = Math.min(140, Math.floor(c.width * c.height / 14000));
+    stars = [];
+    for (var i = 0; i < n; i++) {
+      stars.push({ x: Math.random(), y: Math.random(), r: Math.random() * 1.2 + 0.2, a: Math.random() * 0.5 + 0.15 });
+    }
+  }
+  function draw() {
+    ctx.clearRect(0, 0, c.width, c.height);
+    for (var i = 0; i < stars.length; i++) {
+      var s = stars[i];
+      ctx.fillStyle = "rgba(235,228,214," + s.a + ")";
+      ctx.beginPath();
+      ctx.arc(s.x * c.width, s.y * c.height, s.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+  size(); draw();
+  var line = document.getElementById("line");
+  var fill = document.getElementById("fill");
+  function paint() {
+    if (!line || !fill) return;
+    var top = line.getBoundingClientRect().top + window.scrollY;
+    var total = line.offsetHeight;
+    var y = window.scrollY + window.innerHeight * 0.42 - top;
+    fill.style.height = Math.max(0, Math.min(total, y)) + "px";
+  }
+  paint();
+  window.addEventListener("resize", function () { size(); draw(); paint(); });
+  window.addEventListener("scroll", paint, { passive: true });
+})();
+</script>
+</body>
+</html>
