@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Anunnaki — an expansion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07080c;
+    --ink: #ebe4d6;
+    --muted: #b1a89b;
+    --dim: #7d756b;
+    --gold: #e0bc84;
+    --gold-dim: rgba(224, 188, 132, 0.45);
+    --ice: #b7d4df;
+    --ice-dim: rgba(183, 212, 223, 0.5);
+    --hinge: #e7d7b0;
+    --card: rgba(12, 14, 20, 0.82);
+    --edge: rgba(235, 228, 214, 0.14);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    color: var(--ink);
+    background: var(--bg);
+    font-family: Outfit, "Segoe UI", sans-serif;
+    font-weight: 300;
+    line-height: 1.55;
+    font-size: 17px;
+  }
+  canvas#stars {
+    position: fixed; inset: 0; width: 100%; height: 100%;
+    z-index: 0; pointer-events: none;
+  }
+  .dust {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(1200px 500px at 50% -10%, rgba(224, 188, 132, 0.08), transparent 60%),
+      radial-gradient(900px 700px at 80% 40%, rgba(80, 110, 140, 0.08), transparent 55%),
+      linear-gradient(180deg, transparent, rgba(0,0,0,0.35));
+  }
+  .meridian {
+    position: fixed;
+    top: 0; bottom: 0;
+    left: max(20px, calc(50vw - 430px));
+    width: 1px;
+    z-index: 0;
+    pointer-events: none;
+    background: linear-gradient(180deg, transparent, var(--gold-dim), var(--gold-dim), transparent);
+  }
+  .wrap { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; padding: 72px 24px 80px; }
+  a { color: var(--ice); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  a:hover { color: var(--gold); }
+  .back {
+    display: inline-block;
+    margin: 0 0 22px;
+    color: var(--ice);
+    text-decoration: none;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-size: 12px;
+  }
+  .back:hover { color: var(--gold); }
+  .brand {
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: var(--gold);
+    margin: 0 0 18px;
+  }
+  h1 {
+    font-family: Cinzel, Palatino, serif;
+    font-weight: 500;
+    font-size: clamp(34px, 6vw, 52px);
+    line-height: 1.12;
+    margin: 0 0 18px;
+    letter-spacing: 0.01em;
+  }
+  .lede { color: var(--muted); margin: 0 0 28px; max-width: 64ch; }
+  article.card {
+    background: var(--card);
+    border: 1px solid var(--edge);
+    border-radius: 14px;
+    padding: 22px 22px 18px;
+    margin: 0 0 18px;
+    backdrop-filter: blur(6px);
+  }
+  article.card.primary { border-color: rgba(183, 212, 223, 0.35); }
+  article.card.interpretive { border-color: rgba(224, 188, 132, 0.35); }
+  .kicker {
+    margin: 0 0 8px;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+  article.card.primary .kicker { color: var(--ice); }
+  article.card.interpretive .kicker { color: var(--gold); }
+  h2 {
+    font-family: Cinzel, Palatino, serif;
+    font-weight: 500;
+    font-size: 26px;
+    margin: 0 0 12px;
+    line-height: 1.2;
+  }
+  p { margin: 0 0 12px; color: var(--muted); }
+  p:last-child { margin-bottom: 0; }
+  .links { margin-top: 4px; }
+  .links a { display: inline-block; margin: 0 16px 8px 0; color: var(--gold); }
+  footer.note { margin-top: 28px; color: var(--dim); font-size: 14px; }
+  footer.note p.rights { margin-top: 18px; letter-spacing: 0.04em; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+<canvas id="stars" aria-hidden="true"></canvas>
+<div class="dust" aria-hidden="true"></div>
+<div class="meridian" aria-hidden="true"></div>
+<div class="wrap">
+  <a class="back" href="index.html">← Ancient timeline</a>
+  <p class="brand">Ancient timeline</p>
+  <h1>The Anunnaki</h1>
+  <p class="lede">This page expands the Anunnaki cards. It is not the main spine. The gold line in the margin is only a family mark. One card is the myth, set in mythic time, before the flood. The other is the tablets, dated on their own. The alien-astronaut telling is modern mythology.</p>
+
+  <article class="card primary">
+    <p class="kicker">Mythic time, before the flood</p>
+    <h2>The story's own chronology</h2>
+    <p>In the ancient stories the great gods, and the making of humans, come before the flood. That is the myth's own order. It is not a calendar year, and this page does not give it one.</p>
+    <p>Anunna, later Anunnaki, names a group of gods. Nicole Brisch's entry on Oracc says that in Sumerian texts the name can mean the highest gods, or the gods of one city, such as Eridu or Lagash. One main function was to decide the fates. The same entry says that already in Sumerian sources they are sometimes tied to the netherworld, and that after the Old Babylonian period the name is used for the gods of the netherworld, set against the Igigi, the gods of heaven.</p>
+    <p>The British Museum's summary of its Atrahasis tablet says the minor gods work in the fields and then rebel, and that humans are made from clay, saliva, and divine blood so they will serve the gods. That summary does not mention gold. The people's noise then brings plague, famine, drought, and at last a flood. In the story, the making of humans comes before the flood.</p>
+    <p>In Enuma Elish the Anunnaki are the assembled great gods. Humans are made from Kingu's blood, and they raise Esagila, a temple ziggurat, not a craft. Brisch, on tablet VI, says Marduk assigns 300 Anunna to the heavens and the same number to the netherworld.</p>
+    <p>The Sumerian King List does not name them. It says kingship came down from heaven, then a flood swept over. The huge early reigns are literary, not a calendar year.</p>
+    <p>They are not the Watchers. That story stays on the Civilization and the Watchers card. First Enoch is Jewish apocalyptic, not a Mesopotamian tablet. The slogan that the Anunnaki are the Watchers, and that both are fallen angels, is a modern mashup.</p>
+  </article>
+
+  <article class="card primary">
+    <p class="kicker">Dated, not found</p>
+    <h2>When the tablets are dated</h2>
+    <p>Brisch says the term Anunna first appears in the Post-Akkadian period, in some inscriptions of Gudea, and in a few texts of the Third Dynasty of Ur. On that same entry the Akkadian forms Anunnaku and Anunnaki continue until the Seleucid period. The entry does not print a regnal year.</p>
+    <p>The Wikipedia article on the Anunnaki gives Gudea's reign as about 2144–2124 BCE, and the Third Dynasty of Ur as about 2112–2004 BCE. Those are that article's dates for the early inscriptions. They are not a year for the myth.</p>
+    <p>The British Museum Images record for the Atrahasis tablet from Sippar prints a production date of 1635 BC, Old Babylonian, about the 17th century BC. It says copies of this story have survived from the seventeenth to the seventh century BC. Lambert and Millard's publication of those museum tablets says the Old Babylonian tablet I was written in the twelfth year of Ammisaduqa. That is a date for the tablet. It is not the time the story is set in, and it is not a find-date.</p>
+    <p>The sources do not agree on one year, so this page does not pick a midpoint. The name is already in Gudea's inscriptions. The most complete Atrahasis manuscript is the tablet the museum dates to 1635 BC, with copies still being written into the seventh century BC, and the Akkadian name, on Brisch's entry, still in use into the Seleucid period. Nothing here dates the Anunnaki, or these tablets, to 9600 BCE.</p>
+    <p class="links"><a href="https://oracc.museum.upenn.edu/amgg/listofdeities/anunna/">Oracc, Anunna</a> <a href="https://en.wikipedia.org/wiki/Anunnaki">Wikipedia, Anunnaki</a> <a href="https://www.bmimages.com/preview.asp?image=00032581001">British Museum Images, Atrahasis tablet</a></p>
+  </article>
+
+  <article class="card interpretive">
+    <p class="kicker">Modern mythology, labeled as his</p>
+    <h2>Sitchin's reading</h2>
+    <p>The alien-astronaut chronology is a modern telling. The Wikipedia article on the Anunnaki says Zecharia Sitchin, in The Twelfth Planet (1976), claimed the Anunnaki were extraterrestrials from a planet he called Nibiru, who came to Earth around 500,000 years ago to mine gold, and that they made humans as a slave species of miners. Around 500,000 years ago is his claim, as that article reports it. It is not a date on the tablets.</p>
+    <p>Michael Heiser's paper on the cuneiform sources says Sitchin claims Nibiru passes through the solar system every 3600 years. Heiser, using the Chicago Assyrian Dictionary, says the word is a crossing, a ford, or a crossing point. In the astronomical texts he reads, it is a star identified with Jupiter and with Marduk, and once with Mercury. He says it is never a planet beyond Pluto, and that the texts never tie Nibiru to the Anunnaki. The Wikipedia article says mainstream historians reject Sitchin's books. His years stay his.</p>
+    <p class="links"><a href="https://drmsh.com/michaelsheiser/nibiru.pdf">Heiser, Nibiru according to the cuneiform sources</a> <a href="https://en.wikipedia.org/wiki/Anunnaki">Wikipedia, Anunnaki</a></p>
+  </article>
+
+  <footer class="note">
+    <p><a href="index.html">Back to the timeline</a>.</p>
+    <p class="rights">All rights reserved to Studio Gulch SAS.</p>
+  </footer>
+</div>
+<script>
+  const canvas = document.getElementById("stars");
+  const ctx = canvas.getContext("2d");
+  let stars = [];
+  function layoutStars() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const n = Math.min(140, Math.floor(window.innerWidth * window.innerHeight / 14000));
+    stars = Array.from({ length: n }, () => ({
+      x: Math.random(), y: Math.random(),
+      r: Math.random() * 1.2 + 0.2,
+      a: Math.random() * 0.5 + 0.15
+    }));
+  }
+  function drawStars() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    stars.forEach((s) => {
+      ctx.fillStyle = "rgba(235, 228, 214," + s.a + ")";
+      ctx.beginPath();
+      ctx.arc(s.x * canvas.width, s.y * canvas.height, s.r, 0, Math.PI * 2);
+      ctx.fill();
+    });
+  }
+  layoutStars();
+  drawStars();
+  window.addEventListener("resize", () => { layoutStars(); drawStars(); });
+</script>
+</body>
+</html>
