@@ -318,20 +318,6 @@
     .split-myth .event::before { left: auto; right: -6px; }
     .split-science .event::before { left: -6px; }
   }
-  .anunnaki-summary { margin: 0; }
-  .anunnaki-fold { margin: 0; }
-  .anunnaki-fold > summary {
-    cursor: pointer;
-    color: var(--gold);
-    font-size: 13px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 8px 0 0;
-  }
-  .anunnaki-fold > summary:focus-visible {
-    outline: 1px solid var(--gold);
-    outline-offset: 3px;
-  }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
   }
@@ -387,6 +373,7 @@ const events = [
       "Those teachings build the tools of civilization, and they make the chaos the flood is later aimed at. The Nephilim devour everything and turn on humanity."
     ]
   },
+  { group:"lgp", track:"myth", tone:"myth", era:"Modern mythology", when:"Mythic time, before the flood", title:"The Anunnaki", hrefCard:"anunnaki.html", text:"In the ancient stories the great gods, and the making of humans, come before the flood. The alien-astronaut chronology is a modern telling. It is not a date on the tablets, and it is not the Watchers." },
   { group:"lgp", track:"myth", tone:"myth", era:"The first age", when:"Still inside the long cold", title:"Flood myths",
     paras: [
       "One memory, told four ways, not four dated catastrophes. Noah dates the flood only to his 600th year, not to a calendar year. His household rides it out in the ark.",
@@ -395,20 +382,7 @@ const events = [
     ],
     link:{ href:"flood-myths-more.html", label:"The other flood stories" },
   },
-  { group:"lgp", track:"myth", tone:"myth", era:"The first age", when:"After the waters fall", title:"After the flood", text:"Noah's sons, Shem, Ham, and Japheth, repeople the earth. One language gathers at Babel, the tower is stopped, and the scattering begins. The nations start here, still before the date Plato later gives Atlantis.",
-    oppose: {
-      track:"science", tone:"ice", era:"Tablets, not a landing", when:"Not 9600 BCE, and not the Watchers", title:"The Anunnaki",
-      paras: [
-        "The tablets. Anunna, later Anunnaki, names the highest gods, or the gods of one city. A main job was deciding fates. Later the name often means underworld gods, set against the Igigi.",
-        "Atrahasis, Old Babylonian period: the Igigi do the canal labor and rebel. A human is made from clay mixed with the blood of a slain god, so people will bear the work. That text does not mention gold.",
-        "Enuma Elish: the Anunnaki are the assembled great gods. Humans are made from Kingu's blood, then they raise Esagila, a temple ziggurat, not a craft.",
-        "The Sumerian King List does not name them. It says kingship came down from heaven, then a flood swept over. The huge early reigns are literary, not a calendar year. These texts are second- and first-millennium BCE literature. They belong here, after the flood, in the Babel stretch. They are not a landing at 9600 BCE, and they are not the Watchers.",
-        "Sitchin's reading, kept separate. The 12th Planet, 1976. He says the name means those who from heaven to Earth came, from a planet Nibiru that passes every 3,600 years, to mine gold. His dates, not the tablets': arrival about 450,000 years ago, a worker race about 300,000 years ago, a flood about 13,000 years ago or 10,900 BCE. He equates them with the Nephilim.",
-        "Assyriologists reject that reading. Michael Heiser: nibiru in the dictionaries is a crossing, a ford, or a star identified with Jupiter, once with Mercury, and with Marduk. It is never a planet past Pluto, and the Anunnaki are never tied to it. The slogan that Anunnaki equals the Watchers equals fallen angels is a modern mashup. First Enoch is Jewish apocalyptic, not a Mesopotamian tablet."
-      ]
-    },
-    connector: "Not the Watchers"
-  },
+  { group:"lgp", track:"myth", tone:"myth", era:"The first age", when:"After the waters fall", title:"After the flood", text:"Noah's sons, Shem, Ham, and Japheth, repeople the earth. One language gathers at Babel, the tower is stopped, and the scattering begins. The nations start here, still before the date Plato later gives Atlantis." },
   { group:"yd", track:"science", tone:"ice", era:"The last snap of cold", when:"About 12,900 to 11,700 years ago", title:"The Younger Dryas", hrefCard:"younger-dryas.html",
     paras: [
       "Roughly 10,900 to 9,700 BCE. A short, sharp return to cold at the very end of the glacial period, after the world had already begun to warm. This is not the deep ice of the maximum. It is the last snap. The next mark, Atlantis, is placed just after this band ends.",
@@ -416,6 +390,7 @@ const events = [
     ]
   },
   { group:"holocene", track:"myth", tone:"hinge", era:"Plato's date", when:"About 9600 BCE", title:"Atlantis falls", text:"Nine thousand years before Solon, the power beyond the Pillars of Hercules is said to sink in a single day and night of earthquake and flood. On this page that date is the first mark of the Holocene: just after the Younger Dryas, not during the long cold and not at the glacial maximum. Egypt's own long history is left off this page, apart from the Hawara monument below. The next marks are that monument, then the people of the covenant." },
+  { group:"holocene", track:"science", tone:"ice", era:"Dated tablets", when:"About 2144–2124 BCE, and later copies", title:"The Sumerian tablets", hrefCard:"anunnaki.html", text:"Inscriptions that name the Anuna are dated to the reign of Gudea, about 2144–2124 BCE, and to the Third Dynasty of Ur, about 2112–2004 BCE. The British Museum dates its most complete Atrahasis tablet to 1635 BC, and says copies of that story survive from the seventeenth to the seventh century BC. Dated, not found." },
   { group:"holocene", track:"myth", tone:"myth", era:"Egyptian monument only", when:"About 1860 BCE", title:"Hawara", hrefCard:"hawara.html", text:"Amenemhat III, 12th Dynasty, mudbrick pyramid. Kept here at about 1860 BCE. It is Egyptian. It is not 9600 BCE, and it is not a retelling of Egyptian history." },
   { group:"holocene", part:"The covenant", track:"myth", tone:"myth", era:"Traditional chronology", when:"Traditional chronology", title:"The Torah", hrefCard:"jewish-saga.html", text:"This material is from the Torah, not the Quran. Abraham, about 2000 to 1800 BCE. The Jews become enslaved. Moses leads them to freedom. They wander for a long time. They found Israel. They fight over Israel for a long time." },
   { group:"holocene", track:"myth", tone:"ice", era:"Off the spine", when:"About 593 BCE", title:"Ezekiel's wheels", text:"A religious vision. Reading it as a spacecraft is modern and retrospective.", link:{ href:"aliens.html", label:"The alien timeline" } },
@@ -494,30 +469,7 @@ function fillCard(card, ev) {
     body.textContent = t;
     parent.appendChild(body);
   }
-  if (ev.title === "The Anunnaki") {
-    card.classList.add("anunnaki-card");
-    const first = paras[0] || "";
-    let cut = first.indexOf(". ");
-    if (cut !== -1 && cut < 20) {
-      const next = first.indexOf(". ", cut + 2);
-      if (next !== -1) cut = next;
-    }
-    const shortText = cut === -1 ? first : first.slice(0, cut + 1);
-    const short = document.createElement("p");
-    short.className = "body anunnaki-summary";
-    short.textContent = shortText;
-    card.appendChild(short);
-    const details = document.createElement("details");
-    details.className = "anunnaki-fold";
-    const summary = document.createElement("summary");
-    summary.textContent = "Full analysis";
-    summary.setAttribute("aria-label", ev.title + ". " + shortText + " Full analysis");
-    details.appendChild(summary);
-    paras.forEach((t) => addBody(details, t));
-    card.appendChild(details);
-  } else {
-    paras.forEach((t) => addBody(card, t));
-  }
+  paras.forEach((t) => addBody(card, t));
   (ev.lines || []).forEach((t) => {
     if (!card.querySelector(".lines")) {
       const ul = document.createElement("ul");
