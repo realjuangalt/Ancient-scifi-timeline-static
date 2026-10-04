@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ancient Sci-fi — A timeline from Creation to the present</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07080c;
+    --ink: #ebe4d6;
+    --muted: #b1a89b;
+    --dim: #7d756b;
+    --gold: #e0bc84;
+    --gold-dim: rgba(224, 188, 132, 0.45);
+    --ice: #b7d4df;
+    --ice-dim: rgba(183, 212, 223, 0.5);
+    --hinge: #e7d7b0;
+    --card: rgba(12, 14, 20, 0.82);
+    --edge: rgba(235, 228, 214, 0.14);
+    --line: 72px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    color: var(--ink);
+    background: var(--bg);
+    font-family: Outfit, "Segoe UI", sans-serif;
+    font-weight: 300;
+    line-height: 1.55;
+    font-size: 17px;
+  }
+  canvas#stars {
+    position: fixed; inset: 0; width: 100%; height: 100%;
+    z-index: 0; pointer-events: none;
+  }
+  .dust {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(1200px 500px at 50% -10%, rgba(224, 188, 132, 0.08), transparent 60%),
+      radial-gradient(900px 700px at 80% 40%, rgba(80, 110, 140, 0.08), transparent 55%),
+      linear-gradient(180deg, transparent, rgba(0,0,0,0.35));
+  }
+  .wrap { position: relative; z-index: 1; }
+  header.top { max-width: 760px; margin: 0 auto; padding: 72px 24px 28px; }
+  .brand {
+    letter-spacing: 0.28em; text-transform: uppercase;
+    font-size: 12px; color: var(--gold); margin: 0 0 18px;
+  }
+  h1 {
+    font-family: Cinzel, Palatino, serif; font-weight: 500;
+    font-size: clamp(34px, 6vw, 58px); line-height: 1.12;
+    margin: 0 0 18px; letter-spacing: 0.01em;
+  }
+  .lede { color: var(--muted); margin: 0; max-width: 64ch; }
+  .key {
+    display: flex; flex-wrap: wrap; gap: 10px 18px;
+    margin-top: 28px; color: var(--dim); font-size: 13px; letter-spacing: 0.04em;
+  }
+  .key i {
+    display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+    margin-right: 8px; vertical-align: 1px;
+  }
+  .key .g { background: var(--gold); box-shadow: 0 0 8px var(--gold); }
+  .key .c { background: var(--ice); box-shadow: 0 0 8px var(--ice); }
+  .key .h { background: var(--hinge); box-shadow: 0 0 8px var(--hinge); }
+  main { padding: 10px 0 40px; }
+  .timeline {
+    position: relative; max-width: 980px; margin: 0 auto; padding: 8px 0 40px;
+    list-style: none;
+  }
+  .meridian, .meridian-fill {
+    position: absolute; top: 0; left: var(--line); width: 1px; pointer-events: none;
+  }
+  .meridian {
+    bottom: 0;
+    background: linear-gradient(180deg, transparent, var(--gold-dim), var(--gold-dim), transparent);
+  }
+  .meridian-fill {
+    height: 0;
+    background: linear-gradient(180deg, transparent, var(--gold));
+    box-shadow: 0 0 12px var(--gold);
+  }
+  .band { position: relative; }
+  .band-quaternary { }
+  .band-lgp {
+    background: linear-gradient(180deg, rgba(120, 158, 178, 0.13), rgba(120, 158, 178, 0.07) 8%, rgba(120, 158, 178, 0.07) 92%, rgba(120, 158, 178, 0.13));
+    box-shadow: inset 0 0 0 1px rgba(183, 212, 223, 0.16);
+  }
+  .band-lgm {
+    background: rgba(198, 226, 236, 0.09);
+    box-shadow: inset 4px 0 0 rgba(183, 212, 223, 0.55);
+  }
+  .band-yd {
+    background: rgba(232, 238, 242, 0.07);
+    box-shadow: inset 4px 0 0 rgba(232, 238, 242, 0.7);
+  }
+  .band-holocene {
+    background: linear-gradient(180deg, rgba(224, 188, 132, 0.09), rgba(224, 188, 132, 0.035));
+    box-shadow: inset 0 0 0 1px rgba(224, 188, 132, 0.14);
+  }
+  .band-after {
+    background: rgba(4, 5, 8, 0.55);
+    box-shadow: inset 0 1px 0 rgba(224, 188, 132, 0.45);
+    margin-top: 28px;
+    padding-bottom: 18px;
+  }
+  .band-mark {
+    margin: 0;
+    padding: 22px 22px 6px calc(var(--line) + 28px);
+    max-width: 640px;
+  }
+  .band-kicker {
+    margin: 0 0 4px;
+    font-family: Cinzel, Palatino, serif;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: var(--ice);
+  }
+  .band-holocene > .band-mark .band-kicker,
+  .band-after > .band-mark .band-kicker { color: var(--gold); }
+  .band-span { margin: 0; color: var(--gold); font-size: 13px; letter-spacing: 0.06em; }
+  .band-lgp > .band-mark .band-span,
+  .band-lgm > .band-mark .band-span,
+  .band-yd > .band-mark .band-span,
+  .band-quaternary > .band-mark .band-span { color: var(--ice); }
+  .band-note {
+    margin: 8px 0 0;
+    color: var(--muted);
+    font-size: 15px;
+    max-width: 58ch;
+  }
+  .band-holocene > .band-mark .band-note { color: var(--ink); }
+  .part {
+    position: relative;
+    margin: 22px 0 0;
+    padding: 8px 20px 0 calc(var(--line) + 28px);
+    font-family: Cinzel, Palatino, serif;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: var(--gold);
+  }
+  .event { position: relative; margin: 0; padding: 14px 20px 14px calc(var(--line) + 28px); }
+  .event::before {
+    content: "";
+    position: absolute;
+    left: calc(var(--line) - 5px);
+    top: 32px;
+    width: 11px; height: 11px; border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--gold);
+    box-shadow: 0 0 0 4px rgba(224, 188, 132, 0.08), 0 0 14px var(--gold);
+    z-index: 1;
+  }
+  .event[data-tone="ice"]::before { border-color: var(--ice); box-shadow: 0 0 0 4px rgba(183, 212, 223, 0.08), 0 0 14px var(--ice); }
+  .event[data-tone="hinge"]::before { border-color: var(--hinge); box-shadow: 0 0 0 4px rgba(231, 215, 176, 0.1), 0 0 14px var(--hinge); }
+  .event[data-tone="christ"]::before { border-color: #fff4d2; box-shadow: 0 0 0 4px rgba(255, 244, 210, 0.12), 0 0 16px #fff4d2; }
+  .event[data-tone="after"]::before { width: 8px; height: 8px; left: calc(var(--line) - 3px); border-color: rgba(224, 188, 132, 0.7); box-shadow: none; top: 28px; }
+  .card {
+    max-width: 560px;
+    background: var(--card);
+    border: 1px solid var(--edge);
+    border-radius: 14px;
+    padding: 18px 20px 16px;
+    backdrop-filter: blur(6px);
+  }
+  .event[data-tone="ice"] .card { border-color: rgba(183, 212, 223, 0.22); }
+  .event[data-tone="hinge"] .card { border-color: rgba(231, 215, 176, 0.28); }
+  .event[data-tone="christ"] .card { border-color: rgba(255, 244, 210, 0.28); }
+  .event[data-tone="after"] .card { padding: 12px 16px; background: rgba(10, 12, 16, 0.72); }
+  .event[data-tone="after"] h2 { font-size: 22px; }
+  .event[data-tone="after"] .body { font-size: 15.5px; }
+  .kicker {
+    display: flex; justify-content: space-between; gap: 12px;
+    margin: 0 0 8px; font-size: 12px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--dim);
+  }
+  .kicker .when { color: var(--gold); letter-spacing: 0.06em; text-align: right; }
+  .event[data-tone="ice"] .kicker .when { color: var(--ice); }
+  h2 {
+    font-family: Cinzel, Palatino, serif; font-weight: 500;
+    font-size: 26px; margin: 0 0 8px; line-height: 1.2;
+  }
+  .body { margin: 0; color: var(--muted); }
+  footer.note p.rights { margin-top: 18px; letter-spacing: 0.04em; }
+  footer.note {
+    max-width: 760px; margin: 0 auto; padding: 10px 24px 80px;
+    color: var(--dim); font-size: 14px;
+  }
+  @media (min-width: 900px) {
+    :root { --line: 50%; }
+    .band-mark, .part { padding-left: calc(var(--line) + 36px); }
+    .event { padding: 16px 0; }
+    .card { max-width: none; }
+    .event.side-left { padding-right: calc(50% + 36px); padding-left: 24px; }
+    .event.side-right { padding-left: calc(50% + 36px); padding-right: 24px; }
+    .event.side-left .card { margin-left: auto; }
+  }
+
+  .reading {
+    max-width: 760px;
+    margin: 0 20px 8px calc(var(--line) + 28px);
+    color: var(--muted);
+    font-size: 15px;
+  }
+  .reading strong { color: var(--gold); font-weight: 500; }
+  a.inline-link { color: var(--gold); }
+  a.card-link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+  }
+  a.card-link:hover { border-color: rgba(224, 188, 132, 0.45); }
+  .opposed {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 0;
+  }
+  .slot-myth, .slot-science, .slot-theory { min-width: 0; }
+  .connector {
+    margin: 0;
+    padding: 0 20px 0 calc(var(--line) + 28px);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-size: 11px;
+    color: var(--gold);
+  }
+  .bracket { margin: 0; }
+
+  .bracket-note { margin: 0 20px 8px calc(var(--line) + 28px); }
+
+  .bracket .bracket-kicker {
+    margin: 0 0 8px;
+    padding: 8px 20px 0 calc(var(--line) + 28px);
+    font-family: Cinzel, Palatino, serif;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: var(--ice);
+  }
+  .bracket .subhead {
+    font-family: Cinzel, Palatino, serif;
+    font-weight: 500;
+    font-size: 18px;
+    margin: 0 0 6px;
+    line-height: 1.25;
+  }
+  .bracket .card + .card, .bracket .event + .event { margin-top: 0; }
+  .lines { margin: 8px 0 0; padding: 0; list-style: none; color: var(--muted); }
+  .lines li { margin: 0 0 4px; }
+  .split { display: block; }
+  @media (min-width: 900px) {
+    .reading { margin-left: 24px; margin-right: 24px; text-align: center; }
+    .opposed {
+      grid-template-columns: 1fr minmax(180px, 0.72fr) 1fr;
+      gap: 18px;
+      padding: 0 24px;
+      align-items: start;
+    }
+    .opposed .event { padding: 16px 0; }
+    .opposed .event.side-left,
+    .opposed .event.side-right { padding: 16px 0; }
+    .opposed { align-items: start; }
+    .slot-myth { grid-column: 1; grid-row: 1; }
+    .slot-theory { grid-column: 2; grid-row: 1; display: flex; align-items: center; justify-content: center; }
+    .slot-science { grid-column: 3; grid-row: 1; }
+    .connector {
+      position: static;
+      transform: none;
+      padding: 0 8px;
+      margin: 0;
+      background: transparent;
+      text-align: center;
+      z-index: 2;
+    }
+    .connector::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 46px;
+      height: 1px;
+      transform: translate(-50%, -50%);
+      background: var(--gold);
+      z-index: -1;
+    }
+    .opposed .event::before { display: none; }
+    .card .body + .body { margin-top: 8px; }
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+    }
+    .split-myth .event,
+    .split-science .event { padding: 14px 22px; }
+    .split-myth .event.side-left,
+    .split-science .event.side-right { padding: 14px 22px; }
+
+    .split .bracket-kicker,
+    .split .bracket-note { padding-left: 22px; margin-left: 0; margin-right: 22px; }
+    .split-myth .event::before { left: auto; right: -6px; }
+    .split-science .event::before { left: -6px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+<canvas id="stars" aria-hidden="true"></canvas>
+<div class="dust" aria-hidden="true"></div>
+<div class="wrap">
+  <header class="top">
+    <p class="brand">Ancient Sci-fi</p>
+    <h1>From the making of the world to the age we are living in</h1>
+    <p class="lede">One line, read downward. Tinted bands are the ice age itself: the long glacial cold, the peak of the ice, the Younger Dryas, then the warm Holocene. The first age is the story as this universe tells it, set inside that cold. Atlantis is not in the deep freeze. It sits just after the Younger Dryas ends. From Abraham on, the years are the familiar traditional chronology, rounded on purpose. The myth track is the story. The science track, opposite it, is geology and other people's claims. A bracket is not a second date.</p>
+    <div class="key">
+      <span><i class="c"></i>Glacial bands, still inside the Quaternary</span>
+      <span><i class="h"></i>Atlantis, just after the cold snap</span>
+      <span><i class="g"></i>The covenant, and the long run after</span>
+      <span><i class="h"></i>Middle lane, a theory, not a date</span>
+      <span><i class="c"></i>Science track and brackets, not extra years</span>
+    </div>
+  </header>
+  <main>
+    <div class="timeline" id="line">
+      <div class="meridian" aria-hidden="true"></div>
+      <div class="meridian-fill" id="fill" aria-hidden="true"></div>
+    </div>
+  </main>
+  <footer class="note">
+    <p>The Quaternary ice age began about 2.6 million years ago and has not ended. We are in a warm pause inside it, the Holocene, which starts about 11,700 years ago. Plato's Atlantis date, nine thousand years before Solon, is about 9600 BCE, just after the Younger Dryas ends, not during the Last Glacial Maximum. The glacial dates are geology. The years from Abraham to Christ are traditional, and several are disputed by centuries. Egypt's own history is left off this page, except the Hawara monument, the slavery, and the Exodus. Creation is not given a calendar year. Brackets are readings, reports, or someone else's theory. After the resurrection the page only marks touchpoints.</p>
+    <p class="rights">All rights reserved to Studio Gulch SAS.</p>
+</footer>
+</div>
+<script>
+const events = [
+  { group:"lgp", track:"science", tone:"ice", era:"The long cold", when:"About 115,000 to 11,700 years ago", title:"The age of ice", text:"The last glacial period is the climate this universe gives the first age. Ice sheets advance and retreat across a hundred thousand years. The story never dates Eden or the flood. The ice is simply the world those chapters walk through, and it does not let go until the Younger Dryas ends." },
+  { group:"lgm", track:"science", tone:"ice", era:"The deep freeze", when:"About 26,000 to 19,000 years ago", title:"The ice at its peak", text:"The Last Glacial Maximum. The ice is at its thickest, and the sea sits about 130 to 134 meters lower than today. Coasts that are underwater now were dry ground. Any shore-city of this age would not be on a modern map." },
+  { group:"lgp", track:"myth", part:"The first age", tone:"myth", era:"The first age", when:"Before the flood", title:"The Garden and the fall", text:"They are placed in Eden and given one boundary. They cross it. Exile begins, and the way back to the garden is shut.",
+    oppose: {
+      track:"science", tone:"ice", era:"Science track", when:"Her theory, not a date for Eden", title:"Lynne Isbell",
+      paras: [
+        "Lynne Isbell, The Fruit, the Tree, and the Serpent, 2009, Harvard University Press. Peterson dates it 2011 in 12 Rules for Life and spells her Lynn.",
+        "Thesis: snake predation over tens of millions of years selected for sharper vision, larger visual brains, and fast threat detection. She names the koniocellular path, the superior colliculus, the pulvinar, the parvocellular path, and the amygdala as part of an older fear system.",
+        "Fruit: her 2006 paper says ripe fruit or nectar was a requirement and a cause of the visual brain, but not the ultimate cause. Sugars, in her account, offset the metabolic cost. Her later essay says this was not the main cause but allowed the vision, and that it began before upright walking and tool-making.",
+        "Later and separate: main brain-size increases after about 2 million years ago. Aiello and Wheeler, 1995, point to animal foods. Early bipedalism about 7 to 4 million years ago, still argued.",
+        "Support: a 2013 Davis news report. Macaque neurons responded faster and more strongly to snake pictures than to faces or shapes, in monkeys raised without seeing a real snake. The journal paper was not opened. This line is the university news story.",
+        "Criticism: Wheeler, Bradley, and Kamilar, 2011, Journal of Human Evolution. No link between forward-facing eyes and a shared history with venomous snakes. Species less likely to be snake prey had more orbital convergence. Snake-spotting may be a side effect of stereoscopic vision.",
+        "Peterson's own addition, labeled as his: the snake gave us the vision of God. In 12 Rules for Life he names her, spells her Lynn, and dates the book 2011. The ripe-fruit sentence beside that is footnoted to other researchers, not to her."
+      ]
+    },
+    connector: "Connector to Eden"
+  },
+  { group:"lgp", track:"myth", tone:"myth", era:"The first age", when:"Before the flood", title:"Cain and Abel",
+    paras: [
+      "Cain tills the ground. Abel keeps flocks. Both bring offerings. God favors Abel's, and Cain's anger follows.",
+      "Cain kills Abel. God asks where his brother is. Cain is marked, sent to the land of Nod, east of Eden, and builds the first city, named for his son Enoch."
+    ]
+  },
+  { group:"lgp", track:"myth", tone:"myth", era:"The first age", when:"Before the flood", title:"Civilization and the Watchers", hrefCard:"enoch.html",
+    paras: [
+      "After the first city, civilization rises as the Watchers descend. Two hundred angels, led by Semyaza, take human wives. Azazel teaches metalworking and weapons. Others teach sorcery, astrology, and cosmetics.",
+      "Those teachings build the tools of civilization, and they make the chaos the flood is later aimed at. The Nephilim devour everything and turn on humanity."
+    ]
+  },
+  { group:"lgp", track:"myth", tone:"myth", era:"The first age", when:"Still inside the long cold", title:"Flood myths",
+    paras: [
+      "One memory, told four ways, not four dated catastrophes. Noah dates the flood only to his 600th year, not to a calendar year. His household rides it out in the ark.",
+      "Atrahasis is a tablet of about 1650 BCE. Ziusudra and Utnapishtim are the other two Mesopotamian tellings.",
+      "In this universe the flood sits before Atlantis, still inside the glacial age, and it is not given a year of its own."
+    ],
+    link:{ href:"flood-myths.html", label:"The flood stories" },
+    bracket: {
+      kicker: "Other flood stories",
+      note: "Same family of stories, off the spine. Uncalibrated, except the deduced placements named here. Only Plato's Atlantis flood self-dates near 9600 BCE. That card is not moved.",
+      items: [
+        { title:"Deucalion", when:"Deduced placement", text:"A Greek flood, mapped here to the same Mesopotamian memory, not to Atlantis and not to 9600 BCE." },
+        { title:"Ymir", when:"Uncalibrated", text:"Norse: Ymir's blood is a creation flood, not Noah's flood." },
+        { title:"Manu", when:"Uncalibrated", text:"A cosmic-age story. The earliest version is a fish and a ship. The billion-year pralaya is later. This page does not date it." },
+        { title:"Yu", when:"Deduced placement", text:"River drainage, traditional late 3rd millennium BCE. A deduced placement, not a flood year in the text." },
+        { title:"Maya and Aztec", when:"Uncalibrated", text:"Repeating world-age endings, not one historical flood." },
+        { title:"Hopi", when:"Uncalibrated", text:"Climbing out of a flooded underworld on plants." },
+        { title:"Shaped by later collectors", when:"Not independent ancient dates", text:"Choctaw, the later Hawaiian houseboat, Maori, and Yoruba are flagged by collectors as missionary-shaped or Muslim-shaped. They are not treated here as independent ancient dates." },
+        { title:"Older Hawaiian report", when:"Uncalibrated", text:"Two people on Mauna Kea, no ship. Not merged with the houseboat." },
+        { title:"Yima", when:"Uncalibrated", text:"Iranian: a sealed enclosure against winter, not an ark." },
+        { title:"Cessair", when:"Not an independent date", text:"Irish: Noah's flood on purpose, said to arrive forty days early." },
+        { title:"What is not dated", when:"Uncalibrated", text:"Every other flood here is uncalibrated. The deduced placements are Deucalion, mapped to the Mesopotamian memory, and Yu. Only Plato's Atlantis flood self-dates near 9600 BCE." }
+      ]
+    }
+  },
+  { group:"lgp", track:"myth", tone:"myth", era:"The first age", when:"After the waters fall", title:"After the flood", text:"Noah's sons, Shem, Ham, and Japheth, repeople the earth. One language gathers at Babel, the tower is stopped, and the scattering begins. The nations start here, still before the date Plato later gives Atlantis.",
+    oppose: {
+      track:"science", tone:"ice", era:"Tablets, not a landing", when:"Not 9600 BCE, and not the Watchers", title:"The Anunnaki",
+      paras: [
+        "The tablets. Anunna, later Anunnaki, names the highest gods, or the gods of one city. A main job was deciding fates. Later the name often means underworld gods, set against the Igigi.",
+        "Atrahasis, Old Babylonian period: the Igigi do the canal labor and rebel. A human is made from clay mixed with the blood of a slain god, so people will bear the work. That text does not mention gold.",
+        "Enuma Elish: the Anunnaki are the assembled great gods. Humans are made from Kingu's blood, then they raise Esagila, a temple ziggurat, not a craft.",
+        "The Sumerian King List does not name them. It says kingship came down from heaven, then a flood swept over. The huge early reigns are literary, not a calendar year. These texts are second- and first-millennium BCE literature. They belong here, after the flood, in the Babel stretch. They are not a landing at 9600 BCE, and they are not the Watchers.",
+        "Sitchin's reading, kept separate. The 12th Planet, 1976. He says the name means those who from heaven to Earth came, from a planet Nibiru that passes every 3,600 years, to mine gold. His dates, not the tablets': arrival about 450,000 years ago, a worker race about 300,000 years ago, a flood about 13,000 years ago or 10,900 BCE. He equates them with the Nephilim.",
+        "Assyriologists reject that reading. Michael Heiser: nibiru in the dictionaries is a crossing, a ford, or a star identified with Jupiter, once with Mercury, and with Marduk. It is never a planet past Pluto, and the Anunnaki are never tied to it. The slogan that Anunnaki equals the Watchers equals fallen angels is a modern mashup. First Enoch is Jewish apocalyptic, not a Mesopotamian tablet."
+      ]
+    },
+    connector: "Not the Watchers"
+  },
+  { group:"yd", track:"science", tone:"ice", era:"The last snap of cold", when:"About 12,900 to 11,700 years ago", title:"The Younger Dryas", text:"Roughly 10,900 to 9,700 BCE. A short, sharp return to cold at the very end of the glacial period, after the world had already begun to warm. This is not the deep ice of the maximum. It is the last snap. The next mark, Atlantis, is placed just after this band ends.",
+    middle: {
+      track:"theory", tone:"hinge", era:"Theory bracket", when:"Not this page's date for the ice", title:"Graham Hancock",
+      paras: [
+        "His theory, not a geological date. Two impacts: one about 12,800 years ago, and a second about 9600 BCE. He aligns 9600 BCE with Plato and with Göbekli Tepe's monumental phase, about 9600 to 8200 BCE.",
+        "On Joe Rogan Experience #872, with Randall Carlson, November 16, 2016, an automated transcript has him describe the Taurid stream as debris of a giant comet that entered the inner solar system about 20,000 years ago, broke into fragments, and still crosses Earth's path. Earth passes through that stream twice a year. He says pieces hit the North American ice cap 12,800 years ago, and again about 11,600 years ago. He ties the Tunguska explosion of June 30, 1908, to the June crossing. No official transcript. The transcript does not say the comet stayed visible for a long time. That line is Martin Sweatman's, not Hancock's.",
+        "He tells the same comet story on #725, #1897, and #2051. On #1897 the automated transcript dates the breakup to 12,800 years ago, which disagrees with the 20,000-year entry on #872.",
+        "The scientific counter sits in this same bracket: no crater, no impact glass, no unambiguous debris field, and 9600 BCE lines up suspiciously with Plato."
+      ],
+      links: [
+        { href:"https://www.jrepodcast.com/episode/joe-rogan-experience-872-graham-hancock-randall-carlson/", label:"JRE #872 page" },
+        { href:"https://www.youtube.com/watch?v=0H5LCLljJho", label:"YouTube" }
+      ]
+    }
+  },
+  { group:"holocene", track:"myth", tone:"hinge", era:"Plato's date", when:"About 9600 BCE", title:"Atlantis falls", text:"Nine thousand years before Solon, the power beyond the Pillars of Hercules is said to sink in a single day and night of earthquake and flood. On this page that date is the first mark of the Holocene: just after the Younger Dryas, not during the long cold and not at the glacial maximum. Egypt's own long history is left off this page, apart from the Hawara monument below. The next marks are that monument, then the people of the covenant." },
+  { group:"holocene", track:"myth", tone:"myth", era:"Egyptian monument only", when:"About 1860 BCE", title:"Hawara", text:"Amenemhat III, 12th Dynasty, mudbrick pyramid. His first pyramid, at Dahshur, was unused. Kept here at about 1860 BCE. It is Egyptian. It is not 9600 BCE, and it is not a retelling of Egyptian history.",
+    paras: [
+      "Herodotus, about the fifth century BCE, described a stone labyrinth a little beyond Lake Moeris: twelve courts, three thousand chambers. He saw the upper ones only. He credited twelve kings, not Amenemhat. Strabo names the builder Imandes. Pliny says a labyrinth stood in the Heracleopolis nome.",
+      "Petrie in 1888 found a limestone chip bed about 1,000 by 800 feet south of the pyramid and said the plan was lost to Roman quarrying. He did not find an intact roof.",
+      "The muon scan people cite is ScanPyramids inside Khufu at Giza, the 2017 void above the Grand Gallery. No peer-reviewed Hawara muon scan was found. The researcher named for one is a waste-management scholar with no Hawara record.",
+      "A 2010 survey found shallow anomalies whose layout matches Herodotus, and reported no metal and no void. A 2015 radar survey was about groundwater, to about 20 metres.",
+      "The room-sized metal object called Dippy, about 40 metres long, comes from a 2025 newsletter retelling a private 2015 briefing. The writer was not in the room, the images were under a non-disclosure agreement, and no original report was found. The alien craft and the stargate are that same newsletter's speculation."
+    ]
+  },
+  { group:"holocene", part:"The covenant", track:"myth", tone:"myth", era:"Traditional chronology", when:"Early 2nd millennium BCE", title:"Abraham leaves Ur", text:"A man leaves the city of Ur. The promise is a land, a people, and a blessing that will run out to the nations. The line that reaches Christ is this one." },
+  { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"After the call", title:"The covenant", text:"The promise is cut and the household is marked off from the nations that scattered after Babel. From here the story is no longer about the whole world at once. It follows one family." },
+  { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"The next generation", title:"Isaac", text:"The son of the promise, born against the odds. The covenant passes to him, not to every child of Abraham." },
+  { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"The next generation", title:"Jacob and the twelve tribes", text:"Jacob, later called Israel, fathers the twelve. The people who will go down into Egypt, and come back out, are all in that family." },
+  { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"The centuries in Egypt", title:"Slavery in Egypt", text:"The family becomes a nation inside Egypt, and then a nation enslaved. This is the Egypt of the oppression, not a history of the pharaohs." },
+  { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"About 1446 BCE, the early date", title:"Moses and the Exodus", text:"Moses leads them out. The sea closes on the pursuit. They leave as the people of the covenant, with the wilderness in front of them. The later date, in the 1200s BCE, is the main alternative. This page uses the early one." },
+  { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"The same season", title:"The Law at Sinai", text:"The mountain smokes. The law is given: who they are, and how a people taken out of Egypt is to live." },
+  { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"Forty years", title:"The wilderness", text:"The generation that would not enter the land dies on the way. Their children grow up facing the Jordan." },
+  { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"About 1400 BCE", title:"Joshua and Canaan", text:"They cross the river. Jericho falls. The land named to Abraham is taken and divided among the tribes." },
+  { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"The long middle", title:"The judges", text:"A rough, uneven age. Deliverers rise when the people are overrun, and the land keeps slipping back. There is still no king." },
+  { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"About 1050 BCE", title:"Saul", text:"The first king. He is anointed, he wins, and he fails. The kingdom is already looking past him." },
+  { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"About 1010 BCE", title:"David", text:"The shepherd king takes Jerusalem and holds the kingdom. The promise narrows again: a son of David, and his throne." },
+  { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"About 970 BCE, Temple about 960", title:"Solomon and the Temple", text:"The kingdom is at its widest. A house is built in Jerusalem for the name that had lived in a tent since Sinai." },
+  { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"About 930 BCE", title:"The kingdom splits", text:"After Solomon the kingdom tears. Israel in the north, Judah in the south. Two thrones, and one story coming apart." },
+  { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"722 BCE", title:"Assyria takes the north", text:"Assyria destroys the northern kingdom and deports Israel. Judah is what remains." },
+  { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"586 BCE", title:"The Babylonian exile", text:"Babylon burns the Temple Solomon built and carries Judah away. Jerusalem is empty, and the line of David looks finished." },
+  { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"538 BCE", title:"The return under Cyrus", text:"Cyrus of Persia lets the exiles go home. They come back to a ruined city, not to the kingdom they lost." },
+  { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"About 516 BCE", title:"The Second Temple", text:"A new house rises on the old ground, poorer than Solomon's. It is the Temple still standing, rebuilt again in a later age, when Rome arrives." },
+  { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"167 BCE", title:"The Maccabean revolt", text:"When the Temple is desecrated, a revolt takes it back. For a short while Judah rules itself. It does not last." },
+  { group:"holocene", track:"myth", tone:"myth", era:"Traditional chronology", when:"63 BCE", title:"Rome", text:"Pompey takes Jerusalem. The land of the promise is under Rome, and the throne of David is not on it." },
+  { group:"holocene", part:"The Christ", track:"myth", tone:"christ", era:"The end of the age", when:"About 4 BCE", title:"The birth", text:"Jesus is born in Bethlehem, in the line this whole second half of the page has been following, while a Roman census is in the land." },
+  { group:"holocene", track:"myth", tone:"christ", era:"The end of the age", when:"About 27 to 30 CE", title:"The ministry", text:"He announces the kingdom, heals, and teaches. The covenant, the law, and the Temple are all reread around him." },
+  { group:"holocene", track:"myth", tone:"christ", era:"The end of the age", when:"About 30 CE", title:"The cross", text:"He is executed outside Jerusalem under Roman authority. The Temple is still standing. The people who followed him scatter." },
+  { group:"holocene", track:"myth", tone:"christ", era:"The end of the age", when:"The third day", title:"The resurrection", text:"The tomb is empty, and the ones who ran come back saying they have seen him. On the dense spine, this is the last milestone. The page continues below only in touchpoints. Everything above is what this universe says that morning is answering." },
+  { group:"after", track:"myth", part:"After the spine", tone:"after", era:"After Christ", when:"476 CE", title:"The fall of Rome", text:"The western empire comes apart. The usual date for the end of Rome in the west is 476." },
+  { group:"after", track:"myth", tone:"after", era:"After Christ", when:"The medieval centuries", title:"The Dark Ages and the medieval world", text:"A long middle between Rome and the modern world, often called the Dark Ages, and better read as the medieval centuries. Kingdoms, the church, and the story above them still organize life." },
+  { group:"after", track:"myth", tone:"after", era:"After Christ", when:"17th and 18th centuries", title:"The Enlightenment", text:"Reason, experiment, and argument about authority move to the center of European thought." },
+  { group:"after", track:"myth", tone:"after", era:"After Christ", when:"Late 18th into the 19th century", title:"The Industrial Revolution", text:"Machines, coal, and factories remake work and the city. The pace of ordinary life changes." },
+  { group:"after", track:"myth", tone:"after", era:"After Christ", when:"1914 to 1918", title:"World War I", text:"A continental war pulls down old empires and leaves the century already broken." },
+  { group:"after", track:"myth", tone:"after", era:"After Christ", when:"1939 to 1945", title:"World War II", text:"A second and wider war. The map that follows is the one the present still recognizes." },
+  { group:"after", track:"myth", tone:"after", era:"After Christ", when:"Late 20th century to now", title:"The digital age", text:"Computation, networks, and a planet that can see itself in real time. This is the last touchpoint. The line stops in the age we are living in." }
+];
+
+const sightingBracket = {
+  kicker: "Sighting bracket",
+  note: "Beside the last two thousand years. Not on the ancient spine. Reports and official replies, not confirmed visits.",
+  items: [
+    { title:"Ezekiel's wheels", when:"About 593 BCE", text:"A religious vision. Reading it as a spacecraft is modern and retrospective." },
+    { title:"Mystery airships", when:"1896 to 1897", text:"United States mystery airship wave." },
+    { title:"Kenneth Arnold", when:"June 24, 1947", text:"Near Mount Rainier. This is the flying-saucer sighting, not Roswell." },
+    { title:"Roswell", when:"July 1947", text:"Separate from Arnold. The base announced a flying disc and the next day called it a balloon. Later Air Force reports said Mogul balloon trains, and that body stories match crash-test dummies from other years." },
+    { title:"Washington, D.C.", when:"July 1952", text:"Radar and some lights. The public line was temperature inversion." },
+    { title:"Betty and Barney Hill", when:"September 1961", text:"New Hampshire. The template abduction. No government confirmation." },
+    { title:"Jimmy Carter", when:"January 6, 1969", text:"In Leary, Georgia. 1977 is when the Washington Post wrote about it, not the sighting." },
+    { title:"Tehran", when:"September 1976", text:"Iranian jets scrambled. No public confirmation of an alien craft." },
+    { title:"Rendlesham Forest", when:"December 1980", text:"Lights reported by U.S. airmen. The British ministry said no defence threat. A lighthouse is the prosaic account of some of the lights." },
+    { title:"Phoenix Lights", when:"March 13, 1997", text:"The Guard later said A-10 flares explain the videotaped string, not every early report." },
+    { title:"Nimitz tic tac", when:"November 14, 2004", text:"Fravor and Dietrich. The Navy later said the videos are real and unidentified, which is not confirmation of an alien craft." },
+    { title:"O'Hare", when:"November 7, 2006", text:"United employees reported a disc. The FAA said radar showed nothing unusual." },
+    { title:"New York Times", when:"December 16, 2017", text:"On the Pentagon program. The Pentagon later said Luis Elizondo had no assigned role on it. He disputes that." },
+    { title:"Navy videos", when:"April 27, 2020", text:"FLIR, Gimbal, and GoFast, called authentic and unexplained, not confirmed alien craft." },
+    { title:"David Grusch", when:"July 26, 2023", text:"House hearing. He alleged crash retrievals and non-human biologics from what others told him. He said he had not seen the craft or the bodies. The Defense Department said investigators found nothing verifiable." },
+    { title:"Joe Rogan Experience 2560", when:"September 30, 2026", text:"David Grusch, Joe Rogan Experience number 2560. He says greys come in three or four sizes, taller ones running the show, and at least two reptilian kinds. Bodies he says he saw on video were pale, long-haired, and human-looking, not greys. No full transcript was found.",
+      links: [{ href:"https://www.youtube.com/watch?v=dYPXINFcvmI", label:"YouTube" }]
+    }
+  ]
+};
+
+
+const alienBracket = {
+  kicker: "Alien types",
+  note: "Beside the sighting column. Names from stories, not confirmed species.",
+  items: [
+    { title:"Alien types", when:"Not confirmed species", text:"Short lines only.",
+      lines: [
+        "Greys.",
+        "Tall greys.",
+        "Little greys.",
+        "Tall whites.",
+        "Nordics.",
+        "Reptilians, two kinds as David Grusch described them on the show: a large gorilla-looking then scaly kind, and a more humanoid kind. He said he never saw one himself.",
+        "Mantis beings.",
+        "Hybrids.",
+        "Little green men."
+      ]
+    }
+  ]
+};
+
+const line = document.getElementById("line");
+const fill = document.getElementById("fill");
+
+function addMark(parent, kicker, span, note) {
+  const mark = document.createElement("div");
+  mark.className = "band-mark";
+  const k = document.createElement("p");
+  k.className = "band-kicker";
+  k.textContent = kicker;
+  const s = document.createElement("p");
+  s.className = "band-span";
+  s.textContent = span;
+  mark.appendChild(k);
+  mark.appendChild(s);
+  if (note) {
+    const n = document.createElement("p");
+    n.className = "band-note";
+    n.textContent = note;
+    mark.appendChild(n);
+  }
+  parent.appendChild(mark);
+}
+
+function openSection(className, label, span, note) {
+  const section = document.createElement("section");
+  section.className = "band " + className;
+  addMark(section, label, span, note);
+  return section;
+}
+
+function sideName(track) {
+  return track === "science" ? "right" : "left";
+}
+
+function fillCard(card, ev) {
+  const kicker = document.createElement("p");
+  kicker.className = "kicker";
+  const era = document.createElement("span");
+  era.textContent = ev.era || "";
+  const when = document.createElement("span");
+  when.className = "when";
+  when.textContent = ev.when || "";
+  kicker.appendChild(era);
+  kicker.appendChild(when);
+  const h = document.createElement(ev.sub ? "h3" : "h2");
+  if (ev.sub) h.className = "subhead";
+  h.textContent = ev.title;
+  card.appendChild(kicker);
+  card.appendChild(h);
+  const paras = ev.paras || (ev.text ? [ev.text] : []);
+  paras.forEach((t) => {
+    const body = document.createElement("p");
+    body.className = "body";
+    body.textContent = t;
+    card.appendChild(body);
+  });
+  (ev.lines || []).forEach((t) => {
+    if (!card.querySelector(".lines")) {
+      const ul = document.createElement("ul");
+      ul.className = "lines";
+      card.appendChild(ul);
+    }
+    const li = document.createElement("li");
+    li.textContent = t;
+    card.querySelector(".lines").appendChild(li);
+  });
+  (ev.links || []).forEach((link) => {
+    const a = document.createElement("a");
+    a.className = "inline-link";
+    a.href = link.href;
+    a.textContent = link.label;
+    const p = document.createElement("p");
+    p.className = "body";
+    p.appendChild(a);
+    card.appendChild(p);
+  });
+  if (ev.link) {
+    const a = document.createElement("a");
+    a.className = "inline-link";
+    a.href = ev.link.href;
+    a.textContent = ev.link.label;
+    const p = document.createElement("p");
+    p.className = "body";
+    p.appendChild(a);
+    card.appendChild(p);
+  }
+}
+
+function articleFor(ev) {
+  const li = document.createElement("article");
+  li.className = "event side-" + sideName(ev.track) + " track-" + (ev.track || "myth");
+  li.dataset.tone = ev.tone || "myth";
+  const card = document.createElement(ev.hrefCard ? "a" : "div");
+  card.className = "card" + (ev.hrefCard ? " card-link" : "");
+  if (ev.hrefCard) card.href = ev.hrefCard;
+  fillCard(card, ev);
+  li.appendChild(card);
+  return li;
+}
+
+function opposedWrap(ev) {
+  const wrap = document.createElement("div");
+  wrap.className = "opposed" + (ev.middle ? " has-theory" : "");
+  const myth = document.createElement("div");
+  myth.className = "slot-myth";
+  const theory = document.createElement("div");
+  theory.className = "slot-theory";
+  const science = document.createElement("div");
+  science.className = "slot-science";
+  (ev.track === "science" ? science : myth).appendChild(articleFor(ev));
+  if (ev.oppose) {
+    (ev.oppose.track === "myth" ? myth : science).appendChild(articleFor(ev.oppose));
+  }
+  if (ev.middle) {
+    theory.appendChild(articleFor(ev.middle));
+  } else if (ev.connector) {
+    const label = document.createElement("p");
+    label.className = "connector";
+    label.textContent = ev.connector;
+    theory.appendChild(label);
+  }
+  wrap.appendChild(myth);
+  wrap.appendChild(theory);
+  wrap.appendChild(science);
+  return wrap;
+}
+
+function bracketEl(spec) {
+  const aside = document.createElement("aside");
+  aside.className = "bracket";
+  const k = document.createElement("p");
+  k.className = "bracket-kicker";
+  k.textContent = spec.kicker;
+  aside.appendChild(k);
+  if (spec.note) {
+    const n = document.createElement("p");
+    n.className = "band-note";
+    n.className = "band-note bracket-note";
+    n.textContent = spec.note;
+    aside.appendChild(n);
+  }
+  spec.items.forEach((item) => {
+    const li = document.createElement("article");
+    li.className = "event side-right track-science";
+    li.dataset.tone = "ice";
+    const card = document.createElement("div");
+    card.className = "card";
+    fillCard(card, Object.assign({ sub: true, era: "Off the spine", tone: "ice" }, item));
+    li.appendChild(card);
+    aside.appendChild(li);
+  });
+  return aside;
+}
+
+const quaternary = openSection(
+  "band-quaternary",
+  "Quaternary ice age",
+  "From about 2.6 million years ago. We are still in it.",
+  "Every milestone below sits inside the Quaternary. The bands change when the climate does: a long glacial, the peak of the ice, a last cold snap, then the warm period we are in."
+);
+const lgp = openSection(
+  "band-lgp",
+  "Last Glacial Period",
+  "About 115,000 to 11,700 years ago",
+  "The latest glacial inside the Quaternary. The first age of the story is set in this cold. It runs through the peak of the ice and ends only when the Younger Dryas ends."
+);
+const holocene = openSection(
+  "band-holocene",
+  "Holocene",
+  "The warm period, from about 11,700 years ago",
+  "This band starts when the Younger Dryas ends. Plato's date for Atlantis, about 9600 BCE, falls just after that ending. It is the opening of the warm period, not the deep freeze of the ice at its peak. At 9600 BCE the sea was still rising. Near-modern sea level is about 7,000 to 6,000 years ago."
+);
+
+const opening = document.createElement("div");
+opening.className = "opposed";
+opening.id = "opening";
+const openLeft = document.createElement("div");
+openLeft.className = "slot-myth";
+openLeft.appendChild(articleFor({
+  track:"myth", tone:"myth", era:"Genesis", when:"No calendar year", title:"Creation",
+  text:"In the beginning the world is spoken into order. Light, a vault of sky, land and sea, living things, and then a human pair. Every later mark on this line starts from that making.",
+  link:{ href:"creation-myths.html", label:"Other creation stories" }
+}));
+const openRight = document.createElement("div");
+openRight.className = "slot-science";
+openRight.appendChild(articleFor({
+  track:"science", tone:"ice", era:"Science track", when:"Not a year for Creation", title:"The Big Bang",
+  text:"About 13.8 billion years ago. One opening mark only. This page does not walk through the rest of cosmic history, and it does not turn this pairing into a calendar year for Creation."
+}));
+const openConnector = document.createElement("p");
+openConnector.className = "connector";
+openConnector.textContent = "Big Bang pairing";
+const openMid = document.createElement("div");
+openMid.className = "slot-theory";
+openMid.appendChild(openConnector);
+opening.appendChild(openLeft);
+opening.appendChild(openMid);
+opening.appendChild(openRight);
+line.appendChild(opening);
+const ussher = document.createElement("p");
+ussher.className = "reading";
+ussher.innerHTML = "<strong>Ussher's reading.</strong> He dates Creation to 4004 BCE. That chronology is his, not a year this page gives the Genesis opening.";
+line.appendChild(ussher);
+
+line.appendChild(quaternary);
+quaternary.appendChild(lgp);
+
+const made = { lgp: lgp, holocene: holocene };
+function nested(name, className, label, span, note, parent) {
+  if (!made[name]) {
+    made[name] = openSection(className, label, span, note);
+    parent.appendChild(made[name]);
+  }
+  return made[name];
+}
+
+const afterCards = [];
+let afterHost = null;
+
+events.forEach((ev) => {
+  let host = lgp;
+  if (ev.group === "lgm") {
+    host = nested("lgm", "band-lgm", "Last Glacial Maximum", "About 26,000 to 19,000 years ago", "The deep freeze. Ice at its thickest, inside the longer glacial period, many thousands of years before Atlantis.", lgp);
+  } else if (ev.group === "yd") {
+    host = nested("yd", "band-yd", "Younger Dryas", "About 12,900 to 11,700 years ago", "The last snap of cold, at the very end of the glacial period. When this band ends, the warm Holocene begins. Atlantis is the next milestone, just outside this band.", lgp);
+  } else if (ev.group === "holocene") {
+    if (!holocene.parentNode) quaternary.appendChild(holocene);
+    host = holocene;
+  } else if (ev.group === "after") {
+    if (!holocene.parentNode) quaternary.appendChild(holocene);
+    host = nested("after", "band-after", "The last two thousand years", "After the resurrection, in brief", "A separate stretch, on purpose thinner than the spine above. Touchpoints only, from the fall of Rome to the age we are in. Still the Holocene. Still the Quaternary.", holocene);
+    afterHost = host;
+  }
+  if (ev.group === "after") {
+    if (ev.part) {
+      const part = document.createElement("div");
+      part.className = "part";
+      part.textContent = ev.part;
+      host.appendChild(part);
+    }
+    afterCards.push(articleFor(ev));
+    return;
+  }
+  if (ev.part) {
+    const part = document.createElement("div");
+    part.className = "part";
+    part.textContent = ev.part;
+    host.appendChild(part);
+  }
+  host.appendChild((ev.oppose || ev.middle) ? opposedWrap(ev) : articleFor(ev));
+  if (ev.bracket) host.appendChild(bracketEl(ev.bracket));
+});
+
+if (afterHost) {
+  const split = document.createElement("div");
+  split.className = "split";
+  const mythCol = document.createElement("div");
+  mythCol.className = "split-myth";
+  afterCards.forEach((card) => mythCol.appendChild(card));
+  const scienceCol = document.createElement("div");
+  scienceCol.className = "split-science";
+  scienceCol.appendChild(bracketEl(sightingBracket));
+  scienceCol.appendChild(bracketEl(alienBracket));
+  split.appendChild(mythCol);
+  split.appendChild(scienceCol);
+  afterHost.appendChild(split);
+}
+
+const canvas = document.getElementById("stars");
+const ctx = canvas.getContext("2d");
+let stars = [];
+function layoutStars() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const n = Math.min(140, Math.floor(window.innerWidth * window.innerHeight / 14000));
+  stars = Array.from({ length: n }, () => ({
+    x: Math.random(), y: Math.random(),
+    r: Math.random() * 1.2 + 0.2,
+    a: Math.random() * 0.5 + 0.15
+  }));
+}
+function drawStars() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  stars.forEach((s) => {
+    ctx.fillStyle = "rgba(235, 228, 214," + s.a + ")";
+    ctx.beginPath();
+    ctx.arc(s.x * canvas.width, s.y * canvas.height, s.r, 0, Math.PI * 2);
+    ctx.fill();
+  });
+}
+layoutStars();
+drawStars();
+window.addEventListener("resize", () => { layoutStars(); drawStars(); paint(); });
+
+function paint() {
+  const top = line.getBoundingClientRect().top + window.scrollY;
+  const total = line.offsetHeight;
+  const y = window.scrollY + window.innerHeight * 0.42 - top;
+  fill.style.height = Math.max(0, Math.min(total, y)) + "px";
+}
+paint();
+window.addEventListener("scroll", paint, { passive: true });
+</script>
+</body>
+</html>

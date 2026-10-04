@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flood stories</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07080c;
+    --ink: #ebe4d6;
+    --muted: #b1a89b;
+    --dim: #7d756b;
+    --gold: #e0bc84;
+    --gold-dim: rgba(224, 188, 132, 0.45);
+    --ice: #b7d4df;
+    --card: rgba(12, 14, 20, 0.82);
+    --edge: rgba(235, 228, 214, 0.14);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    color: var(--ink);
+    background: var(--bg);
+    font-family: Outfit, "Segoe UI", sans-serif;
+    font-weight: 300;
+    line-height: 1.55;
+    font-size: 17px;
+  }
+  canvas#stars { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+  .dust {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(1200px 500px at 50% -10%, rgba(224, 188, 132, 0.08), transparent 60%),
+      radial-gradient(900px 700px at 80% 40%, rgba(80, 110, 140, 0.08), transparent 55%),
+      linear-gradient(180deg, transparent, rgba(0,0,0,0.35));
+  }
+  .wrap { position: relative; z-index: 1; }
+  header.top { max-width: 760px; margin: 0 auto; padding: 56px 24px 12px; }
+  .back {
+    display: inline-block; margin: 0 0 22px; color: var(--ice); text-decoration: none;
+    letter-spacing: 0.14em; text-transform: uppercase; font-size: 12px;
+  }
+  .back:hover { color: var(--gold); }
+  .brand { letter-spacing: 0.28em; text-transform: uppercase; font-size: 12px; color: var(--gold); margin: 0 0 18px; }
+  h1 { font-family: Cinzel, Palatino, serif; font-weight: 500; font-size: clamp(34px, 6vw, 56px); line-height: 1.12; margin: 0 0 18px; }
+  .lede { color: var(--muted); margin: 0; max-width: 62ch; }
+  main { max-width: 760px; margin: 0 auto; padding: 28px 24px 80px; }
+  article.card {
+    background: var(--card); border: 1px solid var(--edge); border-radius: 14px;
+    padding: 22px 22px 18px; margin: 0 0 18px; backdrop-filter: blur(6px);
+  }
+  article.card:nth-child(even) { border-color: rgba(183, 212, 223, 0.22); }
+  .kicker { margin: 0 0 8px; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim); }
+  article.card:nth-child(even) .kicker { color: var(--ice); }
+  h2 { font-family: Cinzel, Palatino, serif; font-weight: 500; font-size: 26px; margin: 0 0 10px; line-height: 1.2; }
+  p { margin: 0 0 12px; color: var(--muted); }
+  p:last-child { margin-bottom: 0; }
+  .src { margin: 0; color: var(--dim); font-size: 13px; }
+
+  nav.order {
+    background: rgba(12, 14, 20, 0.82);
+    border: 1px solid rgba(224, 188, 132, 0.35);
+    border-radius: 14px;
+    padding: 22px 22px 8px;
+    margin: 0 0 28px;
+  }
+  .order-kicker {
+    margin: 0 0 8px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: var(--gold);
+  }
+  .order-note { color: var(--muted); margin: 0 0 16px; }
+  nav.order ol { list-style: none; margin: 0; padding: 0; }
+  nav.order li {
+    position: relative;
+    margin: 0 0 14px;
+    padding: 0 0 14px 28px;
+    border-left: 1px solid rgba(224, 188, 132, 0.35);
+  }
+  nav.order li:last-child { border-left-color: transparent; margin-bottom: 8px; }
+  nav.order li::before {
+    content: "";
+    position: absolute;
+    left: -5px; top: 6px;
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--gold);
+    box-shadow: 0 0 8px var(--gold);
+  }
+  nav.order a { color: var(--ink); text-decoration: none; font-family: Cinzel, Palatino, serif; font-size: 18px; }
+  nav.order a:hover { color: var(--gold); }
+  nav.order li span { display: block; color: var(--dim); font-size: 14px; margin-top: 3px; }
+  footer.note p.rights { margin-top: 18px; letter-spacing: 0.04em; }
+  footer.note { max-width: 760px; margin: 0 auto; padding: 0 24px 72px; color: var(--dim); font-size: 14px; }
+</style>
+</head>
+<body>
+<canvas id="stars" aria-hidden="true"></canvas>
+<div class="dust" aria-hidden="true"></div>
+<div class="wrap">
+<header class="top">
+  <a class="back" href="index.html">← Ancient timeline</a>
+  <p class="brand">The stories of the water</p>
+  <h1>Flood stories</h1>
+  <p class="lede">These are the stories as they are told. Each card gives the people, the text it is told in, what happens, and any time the story itself mentions. Where someone who wrote a story down said it might have come from missionaries or from Islam, that note is theirs.</p>
+</header>
+<main>
+
+<nav class="order" aria-label="Story order">
+  <p class="order-kicker">Story order</p>
+  <p class="order-note">Narrative order, not a calendar. Most of these stories give no year. Plato's Atlantis flood is on this page and is not one of the steps below.</p>
+  <ol>
+    <li><a href="#ymir">Ymir's blood</a><span>Cosmogony. The world's making, before any human story.</span></li>
+    <li><a href="#yima">Yima's enclosure</a><span>A sealed place against a killing winter. Preservation before the flood stories.</span></li>
+    <li><a href="#atrahasis">Mesopotamia, and Noah beside it</a><span>Atrahasis, Ziusudra, and Utnapishtim, one tradition in three tellings, with Noah set next to them.</span></li>
+    <li><a href="#deucalion">Deucalion and Pyrrha</a><span>A Bronze Age flood in Greek memory.</span></li>
+    <li><a href="#popol">Maya and Aztec</a><span>World-ages that end and begin again. A flood is one reset among others.</span></li>
+    <li><a href="#hopi">Hopi</a><span>A climb out of a flooded world below.</span></li>
+    <li><a href="#choctaw">Choctaw</a><span>A boat.</span></li>
+    <li><a href="#hawaii-old">Hawaii</a><span>The older Mauna Kea account, then the later houseboat.</span></li>
+    <li><a href="#maori">Maori</a><span>A raft.</span></li>
+    <li><a href="#yoruba">Yoruba</a><span>A flood as it was written down.</span></li>
+    <li><a href="#cessair">Cessair</a><span>Noah's flood reaching Ireland.</span></li>
+    <li><a href="#yu">Yu</a><span>Rivers drained, at the start of the Xia.</span></li>
+    <li><a href="#manu">Manu</a><span>A fish, a ship, and, in the later telling, a cosmic age.</span></li>
+  </ol>
+</nav>
+
+<article class="card" id="ymir">
+  <p class="kicker">Norse</p>
+  <h2>Ymir's blood</h2>
+  <p class="src">Source: the Prose Edda, Gylfaginning. This flood is at the making of the world, not a later voyage.</p>
+  <p>Before the earth is shaped, the giant Ymir is killed by the sons of Bor. His blood runs out in such a flood that it drowns the frost giants. Bergelmir gets away with his household. He is a giant, not a man, and the giants who come after are said to come from him. Only then is the earth built, from Ymir's body: flesh as soil, bones as mountains, blood as the sea.</p>
+  <p>The story places the blood before the world has a shape. It is not dated to a king's year.</p>
+</article>
+
+<article class="card" id="yima">
+  <p class="kicker">Iranian</p>
+  <h2>Yima's enclosure</h2>
+  <p class="src">Source: the Vendidad, the story of Yima. This is not an ark, and the danger is not a flood of water.</p>
+  <p>Ahura Mazda warns Yima that a killing winter is coming, a cold that will destroy cattle and people. Yima is told to build a vara, a sealed enclosure, and to bring into it the best of men and women, the best of animals, and the seeds of plants, two of each kind that should continue. He seals it. Inside, life goes on through the winter. There is no ship, no sea, and no mountain landing. The world outside is buried in cold.</p>
+  <p>The story sets this in Yima's reign, in the early age of the world. It does not count the years the way a chronicle does.</p>
+</article>
+
+<article class="card" id="atrahasis">
+  <p class="kicker">Mesopotamian - Akkadian</p>
+  <h2>Atrahasis</h2>
+  <p class="src">Source: the Atrahasis poem. A copy is from the reign of Ammi-saduqa, about 1650 BCE. That is the age of the tablet, not a year the poem gives the flood.</p>
+  <p>The gods have been doing the work of the world, and the noise of multiplied people becomes too much. Enlil cannot rest. He sends a flood to wipe the clamor out. Enki warns Atrahasis. Atrahasis builds a boat, brings his household and living things aboard, and rides the water. When it falls, he comes out and makes an offering. The gods smell it and the argument among them turns. People will go on, but with limits, so the noise does not return to what it was.</p>
+  <p>The poem dates the flood only as "in those days," after the labor and the noise. It does not name a year.</p>
+</article>
+
+<article class="card" id="ziusudra">
+  <p class="kicker">Mesopotamian - Sumerian</p>
+  <h2>Ziusudra</h2>
+  <p class="src">Source: the Sumerian flood story. The surviving copy is from about 1600 BCE. The text is broken.</p>
+  <p>Ziusudra is a king, pious, standing at the wall when a god speaks through it and tells him a flood is decided. He builds a huge boat. The storm comes. After it, the sun returns, Ziusudra opens a window, and he prostrates himself. He is given life like a god, and a place to live in Dilmun, where the sun rises.</p>
+  <p>The story does not date the flood. The tablet that carries it is the later copy.</p>
+</article>
+
+<article class="card" id="utnapishtim">
+  <p class="kicker">Mesopotamian - Standard Babylonian</p>
+  <h2>Utnapishtim</h2>
+  <p class="src">Source: the Epic of Gilgamesh, tablet eleven. Utnapishtim tells it to Gilgamesh.</p>
+  <p>The gods decide on a flood. Ea warns Utnapishtim of Shuruppak by speaking to the reed wall of his house. Utnapishtim builds a boat in the shape the god gives him, pitches it, and loads his kin, the craftsmen, animals, and the seed of living things. The storm is so violent the gods themselves are afraid and crouch like dogs. On the seventh day it stops. The boat grounds on a mountain. He sends out a dove, then a swallow, then a raven. The raven does not come back. He offers sacrifice. Enlil, who wanted no one left, is angry that anyone lived, then grants Utnapishtim and his wife a life like the gods, far away at the mouth of the rivers.</p>
+  <p>The tale is set in the time of the old kings, before Gilgamesh goes looking for him. It does not give a year.</p>
+</article>
+
+<article class="card" id="noah">
+  <p class="kicker">Hebrew</p>
+  <h2>Noah</h2>
+  <p class="src">Source: Genesis 6 through 9.</p>
+  <p>The earth is violent, and God decides to end what he has made. Noah finds favor. He is told to build an ark of gopher wood, to pitch it, and to bring his wife, his sons, their wives, and the animals. He is six hundred years old when the waters come. Rain falls forty days. The waters prevail, and the ark rests on the mountains of Ararat. A raven goes out. A dove comes back with an olive leaf, then does not return. They leave the ark. God sets a bow in the clouds and says he will not again destroy all flesh by a flood. Noah's sons, Shem, Ham, and Japheth, repeople the earth.</p>
+  <p>The story itself dates the flood to Noah's six hundredth year, not to a year of the world. Later, James Ussher's arithmetic, counting the genealogies, put that flood in the 2300s BCE. The figures usually repeated are 2348 and 2349, depending on the reckoning. That year is Ussher's, not a sentence in Genesis.</p>
+</article>
+
+<article class="card" id="deucalion">
+  <p class="kicker">Greek</p>
+  <h2>Deucalion and Pyrrha</h2>
+  <p class="src">Source: the Greek flood of Deucalion, told in Apollodorus and in Ovid. This is not Plato's Atlantis.</p>
+  <p>Zeus resolves to destroy the people of the Bronze Age. Prometheus warns his son Deucalion. Deucalion and his wife Pyrrha survive in a chest, or in a small boat, and the water carries them to Mount Parnassus. When the flood sinks, they ask how people can be made again. They are told to throw the bones of their mother behind them. They understand the mother to be the earth, and the bones to be stones. The stones Deucalion throws become men. The stones Pyrrha throws become women.</p>
+  <p>The story calls it the flood of that age. It does not count the years back from a named king the way Plato does.</p>
+</article>
+
+<article class="card" id="atlantis">
+  <p class="kicker">Greek - Plato</p>
+  <h2>The flood of Atlantis</h2>
+  <p class="src">Source: Plato, Timaeus and Critias. An Egyptian priest tells it to Solon.</p>
+  <p>There is no ark and no chosen family. A great power from the island of Atlantis, beyond the Pillars of Heracles, makes war on the cities inside the Mediterranean. Then, in a single day and night of earthquake and flood, the island sinks under the sea, and the Athenian warriors sink with it. The mud it leaves is said to block that part of the ocean.</p>
+  <p>The priest's dating is the story's own. He sets the events nine thousand years before Solon. Told from Solon's day, that is the figure later read as about 9600 BCE. The story does not say anyone was warned, and it does not say anyone sailed through it.</p>
+</article>
+
+<article class="card" id="popol">
+  <p class="kicker">Maya - K'iche'</p>
+  <h2>The wooden people</h2>
+  <p class="src">Source: the Popol Vuh. Do not fold this into the Aztec story of a couple in a log. They are different tellings.</p>
+  <p>The gods have tried to make people. The wooden people can speak and multiply, but they have no hearts and do not remember their makers. A flood is sent against them. Resin rains down. Animals they had used turn on them. Their grinding stones and pots rise up. The wooden people are washed away and destroyed. Two of them, Tata and Nene, are told to hide in a hollow cypress and to eat nothing but what they are given. They come out too soon and cook food. For that they are changed into dogs.</p>
+  <p>The story sets this in the attempts before the people of maize. It does not give a year.</p>
+</article>
+
+<article class="card" id="aztec">
+  <p class="kicker">Aztec</p>
+  <h2>The ages that end</h2>
+  <p class="src">Source: the Aztec telling of the world-ages, the suns, one after another.</p>
+  <p>The world does not flood once. An age ends, and another age begins, and that happens again. One of those ages ends in water. The people of that sun are swept away, and the next sun is made after them. The destruction is a rhythm, not a single rescue. Jaguar, wind, fire, and flood take their turns, and the present sun is the one that followed.</p>
+  <p>The story counts the ages. It does not pin the flood-age to a year before a named king.</p>
+</article>
+
+<article class="card" id="hopi">
+  <p class="kicker">Hopi</p>
+  <h2>The climb from below</h2>
+  <p class="src">Source: Hopi emergence tellings.</p>
+  <p>The people are living in a world under this one, and that world floods. They do not sail. They climb. Tall plants, reeds, grow up through the water toward an opening in the sky of that world, which is the ground of this one. The people ascend the plants and come out into the new world. Those who climb are the ones who continue.</p>
+  <p>The story tells it as a change of worlds. It does not give a year.</p>
+</article>
+
+<article class="card" id="choctaw">
+  <p class="kicker">Choctaw</p>
+  <h2>The boat</h2>
+  <p class="src">Source: a Choctaw flood story as it was written down.</p>
+  <p>A flood covers the land. People survive by a boat. The story, as collected, is a boat story: a warning, a vessel, and people carried through the water until there is ground again.</p>
+  <p>The people who wrote this version down noted that it may reflect missionary influence. That is their note, not a date inside the story. The story itself does not give a year.</p>
+</article>
+
+<article class="card" id="hawaii-old">
+  <p class="kicker">Hawaiian - an older report</p>
+  <h2>Two people on Mauna Kea</h2>
+  <p class="src">Source: an older Hawaiian report, distinct from the houseboat.</p>
+  <p>A flood leaves two people alive on Mauna Kea. They are asked about a ship. They say they never heard of one. There is no boat in their account. They simply remained on the mountain when the water was gone.</p>
+  <p>The report does not date the flood. It is not the houseboat story, and it does not mention Nuu.</p>
+</article>
+
+<article class="card" id="hawaii-late">
+  <p class="kicker">Hawaiian - a later telling</p>
+  <h2>The houseboat</h2>
+  <p class="src">Source: a later Hawaiian telling, in which Nuu rides out a flood.</p>
+  <p>A flood comes over the islands. Nuu builds a houseboat, a vessel with a house on it, and he survives in that. When the water falls, he is the one left to begin again, and he makes an offering.</p>
+  <p>The people who wrote this version down noted that it may reflect missionary influence. That is their note. This is not the older report below, and the two should not be folded together.</p>
+</article>
+
+<article class="card" id="maori">
+  <p class="kicker">Maori</p>
+  <h2>The raft</h2>
+  <p class="src">Source: a Maori flood story as it was written down.</p>
+  <p>The water rises over the land. The survivors are on a raft, not in a beamed ark, and the raft carries them until they can find ground again.</p>
+  <p>The people who wrote this version down noted that it may reflect missionary influence. That is their note. The story itself does not give a year.</p>
+</article>
+
+<article class="card" id="yoruba">
+  <p class="kicker">Yoruba</p>
+  <h2>The flood</h2>
+  <p class="src">Source: a Yoruba flood story as it was written down.</p>
+  <p>A flood covers the world of people. The telling that was collected has the water sent over the land, and a remnant living through it so that people continue.</p>
+  <p>The people who wrote this version down noted that it may reflect Muslim influence. That is their note. The story itself does not give a year.</p>
+</article>
+
+<article class="card" id="cessair">
+  <p class="kicker">Irish</p>
+  <h2>Cessair</h2>
+  <p class="src">Source: the Lebor Gabala Erenn, the Book of Invasions. The story means this to be Noah's flood.</p>
+  <p>Cessair, of Noah's line, is told that Ireland is a place the flood has not yet reached. She sails there with her company to get ahead of it. They land forty days before the water arrives. When the flood comes, it is Noah's flood, reaching Ireland late. The company dies. The story remembers one man, Fintan, left alive after them.</p>
+  <p>The dating is the story's own, and it borrows Noah's. Ireland is reached forty days before that flood. It is not offered as a separate disaster with its own year.</p>
+</article>
+
+<article class="card" id="yu">
+  <p class="kicker">Chinese</p>
+  <h2>Yu</h2>
+  <p class="src">Source: the traditional story of Yu the Great, set at the beginning of the Xia.</p>
+  <p>The rivers have overflowed and the land is under water. Yu's father, Gun, tries to dam the water and fails. Yu does not build a boat and does not ride the flood out. He drains it. He cuts channels, dredges the rivers, and walks the land until the water has a way to the sea. The work takes years. He passes his own door and does not go in. When the land is dry enough to live on, he is remembered as the founder of the Xia.</p>
+  <p>Tradition places that work at the start of the Xia, in the late third millennium BCE. The story itself tells it as the labor that made the kingdom possible, not as a dated tablet.</p>
+</article>
+
+<article class="card" id="manu">
+  <p class="kicker">Hindu</p>
+  <h2>Manu</h2>
+  <p class="src">Source: the earliest telling is in the Shatapatha Brahmana. Later puranas stretch the same rescue across a cosmic age.</p>
+  <p>A fish comes to Manu and asks to be saved. Manu keeps it, and it grows from a jar to a tank to the river to the ocean. The fish tells him a flood is coming, and that he must build a ship. When the water rises, the fish, now huge, tows the ship by a rope to a northern mountain. Manu is the one left to begin the world again. In the later telling, this is not one flood in a human lifetime. It is the dissolution at the end of an age, and that age is spoken of in billions of years.</p>
+  <p>The early story does not give a year. The vast span belongs to the later cosmic telling.</p>
+</article>
+
+</main>
+<footer class="note">
+  <p>Each card is the story as told. A note that a collected version may reflect missionaries, or Islam, is what the recorders said. It is not a verdict added here.</p>
+  <p class="rights">All rights reserved to Studio Gulch SAS.</p>
+</footer>
+</div>
+<script>
+(function () {
+  var c = document.getElementById("stars");
+  if (!c || !c.getContext) return;
+  var ctx = c.getContext("2d");
+  var stars = [];
+  function size() {
+    c.width = window.innerWidth;
+    c.height = window.innerHeight;
+    stars = [];
+    var n = Math.min(220, Math.floor((c.width * c.height) / 9000));
+    for (var i = 0; i < n; i++) {
+      stars.push({ x: Math.random() * c.width, y: Math.random() * c.height, r: Math.random() * 1.2 + 0.2, a: Math.random() * 0.55 + 0.15 });
+    }
+  }
+  function draw() {
+    ctx.clearRect(0, 0, c.width, c.height);
+    for (var i = 0; i < stars.length; i++) {
+      var s = stars[i];
+      ctx.fillStyle = "rgba(235,228,214," + s.a + ")";
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+  size(); draw();
+  window.addEventListener("resize", function () { size(); draw(); });
+})();
+</script>
+</body>
+</html>

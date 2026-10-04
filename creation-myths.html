@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Creation myths — opening stories</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07080c;
+    --ink: #ebe4d6;
+    --muted: #b1a89b;
+    --dim: #7d756b;
+    --gold: #e0bc84;
+    --gold-dim: rgba(224, 188, 132, 0.45);
+    --ice: #b7d4df;
+    --card: rgba(12, 14, 20, 0.82);
+    --edge: rgba(235, 228, 214, 0.14);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    color: var(--ink);
+    background: var(--bg);
+    font-family: Outfit, "Segoe UI", sans-serif;
+    font-weight: 300;
+    line-height: 1.55;
+    font-size: 17px;
+  }
+  canvas#stars {
+    position: fixed; inset: 0; width: 100%; height: 100%;
+    z-index: 0; pointer-events: none;
+  }
+  .dust {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(1200px 500px at 50% -10%, rgba(224, 188, 132, 0.08), transparent 60%),
+      radial-gradient(900px 700px at 80% 40%, rgba(80, 110, 140, 0.08), transparent 55%),
+      linear-gradient(180deg, transparent, rgba(0,0,0,0.35));
+  }
+  .wrap { position: relative; z-index: 1; }
+  header.top { max-width: 760px; margin: 0 auto; padding: 56px 24px 12px; }
+  .back {
+    display: inline-block;
+    margin: 0 0 22px;
+    color: var(--ice);
+    text-decoration: none;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-size: 12px;
+  }
+  .back:hover { color: var(--gold); }
+  .brand {
+    letter-spacing: 0.28em; text-transform: uppercase;
+    font-size: 12px; color: var(--gold); margin: 0 0 18px;
+  }
+  h1 {
+    font-family: Cinzel, Palatino, serif; font-weight: 500;
+    font-size: clamp(34px, 6vw, 56px); line-height: 1.12;
+    margin: 0 0 18px;
+  }
+  .lede { color: var(--muted); margin: 0; max-width: 62ch; }
+  main { max-width: 760px; margin: 0 auto; padding: 28px 24px 80px; }
+  article.card {
+    background: var(--card);
+    border: 1px solid var(--edge);
+    border-radius: 14px;
+    padding: 22px 22px 18px;
+    margin: 0 0 18px;
+    backdrop-filter: blur(6px);
+  }
+  article.card:nth-child(even) { border-color: rgba(183, 212, 223, 0.22); }
+  .kicker {
+    margin: 0 0 8px;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+  article.card:nth-child(even) .kicker { color: var(--ice); }
+  h2 {
+    font-family: Cinzel, Palatino, serif;
+    font-weight: 500;
+    font-size: 26px;
+    margin: 0 0 10px;
+    line-height: 1.2;
+  }
+  p { margin: 0 0 12px; color: var(--muted); }
+  p:last-child { margin-bottom: 0; }
+  blockquote {
+    margin: 0 0 12px;
+    padding: 10px 0 10px 14px;
+    border-left: 2px solid var(--gold-dim);
+    color: var(--ink);
+    font-size: 16px;
+  }
+  .src {
+    margin: 0;
+    color: var(--dim);
+    font-size: 13px;
+    letter-spacing: 0.01em;
+  }
+  .src a { color: var(--ice); }
+  footer.note p.rights { margin-top: 18px; letter-spacing: 0.04em; }
+  footer.note {
+    max-width: 760px; margin: 0 auto; padding: 0 24px 72px;
+    color: var(--dim); font-size: 14px;
+  }
+</style>
+</head>
+<body>
+<canvas id="stars" aria-hidden="true"></canvas>
+<div class="dust" aria-hidden="true"></div>
+<div class="wrap">
+<header class="top">
+  <a class="back" href="index.html">← Ancient timeline</a>
+  <p class="brand">Opening stories</p>
+  <h1>Creation myths</h1>
+  <p class="lede">These are opening stories from different peoples, set side by side, not a ranking and not one story told many times.</p>
+</header>
+<main>
+
+<article class="card" id="genesis">
+  <p class="kicker">Hebrew Bible</p>
+  <h2>Genesis 1 and Genesis 2</h2>
+  <p>In the King James Version, chapter 1 is one telling and chapter 2 begins another. The first moves by days. God creates heaven and earth, light, a firmament called Heaven, dry land and seas, plants, the two great lights and the stars, creatures of water and air, then beasts, and humankind, male and female, in God's image. The sixth day ends with everything called very good. On the seventh day God rests and blesses that day.</p>
+  <p>Chapter 2 then says the heavens and the earth were finished, and tells the making again from the ground up. No plant of the field is yet growing, because there is no rain and no one to till the ground. A mist waters the earth. The Lord God forms a man from the dust, breathes into his nostrils, and the man becomes a living soul. A garden is planted in Eden. Later the man is put into a deep sleep, and a woman is made from a rib.</p>
+  <blockquote>In the beginning God created the heaven and the earth. And the earth was without form and void; and darkness was upon the face of the deep.</blockquote>
+  <blockquote>And the Lord God formed man of the dust of the ground, and breathed into his nostrils the breath of life; and man became a living soul.</blockquote>
+  <p class="src">Source: King James Version, Genesis 1–2, Wikisource. https://en.wikisource.org/wiki/Bible_(King_James)/Genesis</p>
+  <!-- quote source: https://en.wikisource.org/wiki/Bible_(King_James)/Genesis -->
+</article>
+
+<article class="card" id="enuma">
+  <p class="kicker">Mesopotamian · Babylonian</p>
+  <h2>Enuma Elish</h2>
+  <p>This is the Babylonian poem called, from its first words, Enuma Elish. The English here is from Leonard William King's <em>The Seven Tablets of Creation</em> (1902) and, for the making of people, E. A. Wallis Budge's <em>The Babylonian Legends of Creation</em> (1921). It is not presented below as the source of Genesis. Some modern writers have set the two beside each other. Neither text says that.</p>
+  <p>Before heaven is named, Apsu and Tiamat are the parents whose waters are mingled. Gods come into being. Apsu is disturbed by them. Later Tiamat makes monsters and exalts Kingu, giving him the Tablets of Destiny. Marduk is made champion. He kills Tiamat, stands on her body, and splits her. In King's fourth tablet one half is set up as a covering for heaven. The lines opened here do not say, in those words, that the other half is the earth.</p>
+  <p>The making of humans is not the same in the two editions opened. King's 1902 sixth tablet is broken. In what survives, Marduk says he will take his own blood and fashion bone, and then the text fails. Budge's 1921 sixth tablet continues: the gods name Kingu as the one who caused the strife, his blood is let, and Ea fashions mankind from that blood for the service of the gods.</p>
+  <blockquote>When in the height heaven was not named, and the earth beneath did not yet bear a name, and the primeval Apsû, who begat them, and chaos, Tiamat, the mother of them both—their waters were mingled together.</blockquote>
+  <blockquote>He split her up like a flat fish into two halves; one half of her he stablished as a covering for heaven.</blockquote>
+  <blockquote>From his blood he (i.e., Ea) fashioned mankind for the service of the gods, and he set the gods free.</blockquote>
+  <p class="src">Sources: King, Tablet I and Tablet IV, via the Internet Archive's copy of sacred-texts; Budge, Tablet VI, same. https://web.archive.org/web/20180619074450/http://www.sacred-texts.com/ane/stc/stc04.htm · https://web.archive.org/web/20180701000000id_/http://www.sacred-texts.com/ane/stc/stc07.htm · https://web.archive.org/web/2016id_/http://www.sacred-texts.com/ane/blc/blc13.htm</p>
+  <!-- quotes: King opening and split; Budge Kingu blood. A separate Sumerian creation text was not opened. -->
+</article>
+
+<article class="card" id="egypt">
+  <p class="kicker">Egyptian · one text, not every cosmogony</p>
+  <h2>Ra and Atum, and the water Nun</h2>
+  <p>The page opened is Book of the Dead chapter 17, in the English of James P. Allen on the University College London Digital Egypt site. It is a funerary chapter, not the Pyramid Texts, and not a single "Egyptian creation." The speaker is identified with the creator. The glosses use the names Ra, Atum, and Nun. Nun is called father of the gods, and Ra is said to create his body. Atum is glossed as Atum in his sun-disk.</p>
+  <p>The same chapter's commentary also mentions a high ground in Khemenu. That is a Hermopolitan place inside this chapter, not the Memphite theology of Ptah, which was not opened here. Heliopolis is the city usually tied to Atum and Ra; this page does not narrate a separate Heliopolitan myth from the Pyramid Texts.</p>
+  <blockquote>Mine is all in existence alone in Nun, I am Ra in his rising, first in ruling what he made.</blockquote>
+  <blockquote>I am the great god who comes to be of himself, there is water, there is Nun, father of the gods.</blockquote>
+  <p class="src">Source: Book of the Dead, chapter 17, Allen's translation as given by UCL. https://www.ucl.ac.uk/museums-static/digitalegypt/literature/religious/bd17.html</p>
+  <!-- quote source: https://www.ucl.ac.uk/museums-static/digitalegypt/literature/religious/bd17.html -->
+</article>
+
+<article class="card" id="hesiod">
+  <p class="kicker">Greek</p>
+  <h2>Hesiod, Theogony</h2>
+  <p>Hugh G. Evelyn-White's 1914 translation begins the cosmogony after the Muses. First Chaos comes to be, then Earth (Gaia), Tartarus in the depth of Earth, and Eros. From Chaos come Erebus and Night; from Night and Erebus, Aether and Day. Earth first bears starry Heaven, equal to herself, to cover her. She also bears the hills and Pontus without a partner, and later, with Heaven, the Titans, including Cronos.</p>
+  <blockquote>Verily at the first Chaos came to be, but next wide-bosomed Earth, the ever-sure foundations of all the deathless ones who hold the peaks of snowy Olympus, and dim Tartarus in the depth of the wide-pathed Earth, and Eros (Love), fairest among the deathless gods.</blockquote>
+  <blockquote>And Earth first bare starry Heaven, equal to herself, to cover her on every side, and to be an ever-sure abiding-place for the blessed gods.</blockquote>
+  <p class="src">Source: Hesiod, Theogony, tr. Hugh G. Evelyn-White (1914), lines 116–138, sacred-texts via the Internet Archive. https://web.archive.org/web/20180701000000id_/http://www.sacred-texts.com/cla/hesiod/theogony.htm</p>
+  <!-- quote source: https://www.sacred-texts.com/cla/hesiod/theogony.htm (wayback id_ copy) -->
+</article>
+
+<article class="card" id="norse">
+  <p class="kicker">Norse · Prose Edda</p>
+  <h2>Ginnungagap and Ymir</h2>
+  <p>This is the Prose Edda, Gylfaginning, in Arthur Gilchrist Brodeur's 1916 translation, not the Poetic Edda, though Snorri quotes verses. Gangleri asks how things were made before human peoples increased. Ice and rime from the north fill Ginnungagap, the Yawning Void. Sparks from Múspellheim light the south. Where heat meets rime, drops quicken into a man's form. That being is Ymir, called Aurgelimir by the Rime-Giants. He is not called a god. While he sleeps, a man and a woman grow under his arm, and his feet beget a son. A cow, Audumla, nourishes him.</p>
+  <p>The sons of Borr slay Ymir. His blood drowns the Rime-Giants except Bergelmir and his household. They carry Ymir into the middle of the Yawning Void and make the earth from him: blood the sea, flesh the land, bones the crags. His skull becomes heaven, set on four dwarfs named for the directions. His brain becomes the clouds.</p>
+  <blockquote>Ginnungagap was as mild as windless air, and when the breath of heat met the rime, so that it melted and dripped, life was quickened from the yeast-drops, by the power of that which sent the heat, and became a man's form. And that man is named Ymir.</blockquote>
+  <blockquote>They took Ymir and bore him into the middle of the Yawning Void, and made of him the earth: of his blood the sea and the waters; the land was made of his flesh, and the crags of his bones.</blockquote>
+  <p class="src">Source: The Prose Edda, Gylfaginning, tr. Arthur Gilchrist Brodeur (1916), Wikisource. https://en.wikisource.org/wiki/The_Prose_Edda_(1916_translation_by_Arthur_Gilchrist_Brodeur)/Gylfaginning</p>
+  <!-- quote source: Brodeur Gylfaginning on Wikisource, sections V and VIII -->
+</article>
+
+<article class="card" id="nasadiya">
+  <p class="kicker">Hindu · Rig Veda</p>
+  <h2>Nasadiya Sukta, hymn 10.129</h2>
+  <p>Ralph T. H. Griffith's 1896 translation titles Rig Veda 10.129 "Creation." It does not tell a sequence of a god building a world. It asks what was there when there was neither the non-existent nor the existent, no air and no sky beyond. Death was not, nor anything immortal. Darkness covered an undiscriminated All, and warmth brought forth "that Unit." Desire arises. Then the hymn turns to doubt. The gods come later than this world's production. The last verse leaves open whether the overseer in highest heaven knows.</p>
+  <p>The image of Brahma seated on a lotus from Vishnu's navel is not in this hymn. It is a later picture, on the next card.</p>
+  <blockquote>Then was not non-existent nor existent: there was no realm of air, no sky beyond it.</blockquote>
+  <blockquote>The Gods are later than this world's production. Who knows then whence it first came into being? … he verily knows it, or perhaps he knows not.</blockquote>
+  <p class="src">Source: Rig Veda 10.129, tr. Ralph T. H. Griffith (1896), sacred-texts via the Internet Archive. https://web.archive.org/web/20180701000000id_/http://www.sacred-texts.com/hin/rigveda/rv10129.htm</p>
+  <!-- quote source: https://www.sacred-texts.com/hin/rigveda/rv10129.htm -->
+</article>
+
+<article class="card" id="brahma-lotus">
+  <p class="kicker">Hindu · later, Puranic</p>
+  <h2>Brahma from the lotus at Vishnu's navel</h2>
+  <p>This is not the Nasadiya. W. J. Wilkins, in <em>Hindu Mythology, Vedic and Puranic</em> (the sacred-texts page dates the book 1900), says the Puranic accounts of Brahma's creation differ so much that they cannot be pressed into one story. He then reports a particular image from the Mahabharata and some of the Puranas: Brahma issued from a lotus that sprang from Vishnu's navel. That sentence is Wilkins's report. A Purana chapter narrating the scene in full was not the page opened for the quotation.</p>
+  <p>What was opened in Horace Hayman Wilson's Vishnu Purana (1840), Book I, chapter IV, is a different scene. There Narayana, named Brahma, finds the universe void, enters the waters, takes the form of a boar, and lifts the earth. Wilson's footnote on an earlier chapter mentions a kalpa in which Brahma was born from a lotus, but that note does not describe the navel.</p>
+  <blockquote>In the Mahābhārata, and some of the Purānas, Brahmā is said to have issued from a lotus that sprang from the navel of Vishnu.</blockquote>
+  <p class="src">Source of the quotation: W. J. Wilkins, Hindu Mythology, Vedic and Puranic (1900), Part II, chapter III, sacred-texts via the Internet Archive. https://web.archive.org/web/2018id_/http://www.sacred-texts.com/hin/hmvp/hmvp17.htm · Wilson, Vishnu Purana I.4, opened for the boar scene and not quoted as the navel story: https://web.archive.org/web/2018id_/http://www.sacred-texts.com/hin/vp/vp038.htm</p>
+  <!-- quote source: https://www.sacred-texts.com/hin/hmvp/hmvp17.htm -->
+</article>
+
+<article class="card" id="pangu">
+  <p class="kicker">Chinese</p>
+  <h2>Pangu</h2>
+  <p>Pangu is not treated here as a figure from the earliest Chinese classics. The Wikipedia article opened says the earliest known writer to record the myth is believed to have been Xu Zheng, in the Three Kingdoms period, and its bibliography names his book <em>Sanwu Liji</em> (Three Five Historic Records), with the dates 220–265, as the first to mention Pangu, in a story called "Pangu Separates the Sky from the Earth." The same article says his name was found in a tomb predating the Three Kingdoms period. Xu Zheng's book itself was not opened, so no sentence is quoted from it.</p>
+  <p>The short quotation is from a later English retelling, Edward T. C. Werner's <em>Myths and Legends of China</em> (1922). Werner calls P'an Ku the figure who chiselled the universe out of Chaos, offspring of yin and yang, and says the task of making heaven and earth occupied eighteen thousand years. Details such as the hammer and the chisel belong to that retelling, not to a page of the <em>Sanwu Liji</em>.</p>
+  <blockquote>The most conspicuous figure in Chinese cosmogony is P'an Ku. He it was who chiselled the universe out of Chaos.</blockquote>
+  <p class="src">Earliest source as named, not quoted: Wikipedia, "Pangu," Xu Zheng and the Sanwu Liji. https://en.wikipedia.org/wiki/Pangu · Quotation: Werner (1922), chapter III, sacred-texts via the Internet Archive. https://web.archive.org/web/2018id_/http://www.sacred-texts.com/cfu/mlc/mlc05.htm</p>
+  <!-- quote source: Werner mlc05; earliest attribution from https://en.wikipedia.org/wiki/Pangu -->
+</article>
+
+<article class="card" id="popol-vuh">
+  <p class="kicker">Maya · K'iche'</p>
+  <h2>Popol Vuh</h2>
+  <p>The manuscript tradition, as the Wikipedia article opened describes it: the work was preserved orally until it was written down around 1550, and the surviving documentation is the manuscript of the Dominican Francisco Ximénez, who in 1701 came to Santo Tomás Chichicastenango and set down a K'iche' transcription with Spanish in parallel columns. Lewis Spence, in 1908, instead dated a Christianised native's writing to the seventeenth century and described Ximénez as the copyist and translator. Those two pages do not agree on the century of the first writing.</p>
+  <p>No full public-domain translation of the K'iche' creation was opened, so the sequence is taken from summaries, and they do not match in every step. Spence's 1908 English summary of the first book says Hurakan, the mighty wind, called out "earth," and the land appeared. The gods in council are Hurakan, Gucumatz, and Xpiyacoc and Xmucane. Animals are created. Then wooden mannikins are made, fail in reverence, and are destroyed by flood, resin, birds, and their own tools. Spence says their posterity are the little monkeys. He does not, in that first-book summary, tell an attempt in mud. A Wikipedia outline of Book One, also opened, does: humans of earth and mud who crumbled, then humans of wood, washed away, the survivors becoming monkeys. Spence places the successful people in his summary of the third book: four men wholly created from yellow and white maize, named Balam-Quitzé, Balam-Agab, Mahucutah, and Iqi-Balam, who knew too much, so the gods limited them.</p>
+  <blockquote>Over a universe wrapped in the gloom of a dense and primeval night passed the god Hurakan, the mighty wind. He called out "earth," and the solid land appeared.</blockquote>
+  <blockquote>These beings were wholly created from yellow and white maize.</blockquote>
+  <p class="src">Quotations: Lewis Spence, The Popol Vuh (1908), Project Gutenberg. https://www.gutenberg.org/files/56550/56550-h/56550-h.htm · Manuscript and the mud step as an outline, not a quoted line of the K'iche': https://en.wikipedia.org/wiki/Popol_Vuh</p>
+  <!-- Spence quotes are his summary, not a line of the K'iche' text. Mud step: Wikipedia outline only. -->
+</article>
+
+<article class="card" id="teotihuacan">
+  <p class="kicker">Aztec · Nahua</p>
+  <h2>The sun made at Teotihuacan</h2>
+  <p>The page opened is Hubert Howe Bancroft, <em>The Native Races</em>, volume 5 (Project Gutenberg). He is summarising, not translating Sahagún on this page. He says that in the pre-Toltec history of Teotihuacan one event is told: the apotheosis of Nanahuatzin. The gods assemble there so that the sun will appear and light their darkness. A great fire is kindled. Whoever gives himself as a living sacrifice will be honoured. Nanahuatzin throws himself into the fire and becomes the sun, which appears in the east. Metztli follows, and becomes the moon, less bright because the fire had cooled. Bancroft does not use the words "fifth sun" on this page. He says the Codex Chimalpopoca, according to Brasseur, calls the new period Nahui Ollin Tonatiuh, "the sun in its four movements," and states that divine immolation began then at Teotihuacan. Sahagún is mentioned nearby for a different assembly, in the south, when a calendar was invented, not as the narrator of these sentences.</p>
+  <blockquote>Nanahuatzin threw himself into the fire, was instantly devoured and transformed into the sun, which at once appeared in the east. Metztli followed the example of Nanahuatzin, and took his place in the heavens as the moon.</blockquote>
+  <p class="src">Source: Hubert Howe Bancroft, The Native Races, vol. 5, Project Gutenberg eBook 45268. https://www.gutenberg.org/cache/epub/45268/pg45268-images.html</p>
+  <!-- quote source: Gutenberg 45268, Teotihuacan / Nanahuatzin passage -->
+</article>
+
+<article class="card" id="australia">
+  <p class="kicker">Aboriginal Australian</p>
+  <h2>Many traditions, not one Dreaming</h2>
+  <p>There is no single Aboriginal creation story to put on this page, and this page is not pretending there is. Countries, languages, and law differ. A "Dreamtime myth," as if all of Australia told one, would be a collapse.</p>
+  <p>What was opened is the introductory chapter of K. Langloh Parker's <em>The Euahlayi Tribe</em> (the Wikisource text of the book), in the preface remarks signed there as discussing that people of north-western New South Wales. It says the Euahlayi share the name Baiame, or Byamee, with the Wiradjuri and the Kamilaroi, the being A. W. Howitt called the All Father. It also says the Euahlayi have beliefs not recorded for the Kamilaroi, including a form of an Arunta myth of the "Dream Time," called there the age of pristine evolution. That sentence names peoples. It does not tell the story. No particular nation's creation sequence was opened, so none is retold here.</p>
+  <blockquote>There is a form of the Arunta myth of the 'Dream Time,' the age of pristine evolution.</blockquote>
+  <p class="src">Source: The Euahlayi Tribe, chapter 1, Wikisource (introductory remarks on the Euahlayi, Wiradjuri, Kamilaroi, and Arunta). https://en.wikisource.org/wiki/The_Euahlayi_Tribe/Chapter_1</p>
+  <!-- quote source: https://en.wikisource.org/wiki/The_Euahlayi_Tribe/Chapter_1 -->
+</article>
+
+<article class="card" id="kojiki">
+  <p class="kicker">Japanese</p>
+  <h2>Izanagi and Izanami, in the Kojiki</h2>
+  <p>Basil Hall Chamberlain's translation (read to the Asiatic Society of Japan in 1882; the sacred-texts page is the 1919 reprint) does not use the spellings Izanagi and Izanami in the narrative. He translates the names as the Male-Who-Invites and the Female-Who-Invites. A footnote to section II gives the names as Izana-gi-no-kami and Izana-mi-no-kami.</p>
+  <p>Section I begins when heaven and earth began, with deities born in the Plain of High Heaven who were born alone and hid their persons. Then, when the young earth drifted like floating oil, more deities appear. Section II ends the seven divine generations with the inviting pair. In section III the heavenly deities order those two to make, consolidate, and give birth to the drifting land, and give them a jewelled spear. Standing on the Floating Bridge of Heaven, they push down a jewelled spear and stir with it. The copy opened then has a doubtful word (it prints "stiffed," where the sense is the stirring), and the brine goes "curdle-curdle." The brine that drips from the spear is piled up and becomes the island of Onogoro.</p>
+  <blockquote>So the two Deities, standing upon the Floating Bridge of Heaven, pushed down the jewelled spear and stirred with it … the brine that dripped down from the end of the spear was piled up and became an island. This is the Island of Onogoro.</blockquote>
+  <p class="src">Source: Kojiki, tr. Basil Hall Chamberlain, sections II–III, sacred-texts via the Internet Archive. Names in the footnote: Izana-gi-no-kami and Izana-mi-no-kami. https://web.archive.org/web/20180701000000id_/http://www.sacred-texts.com/shi/kj/kj009.htm · https://web.archive.org/web/20180701000000id_/http://www.sacred-texts.com/shi/kj/kj010.htm</p>
+  <!-- quote source: Chamberlain section III, kj010.htm; names in footnote to section II -->
+</article>
+
+<article class="card" id="maori">
+  <p class="kicker">Māori · an added account</p>
+  <h2>Rangi and Papa</h2>
+  <p>This is one Māori tradition, from George Grey's <em>Polynesian Mythology</em>, the chapter "The Children of Heaven and Earth" (Standard Ebooks text of that book). It is not a general Polynesian story. Heaven and Earth, Rangi and Papa, lie together, and darkness rests on them because they have not been rent apart. Their children debate whether to kill them or separate them. Tūmatauenga says to slay them. Tānemahuta says to rend them, so heaven will stand far above and earth lie underfoot. Tāwhirimātea, father of winds and storms, will not consent. Several brothers try and fail. Tāne sets his head against his mother the earth and his feet against his father the sky and presses them apart. Light appears. People who had lain between the two are discovered. The chapter goes on to Tāwhirimātea's storms against his brothers. That continuation is not quoted here.</p>
+  <blockquote>According to the traditions of our race, Rangi and Papa, or Heaven and Earth, were the source from which, in the beginning, all things originated.</blockquote>
+  <blockquote>It was the fierce thrusting of Tāne which tore the heaven from the earth, so that they were rent apart, and darkness was made manifest, and so was the light.</blockquote>
+  <p class="src">Source: George Grey, Polynesian Mythology, "The Children of Heaven and Earth," Standard Ebooks. https://standardebooks.org/ebooks/george-grey/polynesian-mythology/text/chapter-1</p>
+  <!-- quote source: https://standardebooks.org/ebooks/george-grey/polynesian-mythology/text/chapter-1 -->
+</article>
+
+</main>
+<footer class="note">
+  Quotations are short on purpose, and only from pages opened for this file. Where a translation was a summary, or two editions disagreed, the card says so. A Sumerian creation text, a Pyramid Text, a full Purana narration of the navel lotus, and a particular Aboriginal creation sequence were not opened, and are not filled in.
+  <p class="rights">All rights reserved to Studio Gulch SAS.</p>
+</footer>
+</div>
+<script>
+(function () {
+  var c = document.getElementById("stars");
+  if (!c || !c.getContext) return;
+  var ctx = c.getContext("2d");
+  var stars = [];
+  function size() {
+    c.width = window.innerWidth;
+    c.height = window.innerHeight;
+    stars = [];
+    var n = Math.min(220, Math.floor((c.width * c.height) / 9000));
+    for (var i = 0; i < n; i++) {
+      stars.push({
+        x: Math.random() * c.width,
+        y: Math.random() * c.height,
+        r: Math.random() * 1.2 + 0.2,
+        a: Math.random() * 0.55 + 0.15
+      });
+    }
+  }
+  function draw() {
+    ctx.clearRect(0, 0, c.width, c.height);
+    for (var i = 0; i < stars.length; i++) {
+      var s = stars[i];
+      ctx.fillStyle = "rgba(235,228,214," + s.a + ")";
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+  size();
+  draw();
+  window.addEventListener("resize", function () { size(); draw(); });
+})();
+</script>
+</body>
+</html>

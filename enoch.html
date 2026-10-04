@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Book of Enoch — 1 Enoch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07080c;
+    --ink: #ebe4d6;
+    --muted: #b1a89b;
+    --dim: #7d756b;
+    --gold: #e0bc84;
+    --gold-dim: rgba(224, 188, 132, 0.45);
+    --ice: #b7d4df;
+    --ice-dim: rgba(183, 212, 223, 0.5);
+    --card: rgba(12, 14, 20, 0.82);
+    --edge: rgba(235, 228, 214, 0.14);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    color: var(--ink);
+    background: var(--bg);
+    font-family: Outfit, "Segoe UI", sans-serif;
+    font-weight: 300;
+    line-height: 1.55;
+    font-size: 17px;
+  }
+  canvas#stars {
+    position: fixed; inset: 0; width: 100%; height: 100%;
+    z-index: 0; pointer-events: none;
+  }
+  .dust {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(1200px 500px at 50% -10%, rgba(224, 188, 132, 0.08), transparent 60%),
+      radial-gradient(900px 700px at 80% 40%, rgba(80, 110, 140, 0.08), transparent 55%),
+      linear-gradient(180deg, transparent, rgba(0,0,0,0.35));
+  }
+  .wrap { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; padding: 72px 24px 80px; }
+  a { color: var(--ice); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  a:hover { color: var(--gold); }
+  .brand {
+    letter-spacing: 0.28em; text-transform: uppercase;
+    font-size: 12px; color: var(--gold); margin: 0 0 18px;
+  }
+  h1 {
+    font-family: Cinzel, Palatino, serif; font-weight: 500;
+    font-size: clamp(34px, 6vw, 52px); line-height: 1.12;
+    margin: 0 0 18px; letter-spacing: 0.01em;
+  }
+  .lede { color: var(--muted); margin: 0 0 18px; max-width: 64ch; }
+  .plain { color: var(--muted); margin: 0 0 14px; max-width: 68ch; }
+  .notice {
+    border: 1px solid rgba(183, 212, 223, 0.28);
+    background: rgba(12, 16, 22, 0.72);
+    border-radius: 14px;
+    padding: 16px 18px;
+    margin: 22px 0 28px;
+    color: var(--ice);
+    font-size: 15.5px;
+  }
+  .notice strong { color: var(--gold); font-weight: 500; }
+  h2 {
+    font-family: Cinzel, Palatino, serif; font-weight: 500;
+    font-size: 26px; margin: 0 0 8px; line-height: 1.2;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--edge);
+    border-radius: 14px;
+    padding: 18px 20px 16px;
+    backdrop-filter: blur(6px);
+    margin: 0 0 16px;
+  }
+  .card.ice { border-color: rgba(183, 212, 223, 0.22); }
+  .kicker {
+    margin: 0 0 8px; font-size: 12px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--dim);
+  }
+  .kicker span { color: var(--gold); }
+  .body { margin: 0 0 10px; color: var(--muted); }
+  blockquote {
+    margin: 12px 0 6px;
+    padding: 0 0 0 14px;
+    border-left: 2px solid var(--gold-dim);
+    color: var(--ink);
+    font-size: 16px;
+  }
+  blockquote.alt { border-left-color: var(--ice-dim); }
+  .cite { margin: 0; color: var(--dim); font-size: 13px; }
+  .names { color: var(--muted); font-size: 15.5px; }
+  footer.note p.rights { margin-top: 18px; letter-spacing: 0.04em; }
+  footer.note { margin-top: 28px; color: var(--dim); font-size: 14px; }
+  footer.note ul { padding-left: 1.1em; }
+  footer.note li { margin: 0 0 6px; }
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+<div class="dust"></div>
+<div class="wrap">
+  <p class="brand">Ancient timeline</p>
+  <h1>The Book of Enoch</h1>
+  <p class="lede"><a href="index.html">Back to the timeline</a>. This page is 1 Enoch, the Book of Enoch. It is not 2 Enoch or 3 Enoch. Wikipedia notes those as distinct works that only share the name.</p>
+
+  <p class="plain">1 Enoch is a Jewish apocalyptic collection, not a Mesopotamian tablet. Wikipedia calls it an ancient Jewish apocalyptic religious text. The same article estimates the older sections at about 300 to 200 BCE, and says Western scholars place the Book of the Watchers in the fourth or third century BCE. The latest part, the Book of Parables, is there put about 100 BCE. It is not in the Hebrew Bible: the article says it was excluded from the formal canon of the Tanakh. It is not in the standard Protestant canon either. Wikipedia says it is now regarded as scripture only by the Ethiopian Orthodox Tewahedo Church and the Eritrean Orthodox Tewahedo Church, and by the Beta Israel community. The full book survives in its entirety only in Geʽez. No manuscript date is given here.</p>
+
+  <div class="notice">
+    <strong>What this page is.</strong> This page is the story as 1 Enoch tells it. It is not a claim that the Watchers are the Anunnaki, and not a date for Atlantis or 9600 BCE.
+  </div>
+
+  <article class="card">
+    <p class="kicker">Genesis 5 and Jude <span>Seventh from Adam</span></p>
+    <h2>Enoch, seventh from Adam</h2>
+    <p class="body">Genesis 5 lists the line through Jared, who begets Enoch, and Enoch, who begets Methuselah. Enoch walks with God, and then he is gone, because God takes him. Jude names him the seventh from Adam and says he prophesied. In 1 Enoch itself the opening of the Parables calls him the son of Jared, son of Mahalalel, son of Cainan, son of Enos, son of Seth, son of Adam.</p>
+    <blockquote>And Enoch walked with God: and he was not; for God took him.</blockquote>
+    <p class="cite">Genesis 5:24, King James Version. <a href="https://en.wikisource.org/wiki/Bible_(King_James)/Genesis">Wikisource</a>.</p>
+    <blockquote class="alt">And Enoch also, the seventh from Adam, prophesied of these, saying, Behold, the Lord cometh with ten thousands of his saints.</blockquote>
+    <p class="cite">Jude 14, King James Version. <a href="https://en.wikisource.org/wiki/Bible_(King_James)/Jude">Wikisource</a>.</p>
+  </article>
+
+  <article class="card ice">
+    <p class="kicker">1 Enoch 6–8 <span>R. H. Charles, 1917</span></p>
+    <h2>The Book of the Watchers</h2>
+    <p class="body">Two hundred angels, called the children of heaven, see human women and decide to take wives and have children. Their leader, Semjâzâ, fears he will be left to pay for the sin alone. They swear an oath together and descend on the summit of Mount Hermon, and the mountain is named for that oath. Charles's chapter 6 names the other leaders, the chiefs of tens: Sêmîazâz, Arâkîba, Râmêêl, Kôkabîêl, Tâmîêl, Râmîêl, Dânêl, Êzêqêêl, Barâqîjâl, Asâêl, Armârôs, Batârêl, Anânêl, Zaqîêl, Samsâpêêl, Satarêl, Tûrêl, Jômjâêl, and Sariêl. Azâzêl teaches metalworking and weapons: swords, knives, shields, and breastplates, and also ornaments and the beautifying of the eyelids. Semjâzâ teaches enchantments and root-cuttings. Armârôs teaches the resolving of enchantments. Barâqîjâl teaches astrology, Kôkabêl the constellations, Êzêqêêl the knowledge of the clouds, and Sariêl the course of the moon.</p>
+    <blockquote>And Semjâzâ, who was their leader, said unto them: 'I fear ye will not indeed agree to do this deed, and I alone shall have to pay the penalty of a great sin.'</blockquote>
+    <p class="cite">1 Enoch 6:3, R. H. Charles, 1917. <a href="https://sacred-texts.com/bib/boe/boe009.htm">sacred-texts.com</a>.</p>
+    <blockquote class="alt">And Azâzêl taught men to make swords, and knives, and shields, and breastplates, and made known to them the metals 〈of the earth〉 and the art of working them.</blockquote>
+    <p class="cite">1 Enoch 8:1, R. H. Charles, 1917. <a href="https://sacred-texts.com/bib/boe/boe011.htm">sacred-texts.com</a>.</p>
+  </article>
+
+  <article class="card">
+    <p class="kicker">1 Enoch 7 <span>R. H. Charles, 1917</span></p>
+    <h2>The Nephilim, or giants</h2>
+    <p class="body">The wives bear great giants. The giants eat what people have. When people can no longer feed them, the giants turn on humankind and devour them. They also devour animals, and one another's flesh, and they drink the blood. Then the earth itself accuses the lawless ones. Later the archangels see the blood and hear crying that reaches the gates of heaven.</p>
+    <blockquote>Who consumed all the acquisitions of men. And when men could no longer sustain them, the giants turned against them and devoured mankind.</blockquote>
+    <p class="cite">1 Enoch 7:3–4, R. H. Charles, 1917. <a href="https://sacred-texts.com/bib/boe/boe010.htm">sacred-texts.com</a>.</p>
+    <blockquote class="alt">Then the earth laid accusation against the lawless ones.</blockquote>
+    <p class="cite">1 Enoch 7:6, R. H. Charles, 1917. Same page.</p>
+  </article>
+
+  <article class="card ice">
+    <p class="kicker">1 Enoch 9–10 <span>R. H. Charles, 1917</span></p>
+    <h2>The archangels bind the Watchers</h2>
+    <p class="body">Michael, Uriel, Raphael, and Gabriel look down and see the bloodshed. The Most High then gives them different work. The opened text does not give all four the same job. Uriel is sent to the son of Lamech, Noah, to tell him to hide, because a deluge will destroy the earth. Raphael is told to bind Azâzêl hand and foot, cast him into darkness in the desert Dûdâêl, cover him with rocks, and leave him until the great judgement, when he is cast into the fire. Gabriel is told to proceed against the children of the Watchers and to send them against one another so that they destroy each other in battle. Michael is told to bind Semjâzâ and the associates who united themselves with women, and to bind them for seventy generations in the valleys of the earth.</p>
+    <blockquote>And again the Lord said to Raphael: 'Bind Azâzêl hand and foot, and cast him into the darkness.'</blockquote>
+    <p class="cite">1 Enoch 10:4, R. H. Charles, 1917. <a href="https://sacred-texts.com/bib/boe/boe013.htm">sacred-texts.com</a>.</p>
+    <blockquote class="alt">And the Lord said unto Michael: 'Go, bind Semjâzâ and his associates who have united themselves with women so as to have defiled themselves with them in all their uncleanness.'</blockquote>
+    <p class="cite">1 Enoch 10:11, R. H. Charles, 1917. Same page.</p>
+  </article>
+
+  <article class="card">
+    <p class="kicker">1 Enoch 14 and 17 <span>R. H. Charles, 1917</span></p>
+    <h2>Enoch taken through the heavens</h2>
+    <p class="body">In a vision, clouds and mist summon Enoch, and winds lift him into heaven. He comes to a wall of crystals ringed with fire, then to a house of crystal whose ceiling is like the path of the stars. Farther in, the Great Glory sits on a throne. His raiment is brighter than the sun, and Enoch falls on his face until he is called. A later journey takes him to the places of the luminaries and the stars, to darkness, to a river of fire, and to where no flesh walks.</p>
+    <blockquote>And the winds in the vision caused me to fly and lifted me upward, and bore me into heaven.</blockquote>
+    <p class="cite">1 Enoch 14:8, R. H. Charles, 1917. <a href="https://sacred-texts.com/bib/boe/boe017.htm">sacred-texts.com</a>.</p>
+    <blockquote class="alt">And I came to a river of fire in which the fire flows like water and discharges itself into the great sea towards the west.</blockquote>
+    <p class="cite">1 Enoch 17:5, R. H. Charles, 1917. <a href="https://sacred-texts.com/bib/boe/boe020.htm">sacred-texts.com</a>.</p>
+  </article>
+
+  <article class="card ice">
+    <p class="kicker">1 Enoch 37–71 <span>R. H. Charles, 1917</span></p>
+    <h2>The Book of Parables and the Son of Man</h2>
+    <p class="body">The second vision is a vision of wisdom. Three parables are imparted to Enoch. In one of them he sees one whose head is white like wool, the Head of Days, and with him another being whose face is like a man's. Enoch asks who that Son of Man is. The angel says this is the Son of Man who has righteousness, chosen by the Lord of Spirits, who will put down kings and the mighty. Later Enoch's spirit is taken into the heaven of heavens, and he is told of the Son of Man who is born unto righteousness.</p>
+    <blockquote>Now three parables were imparted to me, and I lifted up my voice and recounted them to those that dwell on the earth.</blockquote>
+    <p class="cite">1 Enoch 37:5, R. H. Charles, 1917. <a href="https://sacred-texts.com/bib/boe/boe040.htm">sacred-texts.com</a>.</p>
+    <blockquote class="alt">And I asked the angel who went with me and showed me all the hidden things, concerning that Son of Man, who he was, and whence he was, (and) why he went with the Head of Days?</blockquote>
+    <p class="cite">1 Enoch 46:2, R. H. Charles, 1917. <a href="https://sacred-texts.com/bib/boe/boe049.htm">sacred-texts.com</a>.</p>
+  </article>
+
+  <article class="card">
+    <p class="kicker">1 Enoch 72–82 <span>R. H. Charles, 1917</span></p>
+    <h2>The Astronomical Book</h2>
+    <p class="body">This section is the book of the courses of the heavenly luminaries. Uriel, the holy angel who guides them, shows Enoch their laws. The sun rises through six portals in the east and sets through six in the west. The opened chapter counts the year as three hundred and sixty-four days. The moon and the leaders of the stars move by the same gates.</p>
+    <blockquote>And I saw six portals in which the sun rises, and six portals in which the sun sets and the moon rises and sets in these portals.</blockquote>
+    <p class="cite">1 Enoch 72:3, R. H. Charles, 1917. <a href="https://sacred-texts.com/bib/boe/boe075.htm">sacred-texts.com</a>.</p>
+  </article>
+
+  <article class="card ice">
+    <p class="kicker">1 Enoch 83–90 <span>R. H. Charles, 1917</span></p>
+    <h2>The Dream Visions</h2>
+    <p class="body">Enoch tells his son Methuselah two dreams. In the first, heaven falls and the earth is swallowed in an abyss. In the second, history is told as animals. A white bull comes from the earth, then a heifer, then a black bull and a red bull. The black bull gores the red one. Later a white bull becomes a man, builds a great vessel, and rides out a flood in which the other animals sink. The text itself does not spell out a key to the animals in the lines opened here. It simply tells the story that way.</p>
+    <blockquote>Before I took thy mother Edna, I saw in a vision on my bed, and behold a bull came forth from the earth, and that bull was white; and after it came forth a heifer, and along with this (latter) came forth two bulls, one of them black and the other red.</blockquote>
+    <p class="cite">1 Enoch 85:3, R. H. Charles, 1917. <a href="https://sacred-texts.com/bib/boe/boe088.htm">sacred-texts.com</a>.</p>
+  </article>
+
+  <article class="card">
+    <p class="kicker">1 Enoch 91–105 <span>R. H. Charles, 1917</span></p>
+    <h2>The Epistle</h2>
+    <p class="body">Charles's edition calls the close of the book Enoch's book of admonition for his children. Enoch has Methuselah gather his brothers. He tells them to love uprightness and not to walk with a double heart. He says violence will increase, and that a great chastisement will come, and that the Holy Great One has appointed days for all things. The righteous rise into light. Sin perishes in darkness.</p>
+    <blockquote>Let not your spirit be troubled on account of the times; For the Holy and Great One has appointed days for all things.</blockquote>
+    <p class="cite">1 Enoch 92:2, R. H. Charles, 1917. <a href="https://sacred-texts.com/bib/boe/boe094.htm">sacred-texts.com</a>.</p>
+    <blockquote class="alt">Love uprightness and walk therein.</blockquote>
+    <p class="cite">1 Enoch 91:3, R. H. Charles, 1917. <a href="https://sacred-texts.com/bib/boe/boe095.htm">sacred-texts.com</a>.</p>
+  </article>
+
+  <footer class="note">
+    <p>Quotations of 1 Enoch are from R. H. Charles, <em>The Book of Enoch</em> (London: SPCK, 1917), as published at sacred-texts.com. Angle brackets in one line are in that edition. Genesis and Jude are the King James Version on Wikisource. The note on what the book is, the date range, the canon, and Geʽez follows <a href="https://en.wikipedia.org/wiki/Book_of_Enoch">the Wikipedia article "Book of Enoch"</a> as opened for this page. <a href="index.html">Back to the timeline</a>.</p>
+    <p class="rights">All rights reserved to Studio Gulch SAS.</p>
+</footer>
+</div>
+<script>
+  const canvas = document.getElementById("stars");
+  const ctx = canvas.getContext("2d");
+  let stars = [];
+  function layoutStars() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const n = Math.min(140, Math.floor(window.innerWidth * window.innerHeight / 14000));
+    stars = Array.from({ length: n }, () => ({
+      x: Math.random(), y: Math.random(),
+      r: Math.random() * 1.2 + 0.2,
+      a: Math.random() * 0.5 + 0.15
+    }));
+  }
+  function drawStars() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    stars.forEach((s) => {
+      ctx.fillStyle = "rgba(235, 228, 214," + s.a + ")";
+      ctx.beginPath();
+      ctx.arc(s.x * canvas.width, s.y * canvas.height, s.r, 0, Math.PI * 2);
+      ctx.fill();
+    });
+  }
+  layoutStars();
+  drawStars();
+  window.addEventListener("resize", () => { layoutStars(); drawStars(); });
+</script>
+</body>
+</html>
