@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Younger Dryas — an expansion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07080c;
+    --ink: #ebe4d6;
+    --muted: #b1a89b;
+    --dim: #7d756b;
+    --gold: #e0bc84;
+    --gold-dim: rgba(224, 188, 132, 0.45);
+    --ice: #b7d4df;
+    --ice-dim: rgba(183, 212, 223, 0.5);
+    --hinge: #e7d7b0;
+    --card: rgba(12, 14, 20, 0.82);
+    --edge: rgba(235, 228, 214, 0.14);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    color: var(--ink);
+    background: var(--bg);
+    font-family: Outfit, "Segoe UI", sans-serif;
+    font-weight: 300;
+    line-height: 1.55;
+    font-size: 17px;
+  }
+  canvas#stars {
+    position: fixed; inset: 0; width: 100%; height: 100%;
+    z-index: 0; pointer-events: none;
+  }
+  .dust {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(1200px 500px at 50% -10%, rgba(224, 188, 132, 0.08), transparent 60%),
+      radial-gradient(900px 700px at 80% 40%, rgba(80, 110, 140, 0.08), transparent 55%),
+      linear-gradient(180deg, transparent, rgba(0,0,0,0.35));
+  }
+  .meridian {
+    position: fixed;
+    top: 0; bottom: 0;
+    left: max(20px, calc(50vw - 430px));
+    width: 1px;
+    z-index: 0;
+    pointer-events: none;
+    background: linear-gradient(180deg, transparent, var(--gold-dim), var(--gold-dim), transparent);
+  }
+  .wrap { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; padding: 72px 24px 80px; }
+  a { color: var(--ice); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  a:hover { color: var(--gold); }
+  .back {
+    display: inline-block;
+    margin: 0 0 22px;
+    color: var(--ice);
+    text-decoration: none;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-size: 12px;
+  }
+  .back:hover { color: var(--gold); }
+  .brand {
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: var(--gold);
+    margin: 0 0 18px;
+  }
+  h1 {
+    font-family: Cinzel, Palatino, serif;
+    font-weight: 500;
+    font-size: clamp(34px, 6vw, 52px);
+    line-height: 1.12;
+    margin: 0 0 18px;
+    letter-spacing: 0.01em;
+  }
+  .lede { color: var(--muted); margin: 0 0 28px; max-width: 64ch; }
+  article.card {
+    background: var(--card);
+    border: 1px solid var(--edge);
+    border-radius: 14px;
+    padding: 22px 22px 18px;
+    margin: 0 0 18px;
+    backdrop-filter: blur(6px);
+  }
+  article.card.primary { border-color: rgba(183, 212, 223, 0.35); }
+  article.card.interpretive { border-color: rgba(224, 188, 132, 0.35); }
+  .kicker {
+    margin: 0 0 8px;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+  article.card.primary .kicker { color: var(--ice); }
+  article.card.interpretive .kicker { color: var(--gold); }
+  h2 {
+    font-family: Cinzel, Palatino, serif;
+    font-weight: 500;
+    font-size: 26px;
+    margin: 0 0 12px;
+    line-height: 1.2;
+  }
+  p { margin: 0 0 12px; color: var(--muted); }
+  p:last-child { margin-bottom: 0; }
+  .links { margin-top: 4px; }
+  .links a { display: inline-block; margin: 0 16px 8px 0; color: var(--gold); }
+  footer.note { margin-top: 28px; color: var(--dim); font-size: 14px; }
+  footer.note p.rights { margin-top: 18px; letter-spacing: 0.04em; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+<canvas id="stars" aria-hidden="true"></canvas>
+<div class="dust" aria-hidden="true"></div>
+<div class="meridian" aria-hidden="true"></div>
+<div class="wrap">
+  <a class="back" href="index.html">← Ancient timeline</a>
+  <p class="brand">Ancient timeline</p>
+  <h1>The Younger Dryas</h1>
+  <p class="lede">This page expands the Younger Dryas card. It is not the main spine. The gold line in the margin is only a family mark. The scientific account of the cold snap comes first. Graham Hancock follows as an interpretive layer, not as the date of the ice.</p>
+
+  <article class="card primary">
+    <p class="kicker">Primary · The scientific account</p>
+    <h2>The cold snap on the record</h2>
+    <p>The cold snap is the one read from ice cores and sediment layers. The dates are the ones already on the timeline. The Younger Dryas runs about 12,900 to 11,700 years ago, roughly 10,900 to 9,700 BCE, also written about 10,896 to 9,703 BCE.</p>
+    <p>It is a short, sharp return to cold at the very end of the glacial period, after the world had already begun to warm. This is not the deep ice of the maximum. The Last Glacial Period is the longer cold, about 115,000 to 11,700 years ago. When this snap ends, the warm Holocene begins, from about 11,700 years ago. Atlantis is the next milestone, just outside this band.</p>
+  </article>
+
+  <article class="card interpretive">
+    <p class="kicker">Interpretive layer · Not the date of the ice</p>
+    <h2>Graham Hancock's interpretive layer</h2>
+    <p>What follows is Graham Hancock's analysis and mythological take: a comet impact, and the alignment he builds from it. It is his theory, not a geological date for the ice, and not this page's date for the cold snap.</p>
+    <p>Two impacts: one about 12,800 years ago, and a second about 9600 BCE. He aligns 9600 BCE with Plato and with Göbekli Tepe's monumental phase, about 9600 to 8200 BCE. Göbekli Tepe, in that alignment, is not a city with writing or metal. Only Plato's Atlantis flood is pinned near 9600 BCE. This layer does not date any other flood myth, or the Anunnaki, to that year.</p>
+    <p>On Joe Rogan Experience #872, with Randall Carlson, November 16, 2016, an automated transcript has him describe the Taurid stream as debris of a giant comet that entered the inner solar system about 20,000 years ago, broke into fragments, and still crosses Earth's path. Earth passes through that stream twice a year. He says pieces hit the North American ice cap 12,800 years ago, and again about 11,600 years ago. He ties the Tunguska explosion of June 30, 1908, to the June crossing. No official transcript. The transcript does not say the comet stayed visible for a long time. That line is Martin Sweatman's, not Hancock's.</p>
+    <p>He tells the same comet story on #725, #1897, and #2051. On #1897 the automated transcript dates the breakup to 12,800 years ago, which disagrees with the 20,000-year entry on #872.</p>
+    <p>The scientific counter sits with the theory, not with the date of the ice: no crater, no impact glass, no unambiguous debris field, and 9600 BCE lines up suspiciously with Plato.</p>
+    <p class="links"><a href="https://www.jrepodcast.com/episode/joe-rogan-experience-872-graham-hancock-randall-carlson/">JRE #872 page</a> <a href="https://www.youtube.com/watch?v=0H5LCLljJho">YouTube</a></p>
+  </article>
+
+  <footer class="note">
+    <p><a href="index.html">Back to the timeline</a>.</p>
+    <p class="rights">All rights reserved to Studio Gulch SAS.</p>
+  </footer>
+</div>
+<script>
+  const canvas = document.getElementById("stars");
+  const ctx = canvas.getContext("2d");
+  let stars = [];
+  function layoutStars() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const n = Math.min(140, Math.floor(window.innerWidth * window.innerHeight / 14000));
+    stars = Array.from({ length: n }, () => ({
+      x: Math.random(), y: Math.random(),
+      r: Math.random() * 1.2 + 0.2,
+      a: Math.random() * 0.5 + 0.15
+    }));
+  }
+  function drawStars() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    stars.forEach((s) => {
+      ctx.fillStyle = "rgba(235, 228, 214," + s.a + ")";
+      ctx.beginPath();
+      ctx.arc(s.x * canvas.width, s.y * canvas.height, s.r, 0, Math.PI * 2);
+      ctx.fill();
+    });
+  }
+  layoutStars();
+  drawStars();
+  window.addEventListener("resize", () => { layoutStars(); drawStars(); });
+</script>
+</body>
+</html>

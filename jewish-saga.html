@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Jewish saga</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07080c;
+    --ink: #ebe4d6;
+    --muted: #b1a89b;
+    --dim: #7d756b;
+    --gold: #e0bc84;
+    --gold-dim: rgba(224, 188, 132, 0.45);
+    --ice: #b7d4df;
+    --card: rgba(12, 14, 20, 0.82);
+    --edge: rgba(235, 228, 214, 0.14);
+    --line: 72px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    color: var(--ink);
+    background: var(--bg);
+    font-family: Outfit, "Segoe UI", sans-serif;
+    font-weight: 300;
+    line-height: 1.55;
+    font-size: 17px;
+  }
+  canvas#stars {
+    position: fixed; inset: 0; width: 100%; height: 100%;
+    z-index: 0; pointer-events: none;
+  }
+  .dust {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(1200px 500px at 50% -10%, rgba(224, 188, 132, 0.08), transparent 60%),
+      radial-gradient(900px 700px at 80% 40%, rgba(80, 110, 140, 0.08), transparent 55%),
+      linear-gradient(180deg, transparent, rgba(0,0,0,0.35));
+  }
+  .wrap { position: relative; z-index: 1; }
+  header.top { max-width: 760px; margin: 0 auto; padding: 56px 24px 12px; }
+  .backs { display: flex; flex-wrap: wrap; gap: 8px 22px; margin: 0 0 22px; }
+  .back {
+    display: inline-block; color: var(--ice); text-decoration: none;
+    letter-spacing: 0.14em; text-transform: uppercase; font-size: 12px;
+  }
+  .back:hover { color: var(--gold); }
+  .brand {
+    letter-spacing: 0.28em; text-transform: uppercase;
+    font-size: 12px; color: var(--gold); margin: 0 0 18px;
+  }
+  h1 {
+    font-family: Cinzel, Palatino, serif; font-weight: 500;
+    font-size: clamp(34px, 6vw, 58px); line-height: 1.12;
+    margin: 0 0 18px; letter-spacing: 0.01em;
+  }
+  .lede { color: var(--muted); margin: 0 0 12px; max-width: 64ch; }
+  .lede:last-child { margin-bottom: 0; }
+  main { padding: 10px 0 40px; }
+  .timeline {
+    position: relative; max-width: 980px; margin: 0 auto; padding: 8px 0 40px;
+  }
+  .meridian, .meridian-fill {
+    position: absolute; top: 0; left: var(--line); width: 1px; pointer-events: none;
+  }
+  .meridian {
+    bottom: 0;
+    background: linear-gradient(180deg, transparent, var(--gold-dim), var(--gold-dim), transparent);
+  }
+  .meridian-fill {
+    height: 0;
+    background: linear-gradient(180deg, transparent, var(--gold));
+    box-shadow: 0 0 12px var(--gold);
+  }
+  .band { position: relative; }
+  .band-mark {
+    margin: 0;
+    padding: 22px 22px 6px calc(var(--line) + 28px);
+    max-width: 640px;
+  }
+  .band-kicker {
+    margin: 0 0 4px;
+    font-family: Cinzel, Palatino, serif;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: var(--ice);
+  }
+  .band-span { margin: 0; color: var(--ice); font-size: 13px; letter-spacing: 0.06em; }
+  .band-note {
+    margin: 8px 0 0;
+    color: var(--muted);
+    font-size: 15px;
+    max-width: 58ch;
+  }
+  .event { position: relative; margin: 0; padding: 14px 20px 14px calc(var(--line) + 28px); }
+  .event::before {
+    content: "";
+    position: absolute;
+    left: calc(var(--line) - 5px);
+    top: 32px;
+    width: 11px; height: 11px; border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--gold);
+    box-shadow: 0 0 0 4px rgba(224, 188, 132, 0.08), 0 0 14px var(--gold);
+    z-index: 1;
+  }
+  .event[data-tone="ice"]::before { border-color: var(--ice); box-shadow: 0 0 0 4px rgba(183, 212, 223, 0.08), 0 0 14px var(--ice); }
+  .card {
+    max-width: 560px;
+    background: var(--card);
+    border: 1px solid var(--edge);
+    border-radius: 14px;
+    padding: 18px 20px 16px;
+    backdrop-filter: blur(6px);
+  }
+  .event[data-tone="ice"] .card { border-color: rgba(183, 212, 223, 0.22); }
+  .kicker {
+    display: flex; justify-content: space-between; gap: 12px;
+    margin: 0 0 8px; font-size: 12px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--dim);
+  }
+  .kicker .when { color: var(--gold); letter-spacing: 0.06em; text-align: right; }
+  .event[data-tone="ice"] .kicker .when { color: var(--ice); }
+  h2 {
+    font-family: Cinzel, Palatino, serif; font-weight: 500;
+    font-size: 26px; margin: 0 0 8px; line-height: 1.2;
+  }
+  .body { margin: 0; color: var(--muted); }
+  .card .body + .body { margin-top: 8px; }
+  a.inline-link { color: var(--gold); }
+  .time-rule {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 28px 20px 8px calc(var(--line) + 8px);
+    max-width: 640px;
+  }
+  .time-rule span {
+    font-family: Cinzel, Palatino, serif;
+    font-weight: 500;
+    font-size: 15px;
+    letter-spacing: 0.04em;
+    color: var(--gold);
+    background: var(--bg);
+    padding: 0 10px;
+    white-space: nowrap;
+  }
+  .time-rule i {
+    flex: 1;
+    height: 1px;
+    background: var(--gold);
+    box-shadow: 0 0 12px var(--gold);
+  }
+  .reading {
+    max-width: 560px;
+    margin: 6px 20px 18px calc(var(--line) + 28px);
+    color: var(--muted);
+    font-size: 15px;
+  }
+  footer.note p.rights { margin: 0; letter-spacing: 0.04em; }
+  footer.note {
+    max-width: 760px; margin: 0 auto; padding: 10px 24px 80px;
+    color: var(--dim); font-size: 14px;
+  }
+  @media (min-width: 900px) {
+    :root { --line: 50%; }
+    .band-mark { padding-left: calc(var(--line) + 36px); }
+    .event { padding: 16px 0; }
+    .event.side-right { padding-left: calc(50% + 36px); padding-right: 24px; }
+    .card { max-width: none; }
+    .time-rule { margin-left: calc(var(--line) + 16px); margin-right: 24px; max-width: none; }
+    .reading { margin-left: calc(var(--line) + 36px); margin-right: 24px; max-width: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+<canvas id="stars" aria-hidden="true"></canvas>
+<div class="dust" aria-hidden="true"></div>
+<div class="wrap">
+  <header class="top">
+    <p class="backs"><a class="back" href="index.html">← Ancient timeline</a></p>
+    <p class="brand">Off the spine</p>
+    <h1>The Jewish saga</h1>
+    <p class="lede">This page is the expansion, not the main spine. The timeline keeps three marks: Abraham leaves Ur, the Exodus, and the settlement. The cards between those marks are here, in the wording the timeline already used.</p>
+    <p class="lede"><a class="inline-link" href="index.html">Back to the timeline</a></p>
+  </header>
+  <main>
+    <div class="timeline" id="line">
+      <div class="meridian" aria-hidden="true"></div>
+      <div class="meridian-fill" id="fill" aria-hidden="true"></div>
+      <section class="band">
+        <div class="band-mark">
+          <p class="band-kicker">The family</p>
+          <p class="band-span">Abraham through the settlement</p>
+          <p class="band-note">Traditional maximalist reading, not established by mainstream archaeology. Isaac: 2066 to 1886 BCE. Jacob: 2006 to 1859 BCE. Jacob enters Egypt 1876 BCE at age 130, and the twelve sons are already that household. A looser window often cited is about 2100 to 1500 BCE. Abraham on this page stays about 2000 to 1800 BCE. Critical scholars since Thomas L. Thompson and John Van Seters generally do not date Isaac or Jacob as historical figures.</p>
+        </div>
+      <article class="event side-right" data-tone="myth">
+        <div class="card">
+          <p class="kicker"><span>Traditional chronology</span><span class="when">About 2000 to 1800 BCE</span></p>
+          <h2>Abraham leaves Ur</h2>
+          <p class="body">A man leaves the city of Ur. The promise is a land, a people, and a blessing that will run out to the nations. The line that reaches Christ is this one.</p>
+        </div>
+      </article>
+      <article class="event side-right" data-tone="myth">
+        <div class="card">
+          <p class="kicker"><span>Traditional chronology</span><span class="when">After the call</span></p>
+          <h2>The covenant</h2>
+          <p class="body">The promise is cut and the household is marked off from the nations that scattered after Babel. From here the story is no longer about the whole world at once. It follows one family.</p>
+        </div>
+      </article>
+      <article class="event side-right" data-tone="myth">
+        <div class="card">
+          <p class="kicker"><span>Traditional chronology</span><span class="when">The next generation</span></p>
+          <h2>Isaac</h2>
+          <p class="body">The son of the promise, born against the odds. The covenant passes to him, not to every child of Abraham.</p>
+          <p class="body">Traditional maximalist reading, not established by mainstream archaeology: 2066 to 1886 BCE.</p>
+        </div>
+      </article>
+      <article class="event side-right" data-tone="myth">
+        <div class="card">
+          <p class="kicker"><span>Traditional chronology</span><span class="when">The next generation</span></p>
+          <h2>Jacob and the twelve tribes</h2>
+          <p class="body">Jacob, later called Israel, fathers the twelve. The people who will go down into Egypt, and come back out, are all in that family.</p>
+          <p class="body">Traditional maximalist reading, not established by mainstream archaeology: 2006 to 1859 BCE.</p>
+          <p class="body">Traditional maximalist reading, not established by mainstream archaeology: Jacob enters Egypt 1876 BCE at age 130, and the twelve sons are already that household.</p>
+        </div>
+      </article>
+        <p class="reading">A looser window often cited is about 2100 to 1500 BCE. Traditional maximalist reading, not established by mainstream archaeology.</p>
+      <article class="event side-right" data-tone="myth">
+        <div class="card">
+          <p class="kicker"><span>Traditional chronology</span><span class="when">The centuries in Egypt</span></p>
+          <h2>Slavery in Egypt</h2>
+          <p class="body">The family becomes a nation inside Egypt, and then a nation enslaved. This is the Egypt of the oppression, not a history of the pharaohs.</p>
+        </div>
+      </article>
+      <article class="event side-right" data-tone="myth">
+        <div class="card">
+          <p class="kicker"><span>Traditional chronology</span><span class="when">About 1446 BCE, the early date</span></p>
+          <h2>Moses and the Exodus</h2>
+          <p class="body">Moses leads them out. The sea closes on the pursuit. They leave as the people of the covenant, with the wilderness in front of them. The later date, in the 1200s BCE, is the main alternative. This page uses the early one.</p>
+        </div>
+      </article>
+      <article class="event side-right" data-tone="myth">
+        <div class="card">
+          <p class="kicker"><span>Traditional chronology</span><span class="when">The same season</span></p>
+          <h2>The Law at Sinai</h2>
+          <p class="body">The mountain smokes. The law is given: who they are, and how a people taken out of Egypt is to live.</p>
+        </div>
+      </article>
+      <article class="event side-right" data-tone="myth">
+        <div class="card">
+          <p class="kicker"><span>Traditional chronology</span><span class="when">Forty years</span></p>
+          <h2>The wilderness</h2>
+          <p class="body">The generation that would not enter the land dies on the way. Their children grow up facing the Jordan.</p>
+        </div>
+      </article>
+      <article class="event side-right" data-tone="myth">
+        <div class="card">
+          <p class="kicker"><span>Traditional chronology</span><span class="when">About 1400 BCE</span></p>
+          <h2>Joshua and Canaan</h2>
+          <p class="body">They cross the river. Jericho falls. The land named to Abraham is taken and divided among the tribes.</p>
+        </div>
+      </article>
+      </section>
+    </div>
+  </main>
+  <footer class="note">
+    <p class="rights">All rights reserved to Studio Gulch SAS.</p>
+  </footer>
+
+</div>
+<script>
+(function () {
+  var c = document.getElementById("stars");
+  if (!c || !c.getContext) return;
+  var ctx = c.getContext("2d");
+  var stars = [];
+  function size() {
+    c.width = window.innerWidth;
+    c.height = window.innerHeight;
+    var n = Math.min(140, Math.floor(c.width * c.height / 14000));
+    stars = [];
+    for (var i = 0; i < n; i++) {
+      stars.push({ x: Math.random(), y: Math.random(), r: Math.random() * 1.2 + 0.2, a: Math.random() * 0.5 + 0.15 });
+    }
+  }
+  function draw() {
+    ctx.clearRect(0, 0, c.width, c.height);
+    for (var i = 0; i < stars.length; i++) {
+      var s = stars[i];
+      ctx.fillStyle = "rgba(235,228,214," + s.a + ")";
+      ctx.beginPath();
+      ctx.arc(s.x * c.width, s.y * c.height, s.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+  size(); draw();
+  var line = document.getElementById("line");
+  var fill = document.getElementById("fill");
+  function paint() {
+    if (!line || !fill) return;
+    var top = line.getBoundingClientRect().top + window.scrollY;
+    var total = line.offsetHeight;
+    var y = window.scrollY + window.innerHeight * 0.42 - top;
+    fill.style.height = Math.max(0, Math.min(total, y)) + "px";
+  }
+  paint();
+  window.addEventListener("resize", function () { size(); draw(); paint(); });
+  window.addEventListener("scroll", paint, { passive: true });
+})();
+</script>
+</body>
+</html>
