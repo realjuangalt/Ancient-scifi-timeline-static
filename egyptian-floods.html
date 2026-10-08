@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Egyptian flood myths</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07080c;
+    --ink: #ebe4d6;
+    --muted: #b1a89b;
+    --dim: #7d756b;
+    --gold: #e0bc84;
+    --gold-dim: rgba(224, 188, 132, 0.45);
+    --ice: #b7d4df;
+    --ice-dim: rgba(183, 212, 223, 0.5);
+    --hinge: #e7d7b0;
+    --card: rgba(12, 14, 20, 0.82);
+    --edge: rgba(235, 228, 214, 0.14);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    color: var(--ink);
+    background: var(--bg);
+    font-family: Outfit, "Segoe UI", sans-serif;
+    font-weight: 300;
+    line-height: 1.55;
+    font-size: 17px;
+  }
+  canvas#stars {
+    position: fixed; inset: 0; width: 100%; height: 100%;
+    z-index: 0; pointer-events: none;
+  }
+  .dust {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(1200px 500px at 50% -10%, rgba(224, 188, 132, 0.08), transparent 60%),
+      radial-gradient(900px 700px at 80% 40%, rgba(80, 110, 140, 0.08), transparent 55%),
+      linear-gradient(180deg, transparent, rgba(0,0,0,0.35));
+  }
+  .meridian {
+    position: fixed;
+    top: 0; bottom: 0;
+    left: max(20px, calc(50vw - 430px));
+    width: 1px;
+    z-index: 0;
+    pointer-events: none;
+    background: linear-gradient(180deg, transparent, var(--gold-dim), var(--gold-dim), transparent);
+  }
+  .wrap { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; padding: 72px 24px 80px; }
+  a { color: var(--ice); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  a:hover { color: var(--gold); }
+  .back {
+    display: inline-block;
+    margin: 0 0 22px;
+    color: var(--ice);
+    text-decoration: none;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-size: 12px;
+  }
+  .back:hover { color: var(--gold); }
+  .brand {
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: var(--gold);
+    margin: 0 0 18px;
+  }
+  h1 {
+    font-family: Cinzel, Palatino, serif;
+    font-weight: 500;
+    font-size: clamp(34px, 6vw, 52px);
+    line-height: 1.12;
+    margin: 0 0 18px;
+    letter-spacing: 0.01em;
+  }
+  .lede { color: var(--muted); margin: 0 0 28px; max-width: 64ch; }
+  article.card {
+    background: var(--card);
+    border: 1px solid var(--edge);
+    border-radius: 14px;
+    padding: 22px 22px 18px;
+    margin: 0 0 18px;
+    backdrop-filter: blur(6px);
+  }
+  article.card.primary { border-color: rgba(183, 212, 223, 0.35); }
+  article.card.interpretive { border-color: rgba(224, 188, 132, 0.35); }
+  .kicker {
+    margin: 0 0 8px;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+  article.card.primary .kicker { color: var(--ice); }
+  article.card.interpretive .kicker { color: var(--gold); }
+  h2 {
+    font-family: Cinzel, Palatino, serif;
+    font-weight: 500;
+    font-size: 26px;
+    margin: 0 0 12px;
+    line-height: 1.2;
+  }
+  p { margin: 0 0 12px; color: var(--muted); }
+  p:last-child { margin-bottom: 0; }
+  blockquote {
+    margin: 0;
+    padding: 0 0 0 16px;
+    border-left: 1px solid var(--gold-dim);
+  }
+  blockquote p { color: var(--ink); margin: 0 0 10px; }
+  blockquote p:last-child { margin-bottom: 0; }
+  .verse-no {
+    color: var(--gold);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    margin-right: 6px;
+  }
+  .links { margin-top: 4px; }
+  .links a { display: inline-block; margin: 0 16px 8px 0; color: var(--gold); }
+  footer.note { margin-top: 28px; color: var(--dim); font-size: 14px; }
+  footer.note p.rights { margin-top: 18px; letter-spacing: 0.04em; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+
+  .spine { position: absolute; width: 2px; pointer-events: none; z-index: 3; }
+  .spine-science { left: 0; background: #b7d4df; }
+  .spine-myth { right: 0; background: #e0bc84; }
+  .meridian, .meridian-fill { display: none !important; }
+  body.layout-article .wrap {
+    position: relative;
+    max-width: 880px;
+    margin: 0 16px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  body.layout-article .wrap > :not(article):not(.spine):not(main) {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+  body.layout-article main { padding-left: 0; padding-right: 0; }
+  body.layout-article nav.order { margin-left: 20px; margin-right: 20px; }
+  body.layout-article article.card {
+    position: relative;
+    text-align: left;
+    overflow-wrap: break-word;
+    margin-bottom: 20px;
+    background: #101218;
+  }
+  body.layout-article article.card p,
+  body.layout-article article.card .body { text-align: left; }
+  body.page-science article.card,
+  body.page-myth article.card {
+    margin-left: 8px;
+    margin-right: 8px;
+    max-width: none;
+  }
+  body.page-science article.card { border: 1px solid var(--ice); }
+  body.page-myth article.card { border: 1px solid var(--gold); }
+  body.page-science .brand,
+  body.page-science article.card .kicker { color: var(--ice); }
+  body.page-myth .brand,
+  body.page-myth article.card .kicker,
+  body.page-myth .kicker,
+  body.page-myth .band-kicker,
+  body.page-myth .order-kicker { color: var(--gold); }
+  body.page-science article.card::before,
+  body.page-myth article.card::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    margin-top: -4px;
+  }
+  body.page-science article.card::before {
+    left: -12px;
+    border-width: 4px 12px 4px 0;
+    border-color: transparent var(--ice) transparent transparent;
+  }
+  body.page-myth article.card::before {
+    right: -12px;
+    border-width: 4px 0 4px 12px;
+    border-color: transparent transparent transparent var(--gold);
+  }
+  body.page-science article.card::after,
+  body.page-myth article.card::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    box-sizing: border-box;
+    border-radius: 50%;
+    background: var(--bg);
+    transform: translateY(-50%);
+    z-index: 4;
+  }
+  body.page-science article.card::after {
+    left: -8px;
+    margin-left: -4px;
+    border: 2px solid var(--ice);
+  }
+  body.page-myth article.card::after {
+    right: -8px;
+    margin-right: -4px;
+    border: 2px solid var(--gold);
+  }
+  body.page-both .brand {
+    background: linear-gradient(90deg, var(--ice), var(--gold));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  body.page-both article.card {
+    margin-left: 16px;
+    margin-right: 16px;
+    max-width: none;
+    border-top: 1px solid var(--edge);
+    border-bottom: 1px solid var(--edge);
+    border-left: 2px solid var(--ice);
+    border-right: 2px solid var(--gold);
+  }
+  body.layout-timeline .timeline {
+    position: relative;
+    max-width: 880px;
+    margin: 0 16px;
+    padding-top: 8px;
+  }
+  body.layout-timeline .event {
+    position: relative;
+    margin: 0 0 20px !important;
+    padding: 0 !important;
+  }
+  body.layout-timeline .event::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: auto !important;
+    right: -3px;
+    width: 8px;
+    height: 8px;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--gold);
+    box-shadow: none;
+    box-sizing: border-box;
+    z-index: 4;
+  }
+  body.layout-timeline .event .card {
+    position: relative;
+    margin-left: 8px;
+    margin-right: 8px;
+    max-width: none;
+    border: 1px solid var(--gold);
+    border-radius: 14px;
+    background: #101218;
+    text-align: left;
+    overflow-wrap: break-word;
+  }
+  body.layout-timeline .event .card::before,
+  body.layout-timeline .event .card::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border-style: solid;
+  }
+  body.layout-timeline .event .card::before {
+    right: -12px;
+    margin-top: -4px;
+    border-width: 4px 0 4px 12px;
+    border-color: transparent transparent transparent var(--gold);
+  }
+  body.layout-timeline .event .card::after {
+    right: -10px;
+    margin-top: -3px;
+    border-width: 3px 0 3px 10px;
+    border-color: transparent transparent transparent #101218;
+    z-index: 1;
+  }
+  body.layout-timeline .band-mark,
+  body.layout-timeline .reading,
+  body.layout-timeline .time-rule {
+    margin-left: 20px !important;
+    margin-right: 20px !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    max-width: none !important;
+  }
+  body.layout-timeline .band-kicker,
+  body.layout-timeline .kicker .when,
+  body.layout-timeline .time-rule span { color: var(--gold); }
+  body.layout-timeline .time-rule i { background: var(--gold); box-shadow: none; }
+  body.layout-timeline .event[data-tone="ice"] .card { border-color: var(--gold); }
+  body.layout-timeline .event[data-tone="ice"]::before { border-color: var(--gold); box-shadow: none; }
+  body.page-myth nav.order li::before { box-shadow: none; }
+  @media (min-width: 720px) {
+    body.layout-article .wrap,
+    body.layout-timeline .timeline {
+      width: calc(100% - 28px);
+      margin-left: auto;
+      margin-right: auto;
+    }
+    body.page-science article.card {
+      max-width: 62%;
+      margin-left: 12px;
+      margin-right: auto;
+    }
+    body.page-myth.layout-article article.card {
+      max-width: 62%;
+      margin-left: auto;
+      margin-right: 12px;
+    }
+    body.layout-timeline .event::before { width: 12px; height: 12px; right: -5px; }
+    body.layout-timeline .event .card {
+      max-width: 62%;
+      margin-left: auto;
+      margin-right: 12px;
+    }
+    body.page-science article.card::after,
+    body.page-myth article.card::after {
+      width: 12px;
+      height: 12px;
+    }
+    body.page-science article.card::after { left: -12px; margin-left: -6px; }
+    body.page-myth article.card::after { right: -12px; margin-right: -6px; }
+  }
+
+  ol.beats { margin: 0 0 12px; padding-left: 1.3em; color: var(--muted); }
+  ol.beats li { margin: 0 0 4px; }
+  ol.beats li::marker { color: var(--gold); }
+  blockquote { margin: 0 0 12px; }
+  blockquote .cite { color: var(--dim); font-size: 13px; }
+  p.dated { color: var(--ink); font-size: 15px; }
+  .kicker span::before { content: "·"; margin: 0 8px; }
+</style>
+</head>
+<body class="page-myth layout-article">
+<canvas id="stars" aria-hidden="true"></canvas>
+<div class="dust" aria-hidden="true"></div>
+<div class="meridian" aria-hidden="true"></div>
+<div class="wrap bubble-column">
+<div class="spine spine-myth" aria-hidden="true"></div>
+
+  <a class="back" href="index.html">← Ancient timeline</a>
+  <p class="brand">Ancient timeline</p>
+  <h1>Egyptian flood myths</h1>
+  <p class="lede">This page expands the Egyptian flood myths card. The gold line on the right marks the myth side.</p>
+  <p class="lede">The cards run in the order of the stories’ own world: the waters before creation, the near-destruction of humanity under Ra, the end of the world in the Book of the Dead, the yearly Nile flood, and then what Greek writers were told in Egypt.</p>
+
+
+  <article class="card primary">
+    <p class="kicker">Before creation <span>The world rises from water</span></p>
+    <h2>Nun, the water before the world</h2>
+    <p>Before there is earth or sky there is Nun, the watery expanse. The oldest surviving list of the forces before creation names four pairs: Nun and Nunet for the water, Heh and Hehet for endless time, Kek and Keket for darkness, and Tenem and Tenemet for wandering. Later versions often put Amun and Amunet, the hidden, in place of the last pair. Egyptologists link the Eight to Khemenu, “Eight,” the city the Greeks called Hermopolis.</p>
+    <p>Then the creator comes up out of the water. Egyptian texts picture this as land rising out of the yearly flood: a heron landing on the first dry ground, a lotus opening on the water, a mound that becomes the first sacred ground. Temples are said to stand on that mound. The sun god, Ra or Atum, makes Shu and Tefnut, they make Geb and Nut, and the line runs down to Osiris and Horus. People come from the creator’s tears.</p>
+    <ol class="beats">
+      <li>The Eight are in the waters of Nun.</li>
+      <li>The creator raises himself out of Nun and has no place to stand.</li>
+      <li>The mound rises; the heron lands; the lotus opens.</li>
+      <li>Shu and Tefnut, then Geb and Nut, then Osiris, Isis, Seth, and Nephthys.</li>
+      <li>The creator weeps, and men and women come from the tears.</li>
+    </ol>
+    <blockquote>
+      <p>I myself raised them up from out of Nu, from a state of helpless inertness. I found no place whereon I could stand.</p>
+      <p class="cite">Budge’s translation (1912), the creation legend in the Papyrus of Nes-Menu</p>
+    </blockquote>
+    <p class="dated">Text’s date: UCL’s Digital Egypt gives Coffin Text 76 as the earliest surviving reference to the Eight, and Richter places Spell 76 among the Middle Kingdom Coffin Texts. Budge reads a colophon of the Papyrus of Nes-Menu as the twelfth year of Alexander son of Alexander, which he gives as 311 BCE.</p>
+    <p class="links"><a href="https://www.ucl.ac.uk/museums-static/digitalegypt/religion/deitiescreation.html">UCL Digital Egypt: creation</a> <a href="https://www.gutenberg.org/ebooks/9411">Budge, Legends of the Gods (1912), Project Gutenberg</a> <a href="http://www.barbararichter.com/Richter2010WanderingGoddess.pdf">Richter 2010, On the Heels of the Wandering Goddess</a></p>
+  </article>
+
+  <article class="card primary">
+    <p class="kicker">The reign of Ra <span>The near-destruction of humanity</span></p>
+    <h2>The Destruction of Mankind</h2>
+    <p>Ra has grown old on his throne, and people plot against him. He calls the gods who were with him in Nun to a secret council. Nun tells him to send out his Eye. The Eye goes out as Hathor and kills the rebels who fled into the desert. Ra decides to stop, but the goddess, now Sekhmet, wades through the night in human blood and goes on killing.</p>
+    <p>The red flood is beer. Ra sends runners to Elephantine for red ochre. At Heliopolis it is ground and stirred into barley beer until the beer looks like human blood. Seven thousand jars are made. In the night Ra has them poured out where she will hunt, and the fields stand flooded three palms deep. At dawn she finds the fields flooded, is delighted, drinks, and goes home too drunk to recognize humankind. The survivors live.</p>
+    <p>Ra then leaves the earth. Nut becomes a cow and lifts him into the sky. The story says that from then on, Hathor’s festivals have their jars of the beer that makes people sleep.</p>
+    <ol class="beats">
+      <li>Ra is old; humanity plots.</li>
+      <li>Council of the gods; Nun advises sending the Eye.</li>
+      <li>Hathor slays the rebels in the desert.</li>
+      <li>Ra relents; Sekhmet keeps killing.</li>
+      <li>Red ochre from Elephantine; seven thousand jars of red beer.</li>
+      <li>The fields are flooded with beer; she drinks and is pacified.</li>
+      <li>Ra withdraws onto the Heavenly Cow, and the world is reordered.</li>
+    </ol>
+    <blockquote>
+      <p>And it came to pass that when this goddess arrived at the dawn of day, she found these [Heavens] flooded [with beer], and she was pleased thereat; and she drank [of the beer and blood], and her heart rejoiced, and she became drunk, and she gave no further attention to men and women.</p>
+      <p class="cite">Budge’s translation (1912), from the Seti I text</p>
+    </blockquote>
+    <p>Budge’s 1912 English reads the ground ingredient as mandrakes, mixed with blood of the slain. Guilhou’s entry in the UCLA Encyclopedia of Egyptology and the translation in Simpson’s anthology read it as red ochre. The ochre, the seven thousand jars, and the three palms come from that translation as World History Encyclopedia quotes it; Budge also counts seven thousand vessels.</p>
+    <p>Guilhou also gives a calendar reading: the red of the beer, from Nubian hematite, can stand for the red silt of the first flood waters, when the dangerous last days of the year end and the Nile begins to rise. Pieces of the story turn up elsewhere: the rebellion and its punishment in Coffin Text spell 1130, the Teaching for Merikara, and the Calendar of Good and Bad Days; the rebellion and Ra’s departure in the Roman-era Book of the Fayum.</p>
+    <p class="dated">Text’s date: the earliest known copy, in excerpts, is inside the outermost gilded shrine of Tutankhamun (reigned about 1336–1327 BCE). Fuller versions fill side rooms in the tombs of Seti I (reigned 1290–1279 BCE), Ramesses II, and Ramesses III; Ramesses VI keeps one episode. Guilhou dates the language to a redaction between the start of Dynasty 18 and the Amarna Period.</p>
+    <p class="links"><a href="https://escholarship.org/uc/item/2vh551hn">Guilhou 2010, Myth of the Heavenly Cow (UEE)</a> <a href="https://www.worldhistory.org/Book_of_the_Heavenly_Cow/">World History Encyclopedia: Book of the Heavenly Cow</a> <a href="https://www.gutenberg.org/ebooks/9411">Budge, Legends of the Gods (1912)</a> <a href="https://en.wikipedia.org/wiki/Book_of_the_Heavenly_Cow">Wikipedia: Book of the Heavenly Cow</a> <a href="https://www.ucl.ac.uk/museums-static/digitalegypt/religion/deitiescreation.html">UCL Digital Egypt: creation</a></p>
+  </article>
+
+  <article class="card primary">
+    <p class="kicker">The end of the world <span>Book of the Dead 175</span></p>
+    <h2>Back into Nun</h2>
+    <p>In chapter 175 of the Book of the Dead, the dead person arrives in a place without water or air, all abyss and darkness, and asks Atum how long life will last. Atum answers with eternities, and then says what comes after: he will undo everything he made, and the earth will go back to the flood it came from. Atum will remain with Osiris, in the form of a serpent no one will know.</p>
+    <ol class="beats">
+      <li>The speaker tells Thoth that the children of Nut have raised rebellion.</li>
+      <li>The speaker arrives in the airless, waterless deep and asks Atum how long life will last.</li>
+      <li>Atum answers: eternities of eternities.</li>
+      <li>Atum says he will destroy what he made; the earth becomes water again.</li>
+      <li>Atum remains with Osiris, as an unknown serpent.</li>
+    </ol>
+    <blockquote>
+      <p>Thou art for eternities of eternities, the duration of endless years; and behold I am going to deface all I have done: this earth will become water, an inundation as it was in the beginning. I will remain with Osiris, and I will make my form like another serpent, whom no man will know, and no god will see.</p>
+      <p class="cite">Renouf and Naville’s translation (1904), Chapter CLXXV, from the Papyrus of Ani with readings from a Leiden papyrus</p>
+    </blockquote>
+    <p>The 1904 notes say the longer Leiden copy mentions the blood that flowed at Suten-henen and read it as an allusion to the Destruction of Mankind. Suten-henen, Herakleopolis, is where Budge’s text of that story starts the slaughter.</p>
+    <p class="dated">Text’s date: the Papyrus of Ani, which carries this chapter, was made about 1250 BCE, in Dynasty 19. It is in the British Museum.</p>
+    <p class="links"><a href="https://archive.org/details/egyptianbookofde00reno">Renouf and Naville, The Egyptian Book of the Dead (1904), Internet Archive</a> <a href="https://www.gutenberg.org/ebooks/7145">Budge, The Book of the Dead, Project Gutenberg</a> <a href="https://en.wikipedia.org/wiki/Papyrus_of_Ani">Wikipedia: Papyrus of Ani</a></p>
+  </article>
+
+  <article class="card primary">
+    <p class="kicker">Every year <span>Akhet, the inundation season</span></p>
+    <h2>The yearly flood and the Distant Goddess</h2>
+    <p>Every late summer the Nile rose over the valley, and in autumn the fields came back up coated in black mud. UCL’s Digital Egypt says this yearly sight gave Egypt its main images of creation. The divine force in the river, the flood itself, is Hapy. Guilhou writes that the new year began when the Nile began to flood. Akhet is the inundation season.</p>
+    <p>The Distant Goddess story is tied to that flood. Ra’s Eye, the lioness Tefnut, leaves Egypt in anger for Nubia. Shu and Thoth go after her and win her back with promises, wine, and the symbol of ordered time. She bathes at Philae, becomes a beautiful woman, and sails down the Nile from festival to festival. Ra founds a festival so that she can see the inundation and all the marvels of Egypt.</p>
+    <ol class="beats">
+      <li>The Eye leaves Egypt for Nubia.</li>
+      <li>Shu and Thoth go to bring her back.</li>
+      <li>She is pacified at Philae.</li>
+      <li>She sails north, greeted by festivals.</li>
+      <li>Ra founds a feast so she may see the inundation.</li>
+    </ol>
+    <p>Richter reads the goddess’s ritual sailing at Dendera as her return and the arrival of the inundation she brings with her. Guilhou ties the pacified Hathor of the beer story to the same return, kept each year in the Festivals of Drunkenness in the first month of Akhet.</p>
+    <p class="dated">Text’s date: Richter counts the myth or its festival in at least twenty-two Ptolemaic-era temples, from Bubastis to el-Dakka. Her main papyrus source, Leiden I 384 in Demotic, is from the second century CE. Guilhou cites the Festival of Drunkenness on the twentieth day of the first month of Akhet in Ptolemaic texts at Dendera.</p>
+    <p class="links"><a href="https://www.ucl.ac.uk/museums-static/digitalegypt/religion/deitiescreation.html">UCL Digital Egypt: creation</a> <a href="http://www.barbararichter.com/Richter2010WanderingGoddess.pdf">Richter 2010, On the Heels of the Wandering Goddess</a> <a href="https://escholarship.org/uc/item/2vh551hn">Guilhou 2010 (UEE)</a></p>
+  </article>
+
+  <article class="card primary">
+    <p class="kicker">A Greek report <span>Roman period</span></p>
+    <h2>The tears of Isis</h2>
+    <p>The Greek travel writer Pausanias heard from a man of Phoenicia that the Egyptians keep a feast of Isis at the time when she mourns for Osiris. That is when the Nile starts to rise, and many Egyptians say her tears make it rise.</p>
+    <blockquote>
+      <p>At this time the Nile begins to rise, and it is a saying among many of the natives that what makes the river rise and water their fields is the tears of Isis.</p>
+      <p class="cite">Pausanias, Description of Greece 10.32.18, translated by W. H. S. Jones and H. A. Ormerod (1918)</p>
+    </blockquote>
+    <p class="dated">Text’s date: Pausanias lived about 110 to 180 CE and travelled in Greece from about 150 CE. The idea reaches us here as his second-hand report.</p>
+    <p class="links"><a href="https://www.theoi.com/Text/Pausanias10C.html">Pausanias 10.32, Theoi Classical Texts Library</a> <a href="https://en.wikipedia.org/wiki/Pausanias_(geographer)">Wikipedia: Pausanias</a></p>
+  </article>
+
+  <article class="card primary">
+    <p class="kicker">When the flood fails <span>The Famine Stela</span></p>
+    <h2>Seven low Niles</h2>
+    <p>King Djoser (Budge: Tcheser) writes that the Nile has failed to rise to its height for seven years. There is no grain, people rob each other, and the storehouses hold only wind. He learns that the river answers to Khnum, god of the First Cataract, whose worship has been neglected. Djoser restores Khnum’s offerings and lands, the god lets Hapy pour out of the caverns at the Cataract, and the flood and the harvests come back.</p>
+    <blockquote>
+      <p>Hapi (i.e., the Nile) hath not come forth in my time to the [proper] height for seven years.</p>
+      <p class="cite">Budge’s translation (1912), the legend of Khnemu and the seven years’ famine</p>
+    </blockquote>
+    <p class="dated">Text’s date: the inscription is on a granite boulder on Sehel island (Budge: Sahal) in the First Cataract. Budge dates the carving to the reign of one of the Ptolemies; the story sets itself in the eighteenth year of Djoser, of Dynasty 3.</p>
+    <p class="links"><a href="https://www.gutenberg.org/ebooks/9411">Budge, Legends of the Gods (1912)</a></p>
+  </article>
+
+  <article class="card interpretive">
+    <p class="kicker">The Greek report <span>Timaeus 22</span></p>
+    <h2>The priest at Sais</h2>
+    <p>In Plato’s Timaeus, Solon tells the priests at Sais about Deucalion and Pyrrha. An old priest answers that the Greeks are children. Fire and water destroy peoples again and again, and the survivors start over with no memory. Egypt is spared because the Nile saves it, so its temples keep the records.</p>
+    <blockquote>
+      <p>Now the Nile is our saviour from fire, and as there is little rain in Egypt, we are not harmed by water</p>
+      <p class="cite">Jowett’s translation, Timaeus 22d–22e</p>
+    </blockquote>
+    <blockquote>
+      <p>you remember one deluge only, and there were many of them</p>
+      <p class="cite">Jowett’s translation, Timaeus 23b</p>
+    </blockquote>
+    <p>In this passage the floods fall on other lands. Egypt is the place that remembers them.</p>
+    <p class="dated">Text’s date: Plato wrote the Timaeus about 360 BCE. The priest speaks through Critias, retelling Solon’s visit.</p>
+    <p class="links"><a href="timaeus-jowett.txt">Timaeus, Jowett, on this site</a> <a href="https://www.gutenberg.org/ebooks/1572">Timaeus at Project Gutenberg</a> <a href="https://en.wikipedia.org/wiki/Timaeus_(dialogue)">Wikipedia: Timaeus</a> <a href="atlantis.html">The Atlantis page</a></p>
+  </article>
+
+  <article class="card interpretive">
+    <p class="kicker">The Greek report <span>Diodorus 1.10 and 1.19</span></p>
+    <h2>Diodorus: Deucalion’s flood and the Nile that broke out</h2>
+    <p>Diodorus of Sicily sets down what he calls the Egyptians’ own account. If most living things died in Deucalion’s flood, the people of southern Egypt are the likeliest to have lived through it, since their land is mostly rainless.</p>
+    <p>He also tells of a Nile flood at the rising of Sirius that burst its banks and destroyed the district Prometheus governed. Heracles closed the breach and turned the river back into its course. Diodorus says Greek poets made this into the eagle that eats Prometheus’ liver, and that the river was called Aëtus, eagle, for its violence.</p>
+    <p class="dated">Text’s date: Diodorus wrote his Library of History between about 60 and 30 BCE.</p>
+    <p class="links"><a href="https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Diodorus_Siculus/1A*.html">Diodorus Book I, chapters 1–29, LacusCurtius</a> <a href="https://en.wikipedia.org/wiki/Diodorus_Siculus">Wikipedia: Diodorus Siculus</a></p>
+  </article>
+
+
+  <footer class="note">
+    <p class="rights">All rights reserved to Studio Gulch SAS.</p>
+  </footer>
+</div>
+<script>
+  const canvas = document.getElementById("stars");
+  const ctx = canvas.getContext("2d");
+  let stars = [];
+  function layoutStars() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const n = Math.min(140, Math.floor(window.innerWidth * window.innerHeight / 14000));
+    stars = Array.from({ length: n }, () => ({
+      x: Math.random(), y: Math.random(),
+      r: Math.random() * 1.2 + 0.2,
+      a: Math.random() * 0.5 + 0.15
+    }));
+  }
+  function drawStars() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    stars.forEach((s) => {
+      ctx.fillStyle = "rgba(235, 228, 214," + s.a + ")";
+      ctx.beginPath();
+      ctx.arc(s.x * canvas.width, s.y * canvas.height, s.r, 0, Math.PI * 2);
+      ctx.fill();
+    });
+  }
+  layoutStars();
+  drawStars();
+  window.addEventListener("resize", () => { layoutStars(); drawStars(); });
+</script>
+
+<script>
+(function () {
+  function place() {
+    var host = document.querySelector(".timeline") || document.querySelector(".wrap");
+    if (!host) return;
+    var bubbles = host.querySelectorAll("article.event, article.card");
+    if (!bubbles.length) return;
+    var hostRect = host.getBoundingClientRect();
+    var first = bubbles[0].getBoundingClientRect();
+    var last = bubbles[bubbles.length - 1].getBoundingClientRect();
+    var top = (first.top - hostRect.top) + first.height / 2 - 24;
+    var end = (last.top - hostRect.top) + last.height / 2 + 24;
+    var spines = host.querySelectorAll(".spine");
+    for (var i = 0; i < spines.length; i++) {
+      spines[i].style.top = top + "px";
+      spines[i].style.height = Math.max(0, end - top) + "px";
+    }
+  }
+  place();
+  window.addEventListener("resize", place);
+  window.addEventListener("load", place);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(place);
+})();
+</script>
+
+
+</body>
+</html>
