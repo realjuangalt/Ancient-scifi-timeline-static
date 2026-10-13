@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ECDO — an expansion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07080c;
+    --ink: #ebe4d6;
+    --muted: #b1a89b;
+    --dim: #7d756b;
+    --gold: #e0bc84;
+    --gold-dim: rgba(224, 188, 132, 0.45);
+    --ice: #b7d4df;
+    --ice-dim: rgba(183, 212, 223, 0.5);
+    --hinge: #e7d7b0;
+    --card: rgba(12, 14, 20, 0.82);
+    --edge: rgba(235, 228, 214, 0.14);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    color: var(--ink);
+    background: var(--bg);
+    font-family: Outfit, "Segoe UI", sans-serif;
+    font-weight: 300;
+    line-height: 1.55;
+    font-size: 17px;
+  }
+  canvas#stars {
+    position: fixed; inset: 0; width: 100%; height: 100%;
+    z-index: 0; pointer-events: none;
+  }
+  .dust {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(1200px 500px at 50% -10%, rgba(224, 188, 132, 0.08), transparent 60%),
+      radial-gradient(900px 700px at 80% 40%, rgba(80, 110, 140, 0.08), transparent 55%),
+      linear-gradient(180deg, transparent, rgba(0,0,0,0.35));
+  }
+  .meridian {
+    position: fixed;
+    top: 0; bottom: 0;
+    left: max(20px, calc(50vw - 430px));
+    width: 1px;
+    z-index: 0;
+    pointer-events: none;
+    background: linear-gradient(180deg, transparent, var(--gold-dim), var(--gold-dim), transparent);
+  }
+  .wrap { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; padding: 72px 24px 80px; }
+  a { color: var(--ice); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  a:hover { color: var(--gold); }
+  .back {
+    display: inline-block;
+    margin: 0 0 22px;
+    color: var(--ice);
+    text-decoration: none;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-size: 12px;
+  }
+  .back:hover { color: var(--gold); }
+  .brand {
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: var(--gold);
+    margin: 0 0 18px;
+  }
+  h1 {
+    font-family: Cinzel, Palatino, serif;
+    font-weight: 500;
+    font-size: clamp(34px, 6vw, 52px);
+    line-height: 1.12;
+    margin: 0 0 18px;
+    letter-spacing: 0.01em;
+  }
+  .lede { color: var(--muted); margin: 0 0 28px; max-width: 64ch; }
+  article.card {
+    background: var(--card);
+    border: 1px solid var(--edge);
+    border-radius: 14px;
+    padding: 22px 22px 18px;
+    margin: 0 0 18px;
+    backdrop-filter: blur(6px);
+  }
+  article.card.primary { border-color: rgba(183, 212, 223, 0.35); }
+  article.card.interpretive { border-color: rgba(224, 188, 132, 0.35); }
+  .kicker {
+    margin: 0 0 8px;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+  article.card.primary .kicker { color: var(--ice); }
+  article.card.interpretive .kicker { color: var(--gold); }
+  h2 {
+    font-family: Cinzel, Palatino, serif;
+    font-weight: 500;
+    font-size: 26px;
+    margin: 0 0 12px;
+    line-height: 1.2;
+  }
+  p { margin: 0 0 12px; color: var(--muted); }
+  p:last-child { margin-bottom: 0; }
+  .links { margin-top: 4px; }
+  .links a { display: inline-block; margin: 0 16px 8px 0; color: var(--gold); }
+  footer.note { margin-top: 28px; color: var(--dim); font-size: 14px; }
+  footer.note p.rights { margin-top: 18px; letter-spacing: 0.04em; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+
+  .spine { position: absolute; width: 2px; pointer-events: none; z-index: 3; }
+  .spine-science { left: 0; background: #b7d4df; }
+  .spine-myth { right: 0; background: #e0bc84; }
+  .meridian, .meridian-fill { display: none !important; }
+  body.layout-article .wrap {
+    position: relative;
+    max-width: 880px;
+    margin: 0 16px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  body.layout-article .wrap > :not(article):not(.spine):not(main) {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+  body.layout-article main { padding-left: 0; padding-right: 0; }
+  body.layout-article nav.order { margin-left: 20px; margin-right: 20px; }
+  body.layout-article article.card {
+    position: relative;
+    text-align: left;
+    overflow-wrap: break-word;
+    margin-bottom: 20px;
+    background: #101218;
+  }
+  body.layout-article article.card p,
+  body.layout-article article.card .body { text-align: left; }
+  body.page-science article.card,
+  body.page-myth article.card {
+    margin-left: 8px;
+    margin-right: 8px;
+    max-width: none;
+  }
+  body.page-science article.card { border: 1px solid var(--ice); }
+  body.page-myth article.card { border: 1px solid var(--gold); }
+  body.page-science .brand,
+  body.page-science article.card .kicker { color: var(--ice); }
+  body.page-myth .brand,
+  body.page-myth article.card .kicker,
+  body.page-myth .kicker,
+  body.page-myth .band-kicker,
+  body.page-myth .order-kicker { color: var(--gold); }
+  body.page-science article.card::before,
+  body.page-myth article.card::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    margin-top: -4px;
+  }
+  body.page-science article.card::before {
+    left: -12px;
+    border-width: 4px 12px 4px 0;
+    border-color: transparent var(--ice) transparent transparent;
+  }
+  body.page-myth article.card::before {
+    right: -12px;
+    border-width: 4px 0 4px 12px;
+    border-color: transparent transparent transparent var(--gold);
+  }
+  body.page-science article.card::after,
+  body.page-myth article.card::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    box-sizing: border-box;
+    border-radius: 50%;
+    background: var(--bg);
+    transform: translateY(-50%);
+    z-index: 4;
+  }
+  body.page-science article.card::after {
+    left: -8px;
+    margin-left: -4px;
+    border: 2px solid var(--ice);
+  }
+  body.page-myth article.card::after {
+    right: -8px;
+    margin-right: -4px;
+    border: 2px solid var(--gold);
+  }
+  body.page-both .brand {
+    background: linear-gradient(90deg, var(--ice), var(--gold));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  body.page-both article.card {
+    margin-left: 16px;
+    margin-right: 16px;
+    max-width: none;
+    border-top: 1px solid var(--edge);
+    border-bottom: 1px solid var(--edge);
+    border-left: 2px solid var(--ice);
+    border-right: 2px solid var(--gold);
+  }
+  body.layout-timeline .timeline {
+    position: relative;
+    max-width: 880px;
+    margin: 0 16px;
+    padding-top: 8px;
+  }
+  body.layout-timeline .event {
+    position: relative;
+    margin: 0 0 20px !important;
+    padding: 0 !important;
+  }
+  body.layout-timeline .event::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: auto !important;
+    right: -3px;
+    width: 8px;
+    height: 8px;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--gold);
+    box-shadow: none;
+    box-sizing: border-box;
+    z-index: 4;
+  }
+  body.layout-timeline .event .card {
+    position: relative;
+    margin-left: 8px;
+    margin-right: 8px;
+    max-width: none;
+    border: 1px solid var(--gold);
+    border-radius: 14px;
+    background: #101218;
+    text-align: left;
+    overflow-wrap: break-word;
+  }
+  body.layout-timeline .event .card::before,
+  body.layout-timeline .event .card::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border-style: solid;
+  }
+  body.layout-timeline .event .card::before {
+    right: -12px;
+    margin-top: -4px;
+    border-width: 4px 0 4px 12px;
+    border-color: transparent transparent transparent var(--gold);
+  }
+  body.layout-timeline .event .card::after {
+    right: -10px;
+    margin-top: -3px;
+    border-width: 3px 0 3px 10px;
+    border-color: transparent transparent transparent #101218;
+    z-index: 1;
+  }
+  body.layout-timeline .band-mark,
+  body.layout-timeline .reading,
+  body.layout-timeline .time-rule {
+    margin-left: 20px !important;
+    margin-right: 20px !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    max-width: none !important;
+  }
+  body.layout-timeline .band-kicker,
+  body.layout-timeline .kicker .when,
+  body.layout-timeline .time-rule span { color: var(--gold); }
+  body.layout-timeline .time-rule i { background: var(--gold); box-shadow: none; }
+  body.layout-timeline .event[data-tone="ice"] .card { border-color: var(--gold); }
+  body.layout-timeline .event[data-tone="ice"]::before { border-color: var(--gold); box-shadow: none; }
+  body.page-myth nav.order li::before { box-shadow: none; }
+  @media (min-width: 720px) {
+    body.layout-article .wrap,
+    body.layout-timeline .timeline {
+      width: calc(100% - 28px);
+      margin-left: auto;
+      margin-right: auto;
+    }
+    body.page-science article.card {
+      max-width: 62%;
+      margin-left: 12px;
+      margin-right: auto;
+    }
+    body.page-myth.layout-article article.card {
+      max-width: 62%;
+      margin-left: auto;
+      margin-right: 12px;
+    }
+    body.layout-timeline .event::before { width: 12px; height: 12px; right: -5px; }
+    body.layout-timeline .event .card {
+      max-width: 62%;
+      margin-left: auto;
+      margin-right: 12px;
+    }
+    body.page-science article.card::after,
+    body.page-myth article.card::after {
+      width: 12px;
+      height: 12px;
+    }
+    body.page-science article.card::after { left: -12px; margin-left: -6px; }
+    body.page-myth article.card::after { right: -12px; margin-right: -6px; }
+  }
+
+</style>
+</head>
+<body class="page-both layout-article">
+<canvas id="stars" aria-hidden="true"></canvas>
+<div class="dust" aria-hidden="true"></div>
+<div class="meridian" aria-hidden="true"></div>
+<div class="wrap bubble-column">
+<div class="spine spine-science" aria-hidden="true"></div>
+<div class="spine spine-myth" aria-hidden="true"></div>
+
+  <a class="back" href="index.html">← Ancient timeline</a>
+  <p class="brand">Ancient timeline</p>
+  <h1>ECDO: the planet flips</h1>
+  <p class="lede">The ECDO card opens this page. ECDO is one author's theory. The gold cards set out the theory as he states it and the strongest case for it. The ice cards set out the case against it. The last card says where the debate stands.</p>
+
+  <article class="card interpretive">
+    <p class="kicker">His theory</p>
+    <h2>What ECDO claims</h2>
+    <p>ECDO stands for Exothermic Core-Mantle Decoupling – Dzhanibekov Oscillation. Its author wrote for years as The Ethical Skeptic and now goes by his name, Roger B. Cunningham. His master page says he developed it from 2010, first published it on 16 February 2020, and released a book, Inversion, in April 2026.</p>
+    <p>On that page, heat released from the Earth's iron core weakens the bond between the core and the mantle. When the magnetic field is weak enough, the mantle and crust together decouple from the core and roll about 104 degrees along the 31st East meridian, the meridian of Giza, into a second spin state. The oceans run over the land. He reads the world's flood stories, more than 175 of them, as memories of that roll. Later the planet rolls back.</p>
+    <p class="links"><a href="https://theethicalskeptic.com/2024/05/23/master-exothermic-core-mantle-decoupling-dzhanibekov-oscillation-theory/">The Ethical Skeptic, Master ECDO Theory</a> <a href="https://podherd.com/thcfree/episode/the-ethical-skeptic-roger-b-cunningham-ecdo-theory-pole-shifts-explained-earth-s-cataclysmic-cycle">The Higherside Chats, with Roger B. Cunningham</a></p>
+  </article>
+
+  <article class="card interpretive">
+    <p class="kicker">His cycle</p>
+    <h2>Every 5,200 or 6,443 years</h2>
+    <p>He gives two candidate intervals: 5,200 years, and 6,443 years, which is a quarter of the 25,772-year precession of the equinoxes. He calls both placeholders and says the roll does not happen every cycle. The second spin state, in his estimate, lasts about 400 years. He ties that figure to the Laschamp magnetic excursion about 42,000 years ago and to an estimate of how long sea water would take to dissolve the limestone casing of the Khafre pyramid.</p>
+    <p>On the same show he dates Göbekli Tepe Pillar 43 to 14,800 BCE from his reading of it as a star map, and he counts roll events since then at intervals of about 6,400 years. He says that count is not strong enough to predict the next one.</p>
+    <p class="links"><a href="https://podherd.com/thcfree/episode/the-ethical-skeptic-roger-b-cunningham-ecdo-theory-pole-shifts-explained-earth-s-cataclysmic-cycle">The Higherside Chats, with Roger B. Cunningham</a> <a href="https://theethicalskeptic.com/2024/05/23/master-exothermic-core-mantle-decoupling-dzhanibekov-oscillation-theory/">The Ethical Skeptic, Master ECDO Theory</a></p>
+  </article>
+
+  <article class="card interpretive">
+    <p class="kicker">His chart</p>
+    <h2>The seven days</h2>
+    <p>His chart, titled Timeline of Utanapishtim's Earth Geophysical Events, lays out one event day by day. On day minus one and day zero come tephra bombs, ash and lapilli, pyroclastic flow and darkness, land set ablaze, and land shattering. Over nights one to seven the chart marks ocean seiching, labelled “Woman writhing in labor,” with ocean, wind, and aerosolized ocean displaced over the land. A note on the chart says there can be no rain in such an event.</p>
+    <p>On the show he says the roll itself takes 12 to 36 hours and the oceans slosh for seven to nine days. He takes the seven days from Utnapishtim's account in the Epic of Gilgamesh and the nine days from Deucalion.</p>
+    <p class="links"><a href="https://x.com/EthicalSkeptic/status/2109101458855760051">The Ethical Skeptic, the chart on X</a> <a href="https://podherd.com/thcfree/episode/the-ethical-skeptic-roger-b-cunningham-ecdo-theory-pole-shifts-explained-earth-s-cataclysmic-cycle">The Higherside Chats, with Roger B. Cunningham</a></p>
+  </article>
+
+  <article class="card interpretive">
+    <p class="kicker">1958, an older idea</p>
+    <h2>Hapgood's shifting crust</h2>
+    <p>Charles Hapgood published The Earth's Shifting Crust in 1958, with a foreword by Albert Einstein. He later proposed that the Earth's axis had shifted many times, and in Maps of the Ancient Sea Kings (1966) he set a 15-degree pole shift around 9,600 BC. Wikipedia calls his claim of a rapid, recent pole shift pseudo-scientific, and records that later research on Antarctic ice discredited his reading.</p>
+    <p>Cunningham sets ECDO apart from Hapgood: Hapgood's crust slides over the mantle, while in ECDO the break is at the core-mantle boundary. He says a sliding crust would leave the whole surface torn like the Grand Canyon.</p>
+    <p class="links"><a href="https://en.wikipedia.org/wiki/Charles_Hapgood">Wikipedia, Charles Hapgood</a> <a href="https://podherd.com/thcfree/episode/the-ethical-skeptic-roger-b-cunningham-ecdo-theory-pole-shifts-explained-earth-s-cataclysmic-cycle">The Higherside Chats, with Roger B. Cunningham</a></p>
+  </article>
+
+  <article class="card primary">
+    <p class="kicker">1834, and 1985</p>
+    <h2>The Dzhanibekov effect</h2>
+    <p>The tennis racket theorem, or intermediate axis theorem, describes a rigid body with three different moments of inertia. Spin about the axis of greatest or least inertia is stable. Spin about the middle axis is unstable, and the body flips. Louis Poinsot described it in 1834. It is called the Dzhanibekov effect after the Soviet cosmonaut Vladimir Dzhanibekov, who saw it in space in 1985.</p>
+    <p>Cunningham says the effect is not the cause of the roll in his theory. He uses it as the path of least resistance the roll would follow.</p>
+    <p class="links"><a href="https://en.wikipedia.org/wiki/Tennis_racket_theorem">Wikipedia, Tennis racket theorem</a> <a href="https://theethicalskeptic.com/2024/05/23/master-exothermic-core-mantle-decoupling-dzhanibekov-oscillation-theory/">The Ethical Skeptic, Master ECDO Theory</a></p>
+  </article>
+
+  <article class="card interpretive">
+    <p class="kicker">The case for</p>
+    <h2>The flood stories</h2>
+    <p>The strongest pull of the theory is the stories. Many cultures tell of water over the land, and a few give a span of days: seven days and seven nights in Atrahasis, nine days and nine nights for Deucalion in Apollodorus. Utnapishtim's account says the land was shattered like a pot and the storm on the seventh day was like a woman in labour. Chinese tradition has Gonggong tilt the sky to the northwest and the earth to the southeast. Cunningham reads all of this as one physical event seen from different places.</p>
+    <p class="links"><a href="https://en.wikipedia.org/wiki/Gilgamesh_flood_myth">Wikipedia, Gilgamesh flood myth</a> <a href="https://www.theoi.com/Text/Apollodorus1.html">Apollodorus, Library 1, Frazer translation</a> <a href="https://en.wikipedia.org/wiki/Gonggong">Wikipedia, Gonggong</a></p>
+  </article>
+
+  <article class="card interpretive">
+    <p class="kicker">The case for, as he states it</p>
+    <h2>Giza, Göbekli Tepe, and the monuments</h2>
+    <p>His master page reads a light erosion band near the top of the Khafre pyramid as the mark of a sea that stood 576 feet above today's level for 50 to 400 years. It says more than two hundred ancient monuments, among them Sacsayhuamán, Gunung Padang, Ġgantija, the Great Pyramid, Puma Punku, and the Nazca Lines, align to the second pole his theory predicts. It says Pillar 43 at Göbekli Tepe carries the same message.</p>
+    <p>The page lists over thirty predictions he counts as confirmed, including rapid heating of the deep ocean in 2023, and gives a statement of what would falsify the theory: a stable, near-symmetric inertia about the present axis, and mantle heat too small to warm the deep ocean.</p>
+    <p class="links"><a href="https://theethicalskeptic.com/2024/05/23/master-exothermic-core-mantle-decoupling-dzhanibekov-oscillation-theory/">The Ethical Skeptic, Master ECDO Theory</a></p>
+  </article>
+
+  <article class="card primary">
+    <p class="kicker">The case against</p>
+    <h2>How poles really wander</h2>
+    <p>True polar wander is real. The planet as a whole turns relative to its spin axis when its mass shifts. Wikipedia describes it as driven by gradual readjustment of the rotational bulge, and its example for Earth is east Asia moving south by 25 degrees between about 174 and 157 million years ago, a shift spread over some 17 million years. ECDO asks for 104 degrees in a day or two.</p>
+    <p>The same article says the Earth's axis of greatest inertia is closely aligned with its spin axis, held there by the equatorial bulge. In the tennis racket theorem, spin about that axis is the stable case. The flip belongs to the middle axis.</p>
+    <p class="links"><a href="https://en.wikipedia.org/wiki/True_polar_wander">Wikipedia, True polar wander</a> <a href="https://en.wikipedia.org/wiki/Tennis_racket_theorem">Wikipedia, Tennis racket theorem</a></p>
+  </article>
+
+  <article class="card primary">
+    <p class="kicker">The case against</p>
+    <h2>The ice keeps counting</h2>
+    <p>The Greenland ice cores are counted layer by layer. Rasmussen and others build one continuous chronology from 7.9 to 14.8 thousand years before present across the NGRIP, GRIP, and DYE-3 cores. A roll of the planet inside that span would have put Greenland in a new climate band. Cunningham answers that ice melts away and leaves no record of the gap. That answer does not fit a record that runs unbroken across those years.</p>
+    <p class="links"><a href="https://www.iceandclimate.nbi.ku.dk/publications/papers/pdfs/220.pdf">Rasmussen and others, 2006, Journal of Geophysical Research</a> <a href="https://podherd.com/thcfree/episode/the-ethical-skeptic-roger-b-cunningham-ecdo-theory-pole-shifts-explained-earth-s-cataclysmic-cycle">The Higherside Chats, with Roger B. Cunningham</a></p>
+  </article>
+
+  <article class="card primary">
+    <p class="kicker">The case against</p>
+    <h2>The stories, read closely</h2>
+    <p>Several entries on his chart differ from their sources. Herodotus 2.142 has the priests say the sun moved four times from its place of rising, and that meanwhile nothing in Egypt changed. The chart lists it as four floods. The Aztec world-ages end four times, by jaguars, wind, fire, and water. Only one of those ends in a flood. The chart counts four floods. The nine days of Deucalion come from Apollodorus. The chart cites the Argonautica, which tells of Deucalion's birth. Gilgamesh gives the storm six days and the seventh day as its end. Atrahasis gives seven days and seven nights.</p>
+    <p class="links"><a href="https://www.gutenberg.org/cache/epub/2707/pg2707.txt">Herodotus, Macaulay translation</a> <a href="https://en.wikipedia.org/wiki/Five_Suns">Wikipedia, Five Suns</a> <a href="https://www.theoi.com/Text/Apollodorus1.html">Apollodorus, Library 1</a> <a href="https://en.wikipedia.org/wiki/Deucalion">Wikipedia, Deucalion</a> <a href="https://en.wikipedia.org/wiki/Gilgamesh_flood_myth">Wikipedia, Gilgamesh flood myth</a></p>
+  </article>
+
+  <article class="card primary">
+    <p class="kicker">The case against</p>
+    <h2>No published test</h2>
+    <p>The theory lives on his site, in his book, and on podcasts. Under his master page, he writes that the silence is to let the scientific study get published, and that it will come soon. No peer-reviewed geophysics paper testing ECDO turned up in the search for this page. The modelling he points to is by independent groups working with him.</p>
+    <p class="links"><a href="https://theethicalskeptic.com/2024/05/23/master-exothermic-core-mantle-decoupling-dzhanibekov-oscillation-theory/">The Ethical Skeptic, Master ECDO Theory</a> <a href="https://theethicalskeptic.com/2026/06/20/on-modeling-ecdo-theory/">The Ethical Skeptic, On Modeling ECDO Theory</a></p>
+  </article>
+
+  <article class="card interpretive">
+    <p class="kicker">Where it stands</p>
+    <h2>The debate</h2>
+    <p>ECDO is a theory outside the journals. Its draw is real: the flood stories, the seven and nine days, the tilted sky in China, the worn top of a pyramid. Its author has stated what would falsify it. Against it stand the slow rates of true polar wander, the stability of a planet spinning on its axis of greatest inertia, the unbroken ice record, and a chart that bends several of its own sources. On this timeline it sits on the myth line as a modern reading, next to Hancock's comet. Both explain the same flood stories with one catastrophe. They pick different ones.</p>
+    <p class="links"><a href="younger-dryas.html">The Younger Dryas page</a> <a href="flood-myths-more.html">Other flood stories</a></p>
+  </article>
+
+  <footer class="note">
+    <p><a href="index.html">Back to the timeline</a>.</p>
+    <p class="rights">All rights reserved to Studio Gulch SAS.</p>
+  </footer>
+</div>
+
+<script>
+  const canvas = document.getElementById("stars");
+  const ctx = canvas.getContext("2d");
+  let stars = [];
+  function layoutStars() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const n = Math.min(140, Math.floor(window.innerWidth * window.innerHeight / 14000));
+    stars = Array.from({ length: n }, () => ({
+      x: Math.random(), y: Math.random(),
+      r: Math.random() * 1.2 + 0.2,
+      a: Math.random() * 0.5 + 0.15
+    }));
+  }
+  function drawStars() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    stars.forEach((s) => {
+      ctx.fillStyle = "rgba(235, 228, 214," + s.a + ")";
+      ctx.beginPath();
+      ctx.arc(s.x * canvas.width, s.y * canvas.height, s.r, 0, Math.PI * 2);
+      ctx.fill();
+    });
+  }
+  layoutStars();
+  drawStars();
+  window.addEventListener("resize", () => { layoutStars(); drawStars(); });
+</script>
+
+<script>
+(function () {
+  function place() {
+    var host = document.querySelector(".timeline") || document.querySelector(".wrap");
+    if (!host) return;
+    var bubbles = host.querySelectorAll("article.event, article.card");
+    if (!bubbles.length) return;
+    var hostRect = host.getBoundingClientRect();
+    var first = bubbles[0].getBoundingClientRect();
+    var last = bubbles[bubbles.length - 1].getBoundingClientRect();
+    var top = (first.top - hostRect.top) + first.height / 2 - 24;
+    var end = (last.top - hostRect.top) + last.height / 2 + 24;
+    var spines = host.querySelectorAll(".spine");
+    for (var i = 0; i < spines.length; i++) {
+      spines[i].style.top = top + "px";
+      spines[i].style.height = Math.max(0, end - top) + "px";
+    }
+  }
+  place();
+  window.addEventListener("resize", place);
+  window.addEventListener("load", place);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(place);
+})();
+</script>
+
+</body>
+</html>
